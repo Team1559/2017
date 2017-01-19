@@ -31,7 +31,6 @@ public class Shooter {
 		SERVO_BOOLEAN = true; // Starts out defined as true, the servo is open.
 		GATE_STATUS = true; // The gate starts out as open.
 		i = 0; // To be used with the for loop to limit the ball rate.
-		System.out.println("ALL SHOOTER SYSTEMS ARE ONLINE."); // Alerts that the code is online and working.
 	}
 	public void ShooterGate() {
 		// Controls the functions of the gate.
@@ -58,7 +57,6 @@ public class Shooter {
 		else {
 			SERVO_BOOLEAN = false; // The rate of fire is limited
 			BALL_OPENER.set(90.0); // Closes the way for balls to get in.
-			System.out.println("ERROR, SHOOTER CODE IS MISHBEHAVING, OR THE ROBOT IS NOT FUNCTIONING PROPERLY!"); // Alerts the user if the code is misbehaving, other than the light if not visible.
 		}
 	}
 	public void ShooterLaunch() {
