@@ -11,8 +11,7 @@ public class Wiring {
 	public static final int RR_SRX = 4;
 	
 	// Dropper
-	public static final int SHIFT_1 = 3;
-	public static final int SHIFT_2 = 4;
+	public static final int DROPPER = 1;
 	
 	// Joysticks
 	public static final int JOYSTICK0 = 0;
