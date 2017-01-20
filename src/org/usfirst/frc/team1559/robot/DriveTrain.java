@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1559.robot;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TalonSRX;
 
@@ -17,6 +18,7 @@ public class DriveTrain {
 
 	private TalonSRX fl, fr, rl, rr;
 	private Solenoid drop;
+	private RobotDrive drive;
 	private AnalogGyro g;
 	private boolean mecanumized;
 	private double maxSpeed;
@@ -38,7 +40,7 @@ public class DriveTrain {
 		drop.set(mecanumized);
 	}
 
-	public void drive(double x, double y, double rotation) {
+	public void driveMecanum(double x, double y, double rotation) {
 		//
 		gAngle = g.getAngle();
 
@@ -100,5 +102,9 @@ public class DriveTrain {
 				speeds[i] = speeds[i] / maxMagnitude;
 			}
 		}
+	}
+	
+	public void driveTraction(int x, int y) {
+		drive.arcadeDrive(y, x);
 	}
 }
