@@ -9,65 +9,70 @@ import edu.wpi.first.wpilibj.Servo;
 public class Shooter {
 	// The Shooter is a Fly Wheel.
 	// This is where all the variables are instantiated.
-	boolean SERVO_BOOLEAN, GATE_STATUS;
-	// SERVO_BOOLEAN - Sets the angle of the Servo, based on speed.
-	// GATE_STATUS - If the gate is closed, no balls are allowed in, and if open, vice versa.
-	Servo BALL_OPENER;
+	boolean servoBoolean, gateStatus, flowLimit;
+	// servoBoolean - Sets the angle of the Servo, based on speed.
+	// gateStatus - If the gate is closed, no balls are allowed in, and if open, vice versa.
+	Servo ballOpener;
 	// The instantiation of the servo.
-	CANTalon SRX;
+	CANTalon shooterTalon;
 	// The Encoder checks the rate of fire for the talon.
 	// The talon allows the Robot to control the rate of fire.
-	// The Joystick allows the pilots to control the fire of the balls. (Will change)
 	int i;
+	int switchCaseVar;
 	// For all for loops.
 	public void ShooterInit() {
 		// All the variables are defined here.
-		BALL_OPENER = new Servo(1); // Will change for actual Robot.
-		SRX = new CANTalon(1);// Will change for the actual Robot.
-		SERVO_BOOLEAN = true; // Starts out defined as true, the servo is open.
-		GATE_STATUS = true; // The gate starts out as open.
+		ballOpener = new Servo(1); // Will change for actual Robot.
+		shooterTalon = new CANTalon(1);// Will change for the actual Robot.
+		servoBoolean = true; // Starts out defined as true, the servo is open.
+		gateStatus = true; // The gate starts out as open.
+		flowLimit = false; // Starts out defined as false, ball rate not limited.
 		i = 0; // To be used with the for loop to limit the ball rate.
-		SRX.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		SRX.configEncoderCodesPerRev(4096);
-		SRX.changeControlMode(TalonControlMode.Speed);
-		SRX.configNominalOutputVoltage(+0.0f, -0.0f);
-		SRX.configPeakOutputVoltage(+12.0f, 0.0f);
-		SRX.setProfile(0);
-		SRX.setP(0);
-		SRX.setI(0);
-		SRX.setD(0);
-		SRX.setF(0);
+		switchCaseVar = 0;
+		
+		// Initiation for the CANTalon
+		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		shooterTalon.configEncoderCodesPerRev(4096);
+		shooterTalon.changeControlMode(TalonControlMode.Speed);
+		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
+		shooterTalon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NOMIAL_OUTPUT_VOLTAGE);
+		shooterTalon.setProfile(0);
+		shooterTalon.setP(Constants.P);
+		shooterTalon.setI(Constants.I);
+		shooterTalon.setD(Constants.D);
+		shooterTalon.setF(Constants.F);
 		
 	}
-	public void ShooterGate() {
-		// Controls the functions of the gate.
-		if(GATE_STATUS) {
-			SERVO_BOOLEAN = true; // The rate of fire is not limited.
-			BALL_OPENER.set(0.0); // The angle will most definitely change. Also, closes the way for balls to get in.
-		}
-		else if(GATE_STATUS) {
-			for(i = 0; i <= 101; i++) { // 1 integer value is equal to about 20ms.
-				SERVO_BOOLEAN = false; // The rate of fire is limited
-				if(i <= 50) // tick, tick.
-					BALL_OPENER.setAngle(0.0); // Opens the way for balls to get in.
-				else if(i > 50 && i <= 100) // tick, tick.
-					BALL_OPENER.setAngle(90.00); // Closes the way for balls to get in.
-				else if(i == 101) // default scenario
-					i = 0; // the for loop resets.
+	public void ShooterMotor(int rpm){
+		shooterTalon.set(rpm*Constants.RPM_CONVERSION); // Motor is started up.
+	}
+	public void Fire() {
+		switch(switchCaseVar){
+		case 0:
+			ballOpener.setAngle(Constants.OPEN_VAL);
+			i++;
+			if(i >= Constants.CLOSE_DELAY*50){
+				switchCaseVar++;
+				i = 0;
 			}
-		}
-		else if(!GATE_STATUS) {
-			for(i = 0; i < 200; i++) { // 1 integer value is equal to about 20ms.
-				SERVO_BOOLEAN = false; // The rate of fire is limited
+		break;
+		case 1:
+			ballOpener.setAngle(Constants.CLOSE_VAL);
+			i++;
+			if(i >= Constants.FIRE_DELAY*50){
+				switchCaseVar++;
+				i = 0;
 			}
-		}
-		else {
-			SERVO_BOOLEAN = false; // The rate of fire is limited
-			BALL_OPENER.setAngle(90.0); // Closes the way for balls to get in.
+		break;
+		default:
+		switchCaseVar = 0;//we screwed up real bad bois
+		break;
 		}
 	}
 	
-	public void ShooterMotor(int rpm){
-		SRX.set(rpm*300/4096);
+	public void clearCounter(){
+		i = 0;
 	}
+	
+	
 }
