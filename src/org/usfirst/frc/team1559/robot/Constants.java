@@ -16,6 +16,10 @@ public class Constants {
 	public static final float NEGATIVE_NOMIAL_OUTPUT_VOLTAGE = -0.0f;
 	public static final float NEGATIVE_PEAK_OUTPUT_VOLTAGE = -0.0f;
 	public static final double RPM_CONVERSION = (300)/(4096*.1029);
+	public static final double FIRE_DELAY = 1.0/3;
+	public static final double CLOSE_DELAY = 1.0/8;
+	public static final int OPEN_VAL = 90;
+	public static final int CLOSE_VAL = 0;
 	
 	//Shifting
 	public static final double SHIFT_UP_SPEED = 4.6; // m/s
