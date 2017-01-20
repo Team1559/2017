@@ -1,10 +1,11 @@
 package org.usfirst.frc.team1559.robot;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TalonSRX;
 
 public class DriveTrain {
-
+	
 	private static DriveTrain instance;
 
 	public static DriveTrain getInstance() {
@@ -16,8 +17,11 @@ public class DriveTrain {
 
 	private TalonSRX fl, fr, rl, rr;
 	private Solenoid drop;
+	private AnalogGyro g;
 	private boolean mecanumized;
 	private double maxSpeed;
+	double gAngle = 0.0;
+	double gyroAngle;
 
 	public DriveTrain() {
 		fl = new TalonSRX(Wiring.FL_SRX);
@@ -26,6 +30,7 @@ public class DriveTrain {
 		rr = new TalonSRX(Wiring.RR_SRX);
 		drop = new Solenoid(Wiring.DROPPER);
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
+		g = new AnalogGyro(1); // GET THE ID
 	}
 
 	public void drop() {
