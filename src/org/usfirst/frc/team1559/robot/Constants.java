@@ -2,6 +2,9 @@ package org.usfirst.frc.team1559.robot;
 
 public class Constants {
 	// again, thou shan't use magical digits
+
+	// Drive Train
+	public static final double MAX_DRIVE_SPEED = .685;
 	
 	//Talon stuffs
 	public static final double P = 0.3;
@@ -18,4 +21,6 @@ public class Constants {
 	public static final double SHIFT_UP_SPEED = 4.6; // m/s
 	public static final double SHIFT_DOWN_SPEED = 4.4; // m/s
 	public static final double LOW_SPEED_MULTIPLIER = 1.0 ; //Reccommended 2.2, Chris didn't like it....
+
+
 }
