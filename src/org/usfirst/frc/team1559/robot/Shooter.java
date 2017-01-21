@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.Servo;
 public class Shooter {
 	// The Shooter is a Fly Wheel Shooter.
 	// This is where most of the variables are instantiated.
+	
 	Servo ballOpener; // The instantiation of the servo. Acts as the gate.
 	CANTalon shooterTalon; // The motor that is used to fire them balls.
 	int i; // Used as a counter.
 	int switchCaseVar; // Used with the switch case to initiate a delay in the fire rate.
 	
 	public void ShooterInit() { // All the variables are assigned values.
+		
 		// All the variables are defined here.
 		ballOpener = new Servo(Wiring.SHOOTER_BALL_OPENER_PORT); // Will change for actual Robot.
 		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON_PORT);// Will change for the actual Robot.
@@ -21,21 +23,25 @@ public class Shooter {
 		switchCaseVar = 0;
 		
 		// Initiation for the CANTalon
-		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooterTalon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		shooterTalon.changeControlMode(TalonControlMode.Speed);
-		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
-		shooterTalon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NOMIAL_OUTPUT_VOLTAGE);
-		shooterTalon.setProfile(0);
+		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder); // Sets the feedback device to a Quad Encoder.
+		shooterTalon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV); // Encoder codes per Revolution.
+		shooterTalon.changeControlMode(TalonControlMode.Speed); // Sets the control mode to Speed.
+		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); // Sets the output voltages.
+		shooterTalon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NOMIAL_OUTPUT_VOLTAGE); // Sets the peak voltage and the minimum voltage output.
+		shooterTalon.setProfile(Wiring.SHOOTER_TALON_PROFILE); // Sets the profile of the CANTalon.
 		shooterTalon.setP(Constants.Ps); // Ps = 0.3
 		shooterTalon.setI(Constants.Is); // Is = 0
 		shooterTalon.setD(Constants.Ds); // Ds = 0.05
 		shooterTalon.setF(Constants.Fs); // Fs = 0.32
+		
 	}
 	public void ShooterMotor(int rpm) { // Starts up the motor so that them balls can be fired.
+		
 		shooterTalon.set(rpm*Constants.RPM_CONVERSION); // Motor is started up.
+		
 	}
 	public void Fire() { // Used to control the fire rate of the balls
+		
 		switch(switchCaseVar){
 		case 0: // If switchCaseVar = 0, then this line will execute.
 			ballOpener.setAngle(Constants.OPEN_VAL); // The gate is set to open.
@@ -54,11 +60,14 @@ public class Shooter {
 			}
 		break; // end line of code
 		default: // If the other cases don't work come down here.
-		switchCaseVar = 0;// We screwed up real bad bois.
+		switchCaseVar = 0;// If all others fail, then this variable is reset.
 		break; // end line of code
+		
 		}
 	}
 	public void clearCounter() { // Used to reset the counter 'i'.
+		
 		i = 0; // counter 'i' is reset
+		
 	}	
 }

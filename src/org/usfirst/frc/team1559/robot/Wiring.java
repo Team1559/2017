@@ -10,6 +10,7 @@ public class Wiring {
 	public static final int RL_SRX = 3;
 	public static final int RR_SRX = 4;
 	public static final int SHOOTER_TALON_PORT = 1;
+	public static final int SHOOTER_TALON_PROFILE = 0;
 	
 	//Gear Gatherer
 	public static final int GEAR_IN = 1;
