@@ -7,10 +7,18 @@ public class Constants {
 	public static final double MAX_DRIVE_SPEED = .685; //The maximum speed the mecanum wheels can go
 	
 	//Talon stuffs
-	public static final double P = 0.3; //(This may change) The proportional value for the PIDF loop
-	public static final double I = 0; //(This may change) The integral value for the PIDF loop
-	public static final double D = 0.05; //(This may change) The derivative  value for the PIDF loop
-	public static final double F = 0.32; //(This may change) The feed-forward value for the PIDF loop
+	public static final double Pd = 0.3; //(This may change) The proportional value for the PIDF loop (Mecanum)
+	public static final double Id = 0; //(This may change) The integral value for the PIDF loop (Mecanum)
+	public static final double Dd = 0.05; //(This may change) The derivative  value for the PIDF loop (Mecanum)
+	public static final double Fd = 0.32; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
+	
+	public static final double Ps = 0.3; //(This may change) The proportional value for the PIDF loop (Mecanum)
+	public static final double Is = 0; //(This may change) The integral value for the PIDF loop (Mecanum)
+	public static final double Ds = 0.05; //(This may change) The derivative  value for the PIDF loop (Mecanum)
+	public static final double Fs = 0.32; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
+	
+	public static final int ENCODER_CODES_PER_REV = 4096;// 
+	
 	public static final float NOMIAL_OUTPUT_VOLTAGE = +0.0f; //The forward nomial output voltage for the talons
 	public static final float PEAK_OUTPUT_VOLTAGE = +12.0f; //The reverse nomial output voltage for the talons
 	public static final float NEGATIVE_NOMIAL_OUTPUT_VOLTAGE = -0.0f; //The forward peak output voltage for the talons

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1559.robot;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -32,45 +34,57 @@ public class DriveTrain {
 		rr = new CANTalon(Wiring.RR_SRX); //Rear right talon
 		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the mecanum wheels or brings them up
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
-		g = new AnalogGyro(1); // GET THE ID
+		g = new AnalogGyro(1); // replace with jetson (just to satify the code)
 		
 		//Front left talon config
+		fl.changeControlMode(TalonControlMode.Speed);
+		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
 		fl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE); //Configures the nomial output voltages
 		fl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); //Configures the peak output voltages
 		fl.setProfile(Constants.PROFILE); //Configures the profile of the talon
-		fl.setP(Constants.P); //Configures the proportional of the talon
-		fl.setI(Constants.I); //Configures the integral of the talon
-		fl.setD(Constants.D); //Configures the derivative of the talon
-		fl.setF(Constants.F); //Configures the feed-forward of the talon
+		fl.setP(Constants.Pd); //Configures the proportional of the talon
+		fl.setI(Constants.Id); //Configures the integral of the talon
+		fl.setD(Constants.Dd); //Configures the derivative of the talon
+		fl.setF(Constants.Fd); //Configures the feed-forward of the talon
 		
 		//Repeat for the 3 other talons
 		
 		//Front right talon config
+		fr.changeControlMode(TalonControlMode.Speed);
+		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
 		fr.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
 		fr.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
 		fr.setProfile(Constants.PROFILE);
-		fr.setP(Constants.P);
-		fr.setI(Constants.I);
-		fr.setD(Constants.D);
-		fl.setF(Constants.F);
+		fr.setP(Constants.Pd);
+		fr.setI(Constants.Id);
+		fr.setD(Constants.Dd);
+		fl.setF(Constants.Fd);
 		
 		//Rear left talon config
+		rl.changeControlMode(TalonControlMode.Speed);
+		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
 		rl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
 		rl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
 		rl.setProfile(Constants.PROFILE);
-		rl.setP(Constants.P);
-		rl.setI(Constants.I);
-		rl.setD(Constants.D);
-		rl.setF(Constants.F);
+		rl.setP(Constants.Pd);
+		rl.setI(Constants.Id);
+		rl.setD(Constants.Dd);
+		rl.setF(Constants.Fd);
 		
 		//Rear right talon config
+		rr.changeControlMode(TalonControlMode.Speed);
+		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
 		rr.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
 		rr.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
 		rr.setProfile(Constants.PROFILE);
-		rr.setP(Constants.P);
-		rr.setI(Constants.I);
-		rr.setD(Constants.D);
-		rr.setF(Constants.F);
+		rr.setP(Constants.Pd);
+		rr.setI(Constants.Id);
+		rr.setD(Constants.Dd);
+		rr.setF(Constants.Fd);
 		
 		//Enables the PIDF loop
 		fl.enable();

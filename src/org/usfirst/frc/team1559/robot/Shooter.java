@@ -22,7 +22,7 @@ public class Shooter {
 		
 		// Initiation for the CANTalon
 		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooterTalon.configEncoderCodesPerRev(4096);
+		shooterTalon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
 		shooterTalon.changeControlMode(TalonControlMode.Speed);
 		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
 		shooterTalon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NOMIAL_OUTPUT_VOLTAGE);
