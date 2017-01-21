@@ -27,11 +27,10 @@ public class Shooter {
 		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
 		shooterTalon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NOMIAL_OUTPUT_VOLTAGE);
 		shooterTalon.setProfile(0);
-		shooterTalon.setP(Constants.Ps); // P = 0.3
-		shooterTalon.setI(Constants.Is); // I = 0
-		shooterTalon.setD(Constants.Ds); // D = 0.05
-		shooterTalon.setF(Constants.Fs); // F = 0.32
-		
+		shooterTalon.setP(Constants.Ps); // Ps = 0.3
+		shooterTalon.setI(Constants.Is); // Is = 0
+		shooterTalon.setD(Constants.Ds); // Ds = 0.05
+		shooterTalon.setF(Constants.Fs); // Fs = 0.32
 	}
 	public void ShooterMotor(int rpm) { // Starts up the motor so that them balls can be fired.
 		shooterTalon.set(rpm*Constants.RPM_CONVERSION); // Motor is started up.
@@ -61,7 +60,5 @@ public class Shooter {
 	}
 	public void clearCounter() { // Used to reset the counter 'i'.
 		i = 0; // counter 'i' is reset
-	}
-	
-	
+	}	
 }
