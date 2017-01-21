@@ -7,12 +7,12 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
-
+		
 	}
 
 	@Override
 	public void autonomousInit() {
-
+		
 	}
 
 	@Override

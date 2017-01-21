@@ -23,7 +23,6 @@ public class DriveTrain {
 	private AnalogGyro g;
 	private boolean mecanumized;
 	private double maxSpeed;
-	double gAngle = 0.0;
 	double gyroAngle;
 
 	public DriveTrain() {
@@ -33,6 +32,7 @@ public class DriveTrain {
 		rr = new CANTalon(Wiring.RR_SRX); //Rear right talon
 		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the mecanum wheels or brings them up
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
+<<<<<<< HEAD
 		g = new AnalogGyro(1); // GET THE ID
 		
 		//Front left talon config
@@ -78,6 +78,9 @@ public class DriveTrain {
 		fr.enable();
 		rl.enable();
 		rr.enable();
+=======
+		g = new AnalogGyro(1); // WE WILL NOT HAVE A GYRO ON THE ROBORIO JOHN
+>>>>>>> origin/master
 	}
 
 	public void drop() {
@@ -85,9 +88,13 @@ public class DriveTrain {
 		drop.set(mecanumized);
 	}
 
+	public void driveTraction(double move, double rot) {
+		drive.arcadeDrive(move, rot);
+	}
+
 	public void driveMecanum(double x, double y, double rotation) {
 		//
-		gAngle = g.getAngle();
+		//gAngle = g.getAngle();
 
 		// desiredAngle += rotation;
 		//
@@ -101,7 +108,7 @@ public class DriveTrain {
 		//
 		// rotation += correctionAngle;
 
-		gyroAngle = gAngle;
+		gyroAngle = g.getAngle(); // TODO: Replace with IMU data from TX1
 
 		double xIn = x;
 		double yIn = y;
@@ -149,7 +156,4 @@ public class DriveTrain {
 		}
 	}
 	
-	public void driveTraction(int x, int y) {
-		drive.arcadeDrive(y, x);
-	}
 }
