@@ -1,9 +1,10 @@
 package org.usfirst.frc.team1559.robot;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.TalonSRX;
 
 public class DriveTrain {
 	
@@ -16,7 +17,7 @@ public class DriveTrain {
 		return instance;
 	}
 
-	private TalonSRX fl, fr, rl, rr;
+	private CANTalon fl, fr, rl, rr;
 	private Solenoid drop;
 	private RobotDrive drive;
 	private AnalogGyro g;
@@ -26,13 +27,57 @@ public class DriveTrain {
 	double gyroAngle;
 
 	public DriveTrain() {
-		fl = new TalonSRX(Wiring.FL_SRX);
-		fr = new TalonSRX(Wiring.FR_SRX);
-		rl = new TalonSRX(Wiring.RL_SRX);
-		rr = new TalonSRX(Wiring.RR_SRX);
-		drop = new Solenoid(Wiring.DROPPER);
+		fl = new CANTalon(Wiring.FL_SRX); //Front left talon
+		fr = new CANTalon(Wiring.FR_SRX); //Front right talon
+		rl = new CANTalon(Wiring.RL_SRX); //Rear left talon
+		rr = new CANTalon(Wiring.RR_SRX); //Rear right talon
+		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the mecanum wheels or brings them up
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
 		g = new AnalogGyro(1); // GET THE ID
+		
+		//Front left talon config
+		fl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE); //Configures the nomial output voltages
+		fl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); //Configures the peak output voltages
+		fl.setProfile(Constants.PROFILE); //Configures the profile of the talon
+		fl.setP(Constants.P); //Configures the proportional of the talon
+		fl.setI(Constants.I); //Configures the integral of the talon
+		fl.setD(Constants.D); //Configures the derivative of the talon
+		fl.setF(Constants.F); //Configures the feed-forward of the talon
+		
+		//Repeat for the 3 other talons
+		
+		//Front right talon config
+		fr.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
+		fr.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
+		fr.setProfile(Constants.PROFILE);
+		fr.setP(Constants.P);
+		fr.setI(Constants.I);
+		fr.setD(Constants.D);
+		fl.setF(Constants.F);
+		
+		//Rear left talon config
+		rl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
+		rl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
+		rl.setProfile(Constants.PROFILE);
+		rl.setP(Constants.P);
+		rl.setI(Constants.I);
+		rl.setD(Constants.D);
+		rl.setF(Constants.F);
+		
+		//Rear right talon config
+		rr.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
+		rr.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
+		rr.setProfile(Constants.PROFILE);
+		rr.setP(Constants.P);
+		rr.setI(Constants.I);
+		rr.setD(Constants.D);
+		rr.setF(Constants.F);
+		
+		//Enables the PIDF loop
+		fl.enable();
+		fr.enable();
+		rl.enable();
+		rr.enable();
 	}
 
 	public void drop() {
