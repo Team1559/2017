@@ -9,6 +9,7 @@ public class Wiring {
 	public static final int FR_SRX = 2;
 	public static final int RL_SRX = 3;
 	public static final int RR_SRX = 4;
+	public static final int SHOOTER_TALON_PORT = 1;
 	
 	//Gear Gatherer
 	public static final int GEAR_IN = 1;
@@ -27,4 +28,5 @@ public class Wiring {
 	// gatherer/shooter controls
 	public static final int BTN_GATHER = 1;
 	public static final int BTN_SHOOT = 2;
+	public static final int SHOOTER_BALL_OPENER_PORT = 1;
 }

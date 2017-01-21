@@ -15,8 +15,8 @@ public class Shooter {
 	
 	public void ShooterInit() { // All the variables are assigned values.
 		// All the variables are defined here.
-		ballOpener = new Servo(1); // Will change for actual Robot.
-		shooterTalon = new CANTalon(1);// Will change for the actual Robot.
+		ballOpener = new Servo(Wiring.SHOOTER_BALL_OPENER_PORT); // Will change for actual Robot.
+		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON_PORT);// Will change for the actual Robot.
 		i = 0; // To be used with the for loop to limit the ball rate.
 		switchCaseVar = 0;
 		
