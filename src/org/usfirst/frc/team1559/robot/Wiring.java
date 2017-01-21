@@ -5,11 +5,20 @@ public class Wiring {
 	// thou shan't use magical digits
 	
 	//Talon stuffs
+<<<<<<< HEAD
 	public static final int FL_SRX = 1; //The front left TalonSRX
 	public static final int FR_SRX = 2; //The front right TalonSRX
 	public static final int RL_SRX = 3; //The rear left TalonSRX
 	public static final int RR_SRX = 4; //The rear right TalonSRX
 	public static final int SHOOTER_TALON_PORT = 1; //The TalonSRX for shooting
+=======
+	public static final int FL_SRX = 1;
+	public static final int FR_SRX = 2;
+	public static final int RL_SRX = 3;
+	public static final int RR_SRX = 4;
+	public static final int SHOOTER_TALON_PORT = 1;
+	public static final int SHOOTER_TALON_PROFILE = 0;
+>>>>>>> origin/master
 	
 	//Gear Gatherer
 	public static final int GEAR_IN = 1; //Port for the limit switch
