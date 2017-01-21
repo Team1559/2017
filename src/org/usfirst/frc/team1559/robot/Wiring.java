@@ -10,6 +10,11 @@ public class Wiring {
 	public static final int RL_SRX = 3;
 	public static final int RR_SRX = 4;
 	
+	//Gear Gatherer
+	public static final int GEAR_IN = 1;
+	public static final int SOLENOID_UP = 1;
+	public static final int SOLENOID_DOWN = 2;
+	
 	// Dropper
 	public static final int DROPPER = 1;
 	
