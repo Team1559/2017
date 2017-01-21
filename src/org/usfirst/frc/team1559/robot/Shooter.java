@@ -36,13 +36,10 @@ public class Shooter {
 		
 	}
 	public void ShooterMotor(int rpm) { // Starts up the motor so that them balls can be fired.
-<<<<<<< HEAD
 		shooterTalon.set(rpm * Constants.RPM_CONVERSION); // Motor is started up.
-=======
 		
 		shooterTalon.set(rpm*Constants.RPM_CONVERSION); // Motor is started up.
-		
->>>>>>> origin/master
+
 	}
 	public void Fire() { // Used to control the fire rate of the balls
 		
@@ -62,34 +59,20 @@ public class Shooter {
 				switchCaseVar++; //switchCaseVar is updated by 1.
 				i = 0; //counter 'i' is set to 0. (reset)
 			}
-<<<<<<< HEAD
 		break; //end line of code
-		default: // Ifthe other cases don't work come down here.
+		default: // If the other cases don't work come down here.
 		switchCaseVar = 0;//We screwed up real bad bois.
 		System.out.println("We are in the default case of the shooter (shit is fucked my dudes)");
 		break; //end line of code
-		}
-	}
-	public void clearCounter() { //Used to reset the counter 'i'.
-		i = 0; //counter 'i' is reset
-	}
-	
-	public void setRPM(int rpm) {
-		shooterTalon.set(rpm * Constants.RPM_CONVERSION); //Motor RPM is changed
-	}
-}
-=======
-		break; // end line of code
-		default: // If the other cases don't work come down here.
-		switchCaseVar = 0;// If all others fail, then this variable is reset.
-		break; // end line of code
-		
 		}
 	}
 	public void clearCounter() { // Used to reset the counter 'i'.
 		
 		i = 0; // counter 'i' is reset
 		
-	}	
+	}
+	
+	public void setRPM(int rpm) {
+		shooterTalon.set(rpm * Constants.RPM_CONVERSION); //Motor RPM is changed
+	}
 }
->>>>>>> origin/master
