@@ -5,6 +5,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -91,19 +92,19 @@ public class DriveTrain {
 		fr.enable();
 		rl.enable();
 		rr.enable();
-		g = new AnalogGyro(1); // WE WILL NOT HAVE A GYRO ON THE ROBORIO JOHN
+		g = new AnalogGyro(1); //Replace with Jetson data (I knew we wouldnt ryan)
 	}
 
-	public void drop() {
-		mecanumized = !mecanumized;
-		drop.set(mecanumized);
+	public void drop() { //Control the versadrop
+		mecanumized = !mecanumized; //Set boolean mecanum to the opposite of what it is
+		drop.set(mecanumized); //Set the pistons to the new value
 	}
 
-	public void driveTraction(double move, double rot) {
-		drive.arcadeDrive(move, rot);
+	public void driveTraction(Joystick joy) { //The drive method for traction. Param: joy = Joystick)
+		drive.arcadeDrive(joy); //Does the actual driving
 	}
 
-	public void driveMecanum(double x, double y, double rotation) {
+	public void driveMecanum(double x, double y, double rotation) { //Mecanum drive method
 		//
 		//gAngle = g.getAngle();
 
@@ -129,14 +130,16 @@ public class DriveTrain {
 		double rotated[] = rotateVector(xIn, yIn, gyroAngle);
 		xIn = rotated[0];
 		yIn = rotated[1];
-
+		
+		//Calculate the speeds
 		double flSpeed = xIn + yIn + rotation;
 		double frSpeed = -xIn + yIn - rotation;
 		double rlSpeed = -xIn + yIn + rotation;
 		double rrSpeed = xIn + yIn - rotation;
 		double[] speeds = { flSpeed, frSpeed, rlSpeed, rrSpeed };
 		normalize(speeds);
-
+		
+		//Set speeds
 		fl.set(-speeds[0] * maxSpeed);
 		fr.set(speeds[1] * maxSpeed);
 		rl.set(-speeds[2] * maxSpeed);

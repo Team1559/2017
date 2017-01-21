@@ -17,7 +17,7 @@ public class Constants {
 	public static final double Ds = 0.05; //(This may change) The derivative  value for the PIDF loop (Mecanum)
 	public static final double Fs = 0.32; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
 	
-	public static final int ENCODER_CODES_PER_REV = 4096;// 
+	public static final int ENCODER_CODES_PER_REV = 4096;// The number of times an encoder will move in one wheel revolution
 	
 	public static final float NOMIAL_OUTPUT_VOLTAGE = +0.0f; //The forward nomial output voltage for the talons
 	public static final float PEAK_OUTPUT_VOLTAGE = +12.0f; //The reverse nomial output voltage for the talons
