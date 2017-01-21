@@ -32,7 +32,6 @@ public class DriveTrain {
 		rr = new CANTalon(Wiring.RR_SRX); //Rear right talon
 		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the mecanum wheels or brings them up
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
-<<<<<<< HEAD
 		g = new AnalogGyro(1); // GET THE ID
 		
 		//Front left talon config
@@ -78,9 +77,7 @@ public class DriveTrain {
 		fr.enable();
 		rl.enable();
 		rr.enable();
-=======
 		g = new AnalogGyro(1); // WE WILL NOT HAVE A GYRO ON THE ROBORIO JOHN
->>>>>>> origin/master
 	}
 
 	public void drop() {
