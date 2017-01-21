@@ -5,24 +5,24 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class GearGatherer {
-	DigitalInput limit;
-	DoubleSolenoid wow;
+	DigitalInput limit; //The limit switch
+	DoubleSolenoid piston; //The piston that releases the gear
 	
 	public GearGatherer(){
-		limit = new DigitalInput(Wiring.GEAR_IN);
-		wow = new DoubleSolenoid(Wiring.SOLENOID_DOWN,Wiring.SOLENOID_UP);//forward is down
+		limit = new DigitalInput(Wiring.GEAR_IN); //instantiation
+		piston = new DoubleSolenoid(Wiring.SOLENOID_DOWN,Wiring.SOLENOID_UP);//forward is down
 	}
 	
 	public boolean hasGear(){
-		return limit.get();
+		return limit.get(); //Gets the position of the limit switch (on or off)
 	}
 	
-	public void update(boolean triggered){
-		if(limit.get() && triggered){
-			wow.set(Value.kForward);
+	public void update(boolean triggered){ //Triggered is a joystick button
+		if(limit.get() && triggered){ //If the gear is there and the button was pressed then
+			piston.set(Value.kForward); //Sets the value to push
 		}
 		else{
-			wow.set(Value.kReverse);
+			piston.set(Value.kReverse); //Sets the value to pull
 		}
 	}
 }
