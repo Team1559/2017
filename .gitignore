@@ -3,3 +3,4 @@ build.properties
 build.xml
 .project
 .classpath
+*.classpath
