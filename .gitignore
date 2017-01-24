@@ -46,3 +46,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /bin/
+<<<<<<< HEAD
+=======
+build.properties
+build.xml
+.project
+.classpath
+>>>>>>> parent of c02c5ae... Lets try it
