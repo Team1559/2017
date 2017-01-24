@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1559.robot;
 
+import org.usfirst.frc.team1559.lib.State;
+import org.usfirst.frc.team1559.lib.Subsystem;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
@@ -9,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 
-public class DriveTrain {
+public class DriveTrain extends Subsystem {
 	
 	private static DriveTrain instance;
 
@@ -29,6 +32,7 @@ public class DriveTrain {
 	double gyroAngle;
 
 	public DriveTrain() {
+		super("drive-train");
 		fl = new CANTalon(Wiring.FL_SRX); //Front left talon
 		fr = new CANTalon(Wiring.FR_SRX); //Front right talon
 		rl = new CANTalon(Wiring.RL_SRX); //Rear left talon
@@ -168,6 +172,12 @@ public class DriveTrain {
 				speeds[i] = speeds[i] / maxMagnitude;
 			}
 		}
+	}
+
+	@Override
+	public void getState(State s) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
