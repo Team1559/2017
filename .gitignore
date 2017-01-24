@@ -1,5 +1,6 @@
 /bin/
 build.properties
 build.xml
-*.project
+.project
+.classpath
 *.classpath
