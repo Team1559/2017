@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-<<<<<<< HEAD
-	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="C:/Users/John/wpilib/user/java/lib/TalonSRXLibJava.jar"/>
-=======
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
@@ -12,6 +8,5 @@
 	<classpathentry kind="var" path="cscore" sourcepath="cscore.sources"/>
 	<classpathentry kind="var" path="ctrlib"/>
 	<classpathentry kind="lib" path="C:/Users/Ryan/wpilib/user/java/lib/CTRLib.jar"/>
->>>>>>> parent of c02c5ae... Lets try it
 	<classpathentry kind="output" path="bin"/>
 </classpath>
