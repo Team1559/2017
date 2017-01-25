@@ -29,5 +29,4 @@ public class Wiring {
 	public static final int BTN_GATHER = 1; //Button to control the gatherer
 	public static final int BTN_SHOOT = 2; //Button to control the shooter
 	public static final int SHOOTER_BALL_OPENER_PORT = 1; //
-	public static final int SHOOTER_TALON_PROFILE = 0;
 }

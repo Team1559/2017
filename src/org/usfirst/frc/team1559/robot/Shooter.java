@@ -32,7 +32,7 @@ public class Shooter extends Subsystem {
 		shooterTalon.changeControlMode(TalonControlMode.Speed); // Sets the control mode to Speed.
 		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); // Sets the output voltages.
 		shooterTalon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NOMIAL_OUTPUT_VOLTAGE); // Sets the peak voltage and the minimum voltage output.
-		shooterTalon.setProfile(Wiring.SHOOTER_TALON_PROFILE); // Sets the profile of the CANTalon.
+		shooterTalon.setProfile(Constants.PROFILE); // Sets the profile of the CANTalon.
 		shooterTalon.setP(Constants.Ps); // Ps = 0.3
 		shooterTalon.setI(Constants.Is); // Is = 0
 		shooterTalon.setD(Constants.Ds); // Ds = 0.05
