@@ -27,7 +27,6 @@ public class DriveTrain extends Subsystem {
 	private Solenoid drop;
 	private RobotDrive drive;
 	private AnalogGyro g;
-	private boolean mecanumized;
 	private double maxSpeed;
 	double gyroAngle;
 
@@ -99,8 +98,7 @@ public class DriveTrain extends Subsystem {
 		g = new AnalogGyro(1); //Replace with Jetson data (I knew we wouldnt ryan)
 	}
 
-	public void drop() { //Control the versadrop
-		mecanumized = !mecanumized; //Set boolean mecanum to the opposite of what it is
+	public void drop(boolean mecanumized) { //Control the versadrop
 		drop.set(mecanumized); //Set the pistons to the new value
 	}
 
