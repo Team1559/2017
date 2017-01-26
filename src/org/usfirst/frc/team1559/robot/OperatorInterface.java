@@ -4,8 +4,10 @@ import org.usfirst.frc.team1559.lib.BetterJoystick;
 
 public class OperatorInterface {
 
-	private static final int PORT_DRIVER = 0;
-	private static final int PORT_COPILOT = 1;
+	public static final int PORT_DRIVER = 0;
+	public static final int PORT_COPILOT = 1;
+	
+	public static final int DROP_BUTTON = 3;
 	
 	private BetterJoystick driverStick, copilotStick;
 	

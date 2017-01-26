@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1559.robot;
 
+import org.usfirst.frc.team1559.lib.JoystickButtonEvent;
+import org.usfirst.frc.team1559.lib.JoystickButtonListener;
 import org.usfirst.frc.team1559.lib.State;
 import org.usfirst.frc.team1559.lib.Subsystem;
 
@@ -12,8 +14,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 
-public class DriveTrain extends Subsystem {
-	
+public class DriveTrain extends Subsystem implements JoystickButtonListener {
+
 	private static DriveTrain instance;
 
 	public static DriveTrain getInstance() {
@@ -28,33 +30,34 @@ public class DriveTrain extends Subsystem {
 	private RobotDrive drive;
 	private AnalogGyro g;
 	private double maxSpeed;
+	private boolean mecanumized;
 	double gyroAngle;
 
 	public DriveTrain() {
 		super("drive-train");
-		fl = new CANTalon(Wiring.FL_SRX); //Front left talon
-		fr = new CANTalon(Wiring.FR_SRX); //Front right talon
-		rl = new CANTalon(Wiring.RL_SRX); //Rear left talon
-		rr = new CANTalon(Wiring.RR_SRX); //Rear right talon
+		fl = new CANTalon(Wiring.FL_SRX); // Front left talon
+		fr = new CANTalon(Wiring.FR_SRX); // Front right talon
+		rl = new CANTalon(Wiring.RL_SRX); // Rear left talon
+		rr = new CANTalon(Wiring.RR_SRX); // Rear right talon
 		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the mecanum wheels or brings them up
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
 		g = new AnalogGyro(1); // replace with jetson (just to satify the code)
-		
-		//Front left talon config
+
+		// Front left talon config
 		fl.changeControlMode(TalonControlMode.Speed);
 		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		fl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE); //Configures the nomial output voltages
-		fl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); //Configures the peak output voltages
-		fl.setProfile(Constants.PROFILE); //Configures the profile of the talon
-		fl.setP(Constants.Pd); //Configures the proportional of the talon
-		fl.setI(Constants.Id); //Configures the integral of the talon
-		fl.setD(Constants.Dd); //Configures the derivative of the talon
-		fl.setF(Constants.Fd); //Configures the feed-forward of the talon
-		
-		//Repeat for the 3 other talons
-		
-		//Front right talon config
+		fl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE); // Configures the nomial output voltages
+		fl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); // Configures the peak output voltages
+		fl.setProfile(Constants.PROFILE); // Configures the profile of the talon
+		fl.setP(Constants.Pd); // Configures the proportional of the talon
+		fl.setI(Constants.Id); // Configures the integral of the talon
+		fl.setD(Constants.Dd); // Configures the derivative of the talon
+		fl.setF(Constants.Fd); // Configures the feed-forward of the talon
+
+		// Repeat for the 3 other talons
+
+		// Front right talon config
 		fr.changeControlMode(TalonControlMode.Speed);
 		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
@@ -65,8 +68,8 @@ public class DriveTrain extends Subsystem {
 		fr.setI(Constants.Id);
 		fr.setD(Constants.Dd);
 		fl.setF(Constants.Fd);
-		
-		//Rear left talon config
+
+		// Rear left talon config
 		rl.changeControlMode(TalonControlMode.Speed);
 		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
@@ -77,8 +80,8 @@ public class DriveTrain extends Subsystem {
 		rl.setI(Constants.Id);
 		rl.setD(Constants.Dd);
 		rl.setF(Constants.Fd);
-		
-		//Rear right talon config
+
+		// Rear right talon config
 		rr.changeControlMode(TalonControlMode.Speed);
 		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
@@ -89,26 +92,27 @@ public class DriveTrain extends Subsystem {
 		rr.setI(Constants.Id);
 		rr.setD(Constants.Dd);
 		rr.setF(Constants.Fd);
-		
-		//Enables the PIDF loop
+
+		// Enables the PIDF loop
 		fl.enable();
 		fr.enable();
 		rl.enable();
 		rr.enable();
-		g = new AnalogGyro(1); //Replace with Jetson data (I knew we wouldnt ryan)
+		g = new AnalogGyro(1); // Replace with Jetson data (I knew we wouldnt ryan)
 	}
 
-	public void drop(boolean mecanumized) { //Control the versadrop
-		drop.set(mecanumized); //Set the pistons to the new value
+	public void drop(boolean mecanumized) { // Control the versadrop
+		this.mecanumized = mecanumized;
+		drop.set(mecanumized); // Set the pistons to the new value
 	}
 
-	public void driveTraction(Joystick joy) { //The drive method for traction. Param: joy = Joystick)
-		drive.arcadeDrive(joy); //Does the actual driving
+	public void driveTraction(Joystick joy) { // The drive method for traction. Param: joy = Joystick)
+		drive.arcadeDrive(joy); // Does the actual driving
 	}
 
-	public void driveMecanum(double x, double y, double rotation) { //Mecanum drive method
+	public void driveMecanum(double x, double y, double rotation) { // Mecanum drive method
 		//
-		//gAngle = g.getAngle();
+		// gAngle = g.getAngle();
 
 		// desiredAngle += rotation;
 		//
@@ -132,16 +136,16 @@ public class DriveTrain extends Subsystem {
 		double rotated[] = rotateVector(xIn, yIn, gyroAngle);
 		xIn = rotated[0];
 		yIn = rotated[1];
-		
-		//Calculate the speeds
+
+		// Calculate the speeds
 		double flSpeed = xIn + yIn + rotation;
 		double frSpeed = -xIn + yIn - rotation;
 		double rlSpeed = -xIn + yIn + rotation;
 		double rrSpeed = xIn + yIn - rotation;
 		double[] speeds = { flSpeed, frSpeed, rlSpeed, rrSpeed };
 		normalize(speeds);
-		
-		//Set speeds
+
+		// Set speeds
 		fl.set(-speeds[0] * maxSpeed);
 		fr.set(speeds[1] * maxSpeed);
 		rl.set(-speeds[2] * maxSpeed);
@@ -175,7 +179,22 @@ public class DriveTrain extends Subsystem {
 	@Override
 	public void getState(State s) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
+	public boolean getMecanumized() {
+		return mecanumized;
+	}
+
+	@Override
+	public void buttonPressed(JoystickButtonEvent e) {
+		if (e.getPort() == OperatorInterface.PORT_DRIVER && e.getID() == OperatorInterface.DROP_BUTTON) {
+			drop(!mecanumized);
+		}
+	}
+
+	@Override
+	public void buttonReleased(JoystickButtonEvent e) {
+
+	}
 }

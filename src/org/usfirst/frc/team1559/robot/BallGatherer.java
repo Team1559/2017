@@ -6,6 +6,15 @@ import edu.wpi.first.wpilibj.Talon;
 
 
 public class BallGatherer {
+	
+	private static BallGatherer instance;
+	public static BallGatherer getInstance() {
+		if (instance == null) {
+			instance = new BallGatherer();
+		}
+		return instance;
+	}
+
 	DoubleSolenoid piston;
 	Talon belt;
 	Joystick joy;
@@ -25,5 +34,4 @@ public class BallGatherer {
 			belt.set(0);
 		}
 	}
-	
 }

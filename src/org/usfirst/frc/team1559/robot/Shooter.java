@@ -9,6 +9,15 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Servo;
 
 public class Shooter extends Subsystem {
+
+	private static Shooter instance;
+	public static Shooter getInstance() {
+		if (instance == null) {
+			instance = new Shooter();
+		}
+		return instance;
+	}
+	
 	// The Shooter is a Fly Wheel Shooter.
 	// This is where most of the variables are instantiated.
 
@@ -86,4 +95,5 @@ public class Shooter extends Subsystem {
 	public void getState(State s) {
 		
 	}
+
 }

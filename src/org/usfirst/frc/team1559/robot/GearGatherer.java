@@ -5,6 +5,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class GearGatherer {
+	
+	private static GearGatherer instance;
+	public static GearGatherer getInstance() {
+		if (instance == null) {
+			instance = new GearGatherer();
+		}
+		return instance;
+	}
+
 	DigitalInput limit; //The limit switch
 	DoubleSolenoid piston; //The piston that releases the gear
 	

@@ -59,4 +59,8 @@ public class BetterJoystick {
 	public void addAxisListener(JoystickAxisListener al) {
 		axisListeners.add(al);
 	}
+	
+	public Joystick getStick() {
+		return stick;
+	}
 }
