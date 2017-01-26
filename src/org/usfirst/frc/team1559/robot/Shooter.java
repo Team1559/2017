@@ -77,7 +77,7 @@ public class Shooter extends Subsystem {
 			break; // end line of code
 		default: // If the other cases don't work come down here.
 			switchCaseVar = 0;// We screwed up real bad bois.
-			System.out.println("We are in the default case of the shooter (shit is fucked my dudes)");
+			System.out.println("We are in the default case of the shooter (shit is fucked my dudes)"); // Output that message so we know it ain't working.
 			break; // end line of code
 		}
 	}
@@ -88,11 +88,11 @@ public class Shooter extends Subsystem {
 
 	}
 
-	public void setRPM(int rpm) {
+	public void setRPM(int rpm) { // sets the RPM
 		shooterTalon.set(rpm * Constants.RPM_CONVERSION); // Motor RPM is changed
 	}
 
-	public void getState(State s) {
+	public void getState(State s) { // Something, I'm sure.
 		
 	}
 
