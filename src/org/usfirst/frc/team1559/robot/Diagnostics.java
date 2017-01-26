@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1559.robot;
 //                        :-)
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Diagnostics {
 
-	public static SmartDashboard x;
+	public SmartDashboard x;
 	
 	public Diagnostics()
 	{
@@ -20,20 +21,20 @@ public class Diagnostics {
 		
 
 
-	public static void encoderData(Encoder e) //call this to output encoder data (distance)
+	public void encoderData(Encoder e) //call this to output encoder data (distance)
 	{
 		String key = "Encoder Distance:";
 		SmartDashboard.putString(key, (e.getDistance() + ""));				
 	}
 
 	
-	public static void servoData(Servo s) //call to output servo data (angle)
+	public void servoData(Servo s) //call to output servo data (angle)
 	{
 		String key = "Servo Angle:";
 		SmartDashboard.putString(key, (s.getAngle() + ""));				
 	}
 	
-	public static void testServoData(Servo s) //will tell you if the servo is working
+	public void testServoData(Servo s) //will tell you if the servo is working
 	{
 			double num1 = s.getAngle();
 			double num2;
@@ -52,19 +53,19 @@ public class Diagnostics {
 			SmartDashboard.putString(key, (check + ""));	
 	}
 	
-	public static void gyroData(Gyro g) //outputs gyro data (angle)
+	public void gyroData(Gyro g) //outputs gyro data (angle)
 	{
 		String key = "Gyro Angle:";
 		SmartDashboard.putString(key, (g.getAngle() + ""));				
 	}
 	
-	public static void solenoidData(Solenoid s) //outputs solenoid data (on or off)
+	public void solenoidData(Solenoid s) //outputs solenoid data (on or off)
 	{
 		String key = "Solenoid Status:";
 		SmartDashboard.putString(key, (s.get() + ""));				
 	}
 	
-	public static void testSolenoidData(Solenoid s) //tests the solenoid
+	public void testSolenoidData(Solenoid s) //tests the solenoid
 	{
 		boolean state1 = s.get();
 		s.set(!state1);
@@ -74,10 +75,9 @@ public class Diagnostics {
 		SmartDashboard.putString(key, ((state1 != state2) + ""));	
 	}
 	
-	public static void digitalInputData(DigitalInput d)  //outputs the value from the digital input channel (true or false)
+	public void digitalInputData(DigitalInput d)  //outputs the value from the digital input channel (true or false)
 	{
-		String key = "DigitalInput Status:";
+		String key = "Digital Input Status:";
 		SmartDashboard.putString(key, (d.get() + ""));				
 	}
-	
 }
