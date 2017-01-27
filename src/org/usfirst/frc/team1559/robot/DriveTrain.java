@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1559.robot;
 
+import org.usfirst.frc.team1559.lib.JoystickAxisEvent;
+import org.usfirst.frc.team1559.lib.JoystickAxisListener;
 import org.usfirst.frc.team1559.lib.JoystickButtonEvent;
 import org.usfirst.frc.team1559.lib.JoystickButtonListener;
 import org.usfirst.frc.team1559.lib.State;
@@ -13,8 +15,9 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Talon;
 
-public class DriveTrain extends Subsystem implements JoystickButtonListener {
+public class DriveTrain extends Subsystem implements JoystickButtonListener, JoystickAxisListener {
 
 	private static DriveTrain instance;
 
@@ -25,13 +28,13 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener {
 		return instance;
 	}
 
-	private CANTalon fl, fr, rl, rr;
-	private Solenoid drop;
-	private RobotDrive drive;
-	private AnalogGyro g;
-	private double maxSpeed;
-	private boolean mecanumized;
-	double gyroAngle;
+	private CANTalon fl, fr, rl, rr; //The CANTalons for driving
+	private Solenoid drop; //Solenoid for shifting
+	private RobotDrive drive; //The robot's drive
+	private AnalogGyro g; //TODO: Delete
+	private double maxSpeed; //The max speed of the chassis
+	private boolean mecanumized; //Bool to check if the chassis is in mecanum
+	double gyroAngle; //TODO: Delete
 
 	public DriveTrain() {
 		super("drive-train");
@@ -43,55 +46,10 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener {
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
 		g = new AnalogGyro(1); // replace with jetson (just to satify the code)
 
-		// Front left talon config
-		fl.changeControlMode(TalonControlMode.Speed);
-		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		fl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE); // Configures the nomial output voltages
-		fl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); // Configures the peak output voltages
-		fl.setProfile(Constants.PROFILE); // Configures the profile of the talon
-		fl.setP(Constants.Pd); // Configures the proportional of the talon
-		fl.setI(Constants.Id); // Configures the integral of the talon
-		fl.setD(Constants.Dd); // Configures the derivative of the talon
-		fl.setF(Constants.Fd); // Configures the feed-forward of the talon
-
-		// Repeat for the 3 other talons
-
-		// Front right talon config
-		fr.changeControlMode(TalonControlMode.Speed);
-		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		fr.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
-		fr.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
-		fr.setProfile(Constants.PROFILE);
-		fr.setP(Constants.Pd);
-		fr.setI(Constants.Id);
-		fr.setD(Constants.Dd);
-		fl.setF(Constants.Fd);
-
-		// Rear left talon config
-		rl.changeControlMode(TalonControlMode.Speed);
-		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		rl.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
-		rl.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
-		rl.setProfile(Constants.PROFILE);
-		rl.setP(Constants.Pd);
-		rl.setI(Constants.Id);
-		rl.setD(Constants.Dd);
-		rl.setF(Constants.Fd);
-
-		// Rear right talon config
-		rr.changeControlMode(TalonControlMode.Speed);
-		fl.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		fl.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		rr.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
-		rr.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
-		rr.setProfile(Constants.PROFILE);
-		rr.setP(Constants.Pd);
-		rr.setI(Constants.Id);
-		rr.setD(Constants.Dd);
-		rr.setF(Constants.Fd);
+		setupTalon(fl);
+		setupTalon(fr);
+		setupTalon(rl);
+		setupTalon(rr);
 
 		// Enables the PIDF loop
 		fl.enable();
@@ -106,6 +64,14 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener {
 		drop.set(mecanumized); // Set the pistons to the new value
 	}
 
+	public void drive() {
+		if (mecanumized) {
+			driveMecanum(x, y, rotation);
+		} else {
+			driveTraction
+		}
+	}
+	
 	public void driveTraction(Joystick joy) { // The drive method for traction. Param: joy = Joystick)
 		drive.arcadeDrive(joy); // Does the actual driving
 	}
@@ -185,6 +151,19 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener {
 	public boolean getMecanumized() {
 		return mecanumized;
 	}
+	
+	public void setupTalon(CANTalon talon) {
+		talon.changeControlMode(TalonControlMode.Speed);
+		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
+		talon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
+		talon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
+		talon.setProfile(Constants.PROFILE);
+		talon.setP(Constants.Pd);
+		talon.setI(Constants.Id);
+		talon.setD(Constants.Dd);
+		talon.setF(Constants.Fd);
+	}
 
 	@Override
 	public void buttonPressed(JoystickButtonEvent e) {
@@ -196,5 +175,10 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener {
 	@Override
 	public void buttonReleased(JoystickButtonEvent e) {
 
+	}
+
+	@Override
+	public void axisMoved(JoystickAxisEvent e) {
+		if (e.getID() == Wiring.JOYSTICK0 && e.getID() == 0)
 	}
 }

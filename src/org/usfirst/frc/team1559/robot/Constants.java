@@ -5,6 +5,7 @@ public class Constants {
 
 	// Drive Train
 	public static final double MAX_DRIVE_SPEED = .685; //The maximum speed the mecanum wheels can go
+	public static final int DROP_BUTTON = 3; //Button that drops/picks up the mecanum wheels
 	
 	//Talon stuffs
 	public static final double Pd = 0.3; //(This may change) The proportional value for the PIDF loop (Mecanum)
@@ -36,5 +37,5 @@ public class Constants {
 	public static final double SHIFT_DOWN_SPEED = 4.4; // m/s
 	public static final double LOW_SPEED_MULTIPLIER = 1.0 ; //Recommended 2.2, According to Cody...
 
-
+	
 }

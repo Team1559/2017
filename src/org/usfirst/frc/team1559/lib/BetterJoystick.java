@@ -16,8 +16,8 @@ public class BetterJoystick {
 	public BetterJoystick(int port) {
 		this.port = port;
 		stick = new Joystick(port);
-		buttons = new boolean[16];
-		axes = new double[4];
+		buttons = new boolean[stick.getButtonCount()];
+		axes = new double[stick.getAxisCount()];
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i] = stick.getRawButton(i);
 		}

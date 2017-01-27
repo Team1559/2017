@@ -1,32 +1,31 @@
 
 package org.usfirst.frc.team1559.robot;
 
-import org.usfirst.frc.team1559.lib.BetterJoystick;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends IterativeRobot {
 
-	DriveTrain driveTrain;
-	Shooter shooter;
-	GearGatherer gearGatherer;
-	BallGatherer ballGatherer;
-	OperatorInterface controllers;
+	DriveTrain driveTrain; //Create the Drive Train
+	Shooter shooter; //Create the Shooter
+	GearGatherer gearGatherer; //Create the Gear Gatherer
+	BallGatherer ballGatherer; //Create the Ball Gatherer
+	OperatorInterface controllers; //Create the OI
+	Diagnostics diagnostics; //Create
 	
 	
 	@Override
 	public void robotInit() {
-		driveTrain = DriveTrain.getInstance();
-		shooter = Shooter.getInstance();
-		gearGatherer = GearGatherer.getInstance();
-		ballGatherer = BallGatherer.getInstance();
-		controllers = new OperatorInterface();
+		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
+		shooter = Shooter.getInstance(); //Instantiate the Shooter
+		gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
+		ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
+		controllers = OperatorInterface.getInstance(); //Instantiate the OI
+		diagnostics = new Diagnostics();
 	}
 
 	@Override
 	public void autonomousInit() {
-		driveTrain.drop(false);
+		driveTrain.drop(false); //Make sure we are in traction mode
 	}
 
 	@Override
@@ -36,12 +35,12 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		driveTrain.drop(false);
+		driveTrain.drop(false); //Make sure we are in traction mode
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		driveTrain.driveTraction(controllers.getDriverStick().getStick());
+		driveTrain.driveTraction(controllers.getDriverStick().getStick()); //Drive in traction mode
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-
+		
 	}
 
 }

@@ -49,14 +49,11 @@ public class Shooter extends Subsystem {
 
 	}
 
-	public void ShooterMotor(int rpm) { // Starts up the motor so that them balls can be fired.
+	public void set(int rpm) { // Starts up the motor so that them balls can be fired.
 		shooterTalon.set(rpm * Constants.RPM_CONVERSION); // Motor is started up.
-
-		shooterTalon.set(rpm * Constants.RPM_CONVERSION); // Motor is started up.
-
 	}
 
-	public void Fire() { // Used to control the fire rate of the balls
+	public void fire() { // Used to control the fire rate of the balls
 
 		switch (switchCaseVar) {
 		case 0: // If switchCaseVar = 0, then this line will execute.
@@ -95,5 +92,4 @@ public class Shooter extends Subsystem {
 	public void getState(State s) { // Something, I'm sure.
 		
 	}
-
 }

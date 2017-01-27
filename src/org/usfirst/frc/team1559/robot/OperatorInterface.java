@@ -3,25 +3,28 @@ package org.usfirst.frc.team1559.robot;
 import org.usfirst.frc.team1559.lib.BetterJoystick;
 
 public class OperatorInterface {
-
-	public static final int PORT_DRIVER = 0;
-	public static final int PORT_COPILOT = 1;
 	
-	public static final int DROP_BUTTON = 3;
+	private BetterJoystick driverStick, copilotStick; //Creates BetterJoysticks
 	
-	private BetterJoystick driverStick, copilotStick;
-	
-	public OperatorInterface() {
-		assert PORT_DRIVER != PORT_COPILOT;
-		driverStick = new BetterJoystick(PORT_DRIVER);
-		copilotStick = new BetterJoystick(PORT_COPILOT);
+	private static OperatorInterface instance;
+	public static OperatorInterface getInstance() {
+		if (instance == null) {
+			instance = new OperatorInterface();
+		}
+		return instance;
 	}
 	
-	public BetterJoystick getDriverStick() {
+	public OperatorInterface() {
+		assert Wiring.JOYSTICK0 != Wiring.JOYSTICK1;
+		driverStick = new BetterJoystick(Wiring.JOYSTICK0); //The drivers joystick
+		copilotStick = new BetterJoystick(Wiring.JOYSTICK1); //The copilots joystick
+	}
+	
+	public BetterJoystick getDriverStick() { //Getter method to get the drivers joystick
 		return driverStick;
 	}
 	
-	public BetterJoystick getCopilotStick() {
+	public BetterJoystick getCopilotStick() { //Getter method to get the copilots joystick
 		return copilotStick;
 	}
 }
