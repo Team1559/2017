@@ -14,7 +14,7 @@ public class JoystickButtonEvent {
 		return port;
 	}
 	
-	public int getID() {
+	public int getButtonID() {
 		return id;
 	}
 	

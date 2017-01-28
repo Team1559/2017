@@ -35,11 +35,13 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		controllers.getDriverStick().addButtonListener(gearGatherer);
 		driveTrain.drop(false); //Make sure we are in traction mode
 	}
 
 	@Override
 	public void teleopPeriodic() {
+		controllers.update();
 		driveTrain.driveTraction(controllers.getDriverStick().getStick()); //Drive in traction mode
 	}
 

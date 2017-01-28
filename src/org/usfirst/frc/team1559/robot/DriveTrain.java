@@ -167,9 +167,7 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener, Joy
 
 	@Override
 	public void buttonPressed(JoystickButtonEvent e) {
-		if (e.getPort() == OperatorInterface.PORT_DRIVER && e.getID() == OperatorInterface.DROP_BUTTON) {
-			drop(!mecanumized);
-		}
+		// TODO: driver control;
 	}
 
 	@Override

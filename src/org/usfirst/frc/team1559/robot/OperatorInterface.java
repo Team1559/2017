@@ -27,4 +27,9 @@ public class OperatorInterface {
 	public BetterJoystick getCopilotStick() { //Getter method to get the copilots joystick
 		return copilotStick;
 	}
+	
+	public void update() {
+		driverStick.update();
+		copilotStick.update();
+	}
 }

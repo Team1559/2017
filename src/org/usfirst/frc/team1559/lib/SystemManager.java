@@ -1,33 +1,38 @@
 package org.usfirst.frc.team1559.lib;
 
-import java.util.Collection;
-import java.util.Vector;
+import java.util.HashMap;
 
 public class SystemManager {
 
-	private Vector<Subsystem> systems = new Vector<Subsystem>();
+	private HashMap<Subsystem, State> systems;
 
 	public SystemManager() {
-
+		systems = new HashMap<Subsystem, State>();
 	}
 
 	public void add(Subsystem v) {
-		systems.add(v);
+		systems.put(v, new State());
 	}
 
-	public void add(Collection<Subsystem> values) {
+	public void add(Subsystem... values) {
 		for (Subsystem v : values) {
-			systems.add(v);
+			systems.put(v, new State());
 		}
 	}
 
 	public Subsystem get(String name) {
-		for (Subsystem s : systems) {
+		for (Subsystem s : systems.keySet()) {
 			if (s.getName().equals(name)) {
 				return s;
 			}
 		}
 		new NullPointerException("Could not find subsystem: " + name).printStackTrace();
 		return null;
+	}
+	
+	public State getState(String name) {
+		Subsystem s = get(name);
+		s.getState(systems.get(s));
+		return systems.get(s);
 	}
 }
