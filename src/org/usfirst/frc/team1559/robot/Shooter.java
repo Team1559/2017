@@ -25,7 +25,8 @@ public class Shooter extends Subsystem {
 	CANTalon shooterTalon; // The motor that is used to fire them balls.
 	int i; // Used as a counter.
 	int switchCaseVar; // Used with the switch case to initiate a delay in the fire rate.
-
+	int velocity;
+	
 	public Shooter() {
 		super("shooter");
 		
@@ -54,28 +55,10 @@ public class Shooter extends Subsystem {
 	}
 
 	public void fire() { // Used to control the fire rate of the balls
-
-		switch (switchCaseVar) {
-		case 0: // If switchCaseVar = 0, then this line will execute.
-			ballOpener.setAngle(Constants.OPEN_VAL); // The gate is set to open.
-			i++; // 1 is added to 'i'.
-			if (i >= Constants.CLOSE_DELAY * 50) { // CLOSE_DELAY = (1.0/8)*50
-				switchCaseVar++; // switchCaseVar is updated by 1.
-				i = 0; // 'i' is reset to 0.
-			}
-			break; // end line of code
-		case 1: // If switchCaseVar = 1, then this line will execute.
-			ballOpener.setAngle(Constants.CLOSE_VAL); // CLOSE_VAL = 0
-			i++; // 1 is added to 'i'.
-			if (i >= Constants.FIRE_DELAY * 50) { // FIRE_DELAY = 1.0/3
-				switchCaseVar++; // switchCaseVar is updated by 1.
-				i = 0; // counter 'i' is set to 0. (reset)
-			}
-			break; // end line of code
-		default: // If the other cases don't work come down here.
-			switchCaseVar = 0;// We screwed up real bad bois.
-			System.out.println("We are in the default case of the shooter (shit is fucked my dudes)"); // Output that message so we know it ain't working.
-			break; // end line of code
+		if (OperatorInterface.getInstance().getDriverStick().getStick().getRawButton(Wiring.BTN_SHOOT)) {
+			set(420); //TODO: math and dont blaze
+		} else {
+			set(0);
 		}
 	}
 
@@ -85,11 +68,7 @@ public class Shooter extends Subsystem {
 
 	}
 
-	public void setRPM(int rpm) { // sets the RPM
-		shooterTalon.set(rpm * Constants.RPM_CONVERSION); // Motor RPM is changed
-	}
-
 	public void getState(State s) { // Something, I'm sure.
-		
+		s.put("shooter-velocity", 420); // TODO: fix
 	}
 }
