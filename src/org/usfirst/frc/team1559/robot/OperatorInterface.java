@@ -6,6 +6,7 @@ public class OperatorInterface {
 	
 	private BetterJoystick driverStick, copilotStick; //Creates BetterJoysticks
 	
+	
 	private static OperatorInterface instance;
 	public static OperatorInterface getInstance() {
 		if (instance == null) {

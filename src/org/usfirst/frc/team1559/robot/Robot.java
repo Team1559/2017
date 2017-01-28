@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team1559.robot;
 
+import org.usfirst.frc.team1559.lib.JoystickButtonListener;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends IterativeRobot {
 
@@ -11,6 +14,7 @@ public class Robot extends IterativeRobot {
 	BallGatherer ballGatherer; //Create the Ball Gatherer
 	OperatorInterface controllers; //Create the OI
 	Diagnostics diagnostics; //Create
+	Joystick driver;
 	
 	
 	@Override
@@ -21,6 +25,8 @@ public class Robot extends IterativeRobot {
 		ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
 		controllers = OperatorInterface.getInstance(); //Instantiate the OI
 		diagnostics = new Diagnostics();
+		driver = new Joystick(Wiring.JOYSTICK0);
+		controllers.getDriverStick().addButtonListener(shooter);
 	}
 
 	@Override
@@ -40,7 +46,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		driveTrain.driveTraction(controllers.getDriverStick().getStick()); //Drive in traction mode
+		driveTrain.drive(driver.getX(), driver.getY(), driver.getX(), driver);
 	}
 
 	@Override
@@ -50,7 +56,15 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void testPeriodic() {
-
+		//diagnostics.encoderData(e); Place encoder "e" here
+		diagnostics.jetsonData(420); //Outputs the jetson IMU data
+		//diagnostics.servoData(s); Place servo "s" here
+		//diagnostics.solenoidData(s); Place solenoid data here
+		
+		//sorry ryan but it just makes way more sense to me to do it like this:
+		if(driver.getRawButton(1) && driver.getRawButton(3)) {
+			diagnostics.testSolenoidData(driveTrain.getDrop());
+		}
 	}
 
 	@Override
