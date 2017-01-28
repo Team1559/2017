@@ -13,30 +13,30 @@ public class Diagnostics {
 
 	public SmartDashboard x;
 	
-	public Diagnostics()
+	public Diagnostics() //the constructor
 	{
 		x = new SmartDashboard();
 	}
-
-		
-
-
+//------------------------------------------------------------------------------------------------------------------------------------
+//       --Call these methods to test various things--
+	
+	//Encoders
 	public void encoderData(Encoder e) //call this to output encoder data (distance)
 	{
-		String key = "Encoder Distance:";
+		String key = "Encoder Distance: ";
 		SmartDashboard.putString(key, (e.getDistance() + ""));				
 	}
-
-	
+	//-----------------------------------------------------------------------------------------
+	//Servos
 	public void servoData(Servo s) //call to output servo data (angle)
 	{
-		String key = "Servo Angle:";
+		String key = "Servo Angle: ";
 		SmartDashboard.putString(key, (s.getAngle() + ""));				
 	}
 	
 	public void testServoData(Servo s) //will tell you if the servo is working
 	{
-			double num1 = s.getAngle();
+			double num1 = s.getAngle(); //moves the servo and sees if it actually moves
 			double num2;
 			if(num1 == 0)
 			{
@@ -52,32 +52,36 @@ public class Diagnostics {
 			String key = "Servo is working: ";
 			SmartDashboard.putString(key, (check + ""));	
 	}
-	
+	//-----------------------------------------------------------------------------------------
+	//Gyros
 	public void gyroData(Gyro g) //outputs gyro data (angle)
 	{
-		String key = "Gyro Angle:";
+		String key = "Gyro Angle: ";
 		SmartDashboard.putString(key, (g.getAngle() + ""));				
 	}
-	
+	//-----------------------------------------------------------------------------------------
+	//Solenoids
 	public void solenoidData(Solenoid s) //outputs solenoid data (on or off)
 	{
-		String key = "Solenoid Status:";
+		String key = "Solenoid Status: ";
 		SmartDashboard.putString(key, (s.get() + ""));				
 	}
 	
 	public void testSolenoidData(Solenoid s) //tests the solenoid
 	{
-		boolean state1 = s.get();
+		boolean state1 = s.get(); //turns on the solenoid and sees if it actually turned on
 		s.set(!state1);
 		boolean state2 = s.get();
 		s.set(state1);
 		String key = "Solenoid is working: ";
 		SmartDashboard.putString(key, ((state1 != state2) + ""));	
 	}
-	
+	//-----------------------------------------------------------------------------------------
+	//Digital inputs
 	public void digitalInputData(DigitalInput d)  //outputs the value from the digital input channel (true or false)
 	{
-		String key = "Digital Input Status:";
+		String key = "DigitalInput Status: ";
 		SmartDashboard.putString(key, (d.get() + ""));				
 	}
+	
 }
