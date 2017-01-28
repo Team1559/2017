@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 
-public class DriveTrain extends Subsystem /*implements JoystickButtonListener, JoystickAxisListener*/ {
+public class DriveTrain extends Subsystem implements JoystickButtonListener, JoystickAxisListener {
 
 	private static DriveTrain instance;
 
@@ -64,11 +64,11 @@ public class DriveTrain extends Subsystem /*implements JoystickButtonListener, J
 		drop.set(mecanumized); // Set the pistons to the new value
 	}
 
-	public void drive(double x, double y, double rotation, Joystick joy) {
+	public void drive() {
 		if (mecanumized) {
 			driveMecanum(x, y, rotation);
 		} else {
-			driveTraction(joy);
+			driveTraction
 		}
 	}
 	
@@ -164,29 +164,21 @@ public class DriveTrain extends Subsystem /*implements JoystickButtonListener, J
 		talon.setD(Constants.Dd);
 		talon.setF(Constants.Fd);
 	}
-	
-	public Solenoid getDrop() {
-		return drop;
-	}
-	
-// Sorry ryan its just so much easier for me to use a regular joystick... really sorry :(	
 
-//	@Override
-//	public void buttonPressed(JoystickButtonEvent e) {
-//		if (e.getPort() == Wiring.PORT_DRIVER && e.getID() == Constants.DROP_BUTTON) {
-//			drop(!mecanumized);
-//		}
-//	}
-//
-//	@Override
-//	public void buttonReleased(JoystickButtonEvent e) {
-//
-//	}
-//
-//	@Override
-//	public void axisMoved(JoystickAxisEvent e) {
-//		if (e.getID() == Wiring.JOYSTICK0) {
-//			drive(e.);
-//		}
-//	}
+	@Override
+	public void buttonPressed(JoystickButtonEvent e) {
+		if (e.getPort() == OperatorInterface.PORT_DRIVER && e.getID() == OperatorInterface.DROP_BUTTON) {
+			drop(!mecanumized);
+		}
+	}
+
+	@Override
+	public void buttonReleased(JoystickButtonEvent e) {
+
+	}
+
+	@Override
+	public void axisMoved(JoystickAxisEvent e) {
+		if (e.getID() == Wiring.JOYSTICK0 && e.getID() == 0)
+	}
 }

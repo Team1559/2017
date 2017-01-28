@@ -1,9 +1,6 @@
 package org.usfirst.frc.team1559.robot;
 //                        :-)
 
-import org.usfirst.frc.team1559.lib.JoystickButtonEvent;
-import org.usfirst.frc.team1559.lib.JoystickButtonListener;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -56,13 +53,7 @@ public class Diagnostics {
 			SmartDashboard.putString(key, (check + ""));	
 	}
 	
-	public void jetsonData(int g) //outputs jetson data (angle)
-	{
-		String key = "Jetson Angle:";
-		SmartDashboard.putString(key, (g + ""));				
-	}
-	
-	public void gyroData(Gyro g) //outputs jetson data (angle)
+	public void gyroData(Gyro g) //outputs gyro data (angle)
 	{
 		String key = "Gyro Angle:";
 		SmartDashboard.putString(key, (g.getAngle() + ""));				
@@ -88,5 +79,5 @@ public class Diagnostics {
 	{
 		String key = "Digital Input Status:";
 		SmartDashboard.putString(key, (d.get() + ""));				
-	}	
+	}
 }

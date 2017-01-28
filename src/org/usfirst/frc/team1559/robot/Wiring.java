@@ -24,7 +24,6 @@ public class Wiring {
 	public static final int JOYSTICK1 = 1;
 	public static final int JOYSTICK2 = 2;
 	public static final int JOYSTICK3 = 3;
-	public static final int PORT_DRIVER = 0;
 	
 	//Gatherer/shooter controls
 	public static final int BTN_GATHER = 1; //Button to control the gatherer
