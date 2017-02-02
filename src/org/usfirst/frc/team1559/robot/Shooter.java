@@ -21,20 +21,14 @@ public class Shooter extends Subsystem {
 	// The Shooter is a Fly Wheel Shooter.
 	// This is where most of the variables are instantiated.
 
-	Servo ballOpener; // The instantiation of the servo. Acts as the gate.
 	CANTalon shooterTalon; // The motor that is used to fire them balls.
-	int i; // Used as a counter.
-	int switchCaseVar; // Used with the switch case to initiate a delay in the fire rate.
-	int velocity;
+	int velocity; // The velocity variable.
 	
 	public Shooter() {
 		super("shooter");
 		
 		// All the variables are defined here.
-		ballOpener = new Servo(Wiring.SHOOTER_BALL_OPENER_PORT); // Will change for actual Robot.
 		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON_PORT);// Will change for the actual Robot.
-		i = 0; // To be used with the for loop to limit the ball rate.
-		switchCaseVar = 0;
 
 		// Initiation for the CANTalon
 		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder); // Sets the feedback device to a Quad Encoder.
@@ -62,11 +56,6 @@ public class Shooter extends Subsystem {
 		}
 	}
 
-	public void clearCounter() { // Used to reset the counter 'i'.
-
-		i = 0; // counter 'i' is reset
-
-	}
 
 	public void getState(State s) { // Something, I'm sure.
 		s.put("shooter-velocity", 420); // TODO: fix
