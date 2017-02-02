@@ -43,6 +43,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		controllers.update();
 		driveTrain.driveTraction(controllers.getDriverStick().getStick()); //Drive in traction mode
+		if (controllers.getDriverStick().getStick().getRawButton(4)) {
+			driveTrain.drop(!driveTrain.getMecanumized());
+		}
 	}
 
 	@Override
