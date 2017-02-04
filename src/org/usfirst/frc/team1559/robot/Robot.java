@@ -9,7 +9,7 @@ public class Robot extends IterativeRobot {
 	Shooter shooter; //Create the Shooter
 	GearGatherer gearGatherer; //Create the Gear Gatherer
 	BallGatherer ballGatherer; //Create the Ball Gatherer
-	OperatorInterface controllers; //Create the OI
+	OperatorInterface oi; //Create the OI
 	Diagnostics diagnostics; //Create
 	
 	
@@ -19,7 +19,7 @@ public class Robot extends IterativeRobot {
 		shooter = Shooter.getInstance(); //Instantiate the Shooter
 		gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
 		ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
-		controllers = OperatorInterface.getInstance(); //Instantiate the OI
+		oi = OperatorInterface.getInstance(); //Instantiate the OI
 		diagnostics = new Diagnostics();
 	}
 
@@ -35,15 +35,15 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		controllers.getDriverStick().addButtonListener(gearGatherer);
 		driveTrain.drop(false); //Make sure we are in traction mode
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		controllers.update();
-		driveTrain.driveTraction(controllers.getDriverStick().getStick()); //Drive in traction mode
-		if (controllers.getDriverStick().getStick().getRawButton(4)) {
+		oi.updateButtons();
+		
+		driveTrain.drive(oi.getDriverStick()); //Drive in traction mode
+		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
 	}

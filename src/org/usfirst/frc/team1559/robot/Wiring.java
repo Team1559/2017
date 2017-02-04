@@ -28,4 +28,5 @@ public class Wiring {
 	//Gatherer/shooter controls
 	public static final int BTN_GATHER = 1; //Button to control the gatherer
 	public static final int BTN_SHOOT = 2; //Button to control the shooter
+	public static final int BTN_DROP = 3;
 }
