@@ -1,10 +1,12 @@
 package org.usfirst.frc.team1559.robot;
 
-import org.usfirst.frc.team1559.lib.BetterJoystick;
+import edu.wpi.first.wpilibj.Joystick;
 
 public class OperatorInterface {
 	
-	private BetterJoystick driverStick, copilotStick; //Creates BetterJoysticks
+	private Joystick driverStick, copilotStick; //Creates BetterJoysticks
+	
+	public DTButton shoot, gather, drop;
 	
 	private static OperatorInterface instance;
 	public static OperatorInterface getInstance() {
@@ -16,20 +18,24 @@ public class OperatorInterface {
 	
 	public OperatorInterface() {
 		assert Wiring.JOYSTICK0 != Wiring.JOYSTICK1;
-		driverStick = new BetterJoystick(Wiring.JOYSTICK0); //The drivers joystick
-		copilotStick = new BetterJoystick(Wiring.JOYSTICK1); //The copilots joystick
+		driverStick = new Joystick(Wiring.JOYSTICK0); //The drivers joystick
+		copilotStick = new Joystick(Wiring.JOYSTICK1); //The copilots joystick
+		shoot = new DTButton(driverStick, Wiring.BTN_SHOOT);
+		gather = new DTButton(driverStick, Wiring.BTN_GATHER);
+		drop = new DTButton(driverStick, Wiring.BTN_DROP);
 	}
 	
-	public BetterJoystick getDriverStick() { //Getter method to get the drivers joystick
+	public Joystick getDriverStick() { //Getter method to get the drivers joystick
 		return driverStick;
 	}
 	
-	public BetterJoystick getCopilotStick() { //Getter method to get the copilots joystick
+	public Joystick getCopilotStick() { //Getter method to get the copilots joystick
 		return copilotStick;
 	}
 	
-	public void update() {
-		driverStick.update();
-		copilotStick.update();
+	public void updateButtons() {
+		shoot.update();
+		gather.update();
+		drop.update();
 	}
 }

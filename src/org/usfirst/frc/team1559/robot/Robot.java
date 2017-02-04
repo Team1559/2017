@@ -9,9 +9,9 @@ public class Robot extends IterativeRobot {
 	Shooter shooter; //Create the Shooter
 	GearGatherer gearGatherer; //Create the Gear Gatherer
 	BallGatherer ballGatherer; //Create the Ball Gatherer
-	OperatorInterface controllers; //Create the OI
 	Climber climber; //Creates the Climber
 	Diagnostics diagnostics; //Create the diagnostics tool
+	OperatorInterface oi; //Create the OI
 	
 	
 	@Override
@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot {
 		shooter = Shooter.getInstance(); //Instantiate the Shooter
 		gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
 		ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
-		controllers = OperatorInterface.getInstance(); //Instantiate the OI
+		oi = OperatorInterface.getInstance(); //Instantiate the OI
 		diagnostics = new Diagnostics();
 		climber = Climber.getInstance();
 	}
@@ -37,30 +37,29 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		controllers.getDriverStick().addButtonListener(gearGatherer);
 		driveTrain.drop(false); //Make sure we are in traction mode
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		controllers.update(); //update controller values
-		gearGatherer.update(controllers.getDriverStick().getStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
+		oi.updateButtons(); //update controller values
+		gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
 		
 		if (driveTrain.getMecanumized()) { //Driving
-			driveTrain.driveMecanum(controllers.getDriverStick().getStick().getRawAxis(0), controllers.getDriverStick().getStick().getRawAxis(1), controllers.getDriverStick().getStick().getRawAxis(4));
+			driveTrain.driveMecanum(oi.getDriverStick().getRawAxis(0), oi.getDriverStick().getRawAxis(1), oi.getDriverStick().getRawAxis(4));
 		} else {
-			driveTrain.driveTraction(controllers.getDriverStick().getStick());
+			driveTrain.driveTraction(oi.getDriverStick().getX(), oi.getDriverStick().getY());
 		}
 		
-		if (controllers.getDriverStick().getStick().getRawButton(Constants.SHIFTER)) { //Shifting
+		
+		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
-		
-		shooter.fire(controllers.getDriverStick().getStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
+		shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
 		
 		ballGatherer.pickUpBall(); //Ball pickup
-		
-		climber.climbOnUp();
+	
+		climber.climbOnUp(); //climb up bois
 	}
 
 	@Override

@@ -1,9 +1,5 @@
 package org.usfirst.frc.team1559.robot;
 
-import org.usfirst.frc.team1559.lib.JoystickAxisEvent;
-import org.usfirst.frc.team1559.lib.JoystickAxisListener;
-import org.usfirst.frc.team1559.lib.JoystickButtonEvent;
-import org.usfirst.frc.team1559.lib.JoystickButtonListener;
 import org.usfirst.frc.team1559.lib.State;
 import org.usfirst.frc.team1559.lib.Subsystem;
 
@@ -15,9 +11,9 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 
-public class DriveTrain extends Subsystem implements JoystickButtonListener, JoystickAxisListener {
+public class DriveTrain extends Subsystem {
 
 	private static DriveTrain instance;
 
@@ -64,16 +60,17 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener, Joy
 		drop.set(mecanumized); // Set the pistons to the new value
 	}
 
-//	public void drive() {
-//		if (mecanumized) {
-//			driveMecanum(x, y, rotation);
-//		} else {
-//			driveTraction
-//		}
-//	}
+
+	public void drive(Joystick stick) {
+		if (mecanumized) {
+			driveMecanum(stick.getX(), stick.getY(), stick.getTwist());
+		} else {
+			driveTraction(stick.getY(), stick.getX());
+		}
+	}
 	
-	public void driveTraction(Joystick joy) { // The drive method for traction. Param: joy = Joystick)
-		drive.arcadeDrive(joy); // Does the actual driving
+	public void driveTraction(double move, double rot) {
+		drive.arcadeDrive(move, rot);
 	}
 
 	public void driveMecanum(double x, double y, double rotation) { // Mecanum drive method
@@ -163,19 +160,5 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener, Joy
 		talon.setI(Constants.Id);
 		talon.setD(Constants.Dd);
 		talon.setF(Constants.Fd);
-	}
-
-	@Override
-	public void buttonPressed(JoystickButtonEvent e) {
-		// TODO: driver control;
-	}
-
-	@Override
-	public void buttonReleased(JoystickButtonEvent e) {
-
-	}
-
-	@Override
-	public void axisMoved(JoystickAxisEvent e) {
 	}
 }
