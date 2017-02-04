@@ -25,11 +25,8 @@ public class BallGatherer {
 	}
     
 	public void pickUpBall(){
-		if(joy.getRawButton(1)){
+		if(joy.getRawButton(Constants.BALL_GATHERER)){
 			belt.setSpeed(0.7);
-		}
-		else if(joy.getRawButton(2)){
-			belt.setSpeed(-0.7);
 		} else {
 			belt.set(0);
 		}

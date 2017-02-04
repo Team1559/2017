@@ -47,8 +47,8 @@ public class Shooter extends Subsystem {
 		shooterTalon.set(rpm * Constants.RPM_CONVERSION); // Motor is started up.
 	}
 
-	public void fire() { // Used to control the fire rate of the balls
-		if (OperatorInterface.getInstance().getDriverStick().getStick().getRawButton(Wiring.BTN_SHOOT)) {
+	public void fire(boolean fire) { // Used to control the fire rate of the balls
+		if (fire) {
 			set(420); //TODO: math and dont blaze
 		} else {
 			set(0); //Sets the fire rate to 0, stopping the shooter.

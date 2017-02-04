@@ -10,7 +10,8 @@ public class Robot extends IterativeRobot {
 	GearGatherer gearGatherer; //Create the Gear Gatherer
 	BallGatherer ballGatherer; //Create the Ball Gatherer
 	OperatorInterface controllers; //Create the OI
-	Diagnostics diagnostics; //Create
+	Climber climber; //Creates the Climber
+	Diagnostics diagnostics; //Create the diagnostics tool
 	
 	
 	@Override
@@ -21,6 +22,7 @@ public class Robot extends IterativeRobot {
 		ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
 		controllers = OperatorInterface.getInstance(); //Instantiate the OI
 		diagnostics = new Diagnostics();
+		climber = Climber.getInstance();
 	}
 
 	@Override
@@ -41,11 +43,24 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		controllers.update();
-		driveTrain.driveTraction(controllers.getDriverStick().getStick()); //Drive in traction mode
-		if (controllers.getDriverStick().getStick().getRawButton(4)) {
+		controllers.update(); //update controller values
+		gearGatherer.update(controllers.getDriverStick().getStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
+		
+		if (driveTrain.getMecanumized()) { //Driving
+			driveTrain.driveMecanum(controllers.getDriverStick().getStick().getRawAxis(0), controllers.getDriverStick().getStick().getRawAxis(1), controllers.getDriverStick().getStick().getRawAxis(4));
+		} else {
+			driveTrain.driveTraction(controllers.getDriverStick().getStick());
+		}
+		
+		if (controllers.getDriverStick().getStick().getRawButton(Constants.SHIFTER)) { //Shifting
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
+		
+		shooter.fire(controllers.getDriverStick().getStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
+		
+		ballGatherer.pickUpBall(); //Ball pickup
+		
+		climber.climbOnUp();
 	}
 
 	@Override

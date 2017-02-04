@@ -37,5 +37,11 @@ public class Constants {
 	public static final double SHIFT_DOWN_SPEED = 4.4; // m/s
 	public static final double LOW_SPEED_MULTIPLIER = 1.0 ; //Recommended 2.2, According to Cody...
 
-	
+	//Driver Controls
+	public static final int SHIFTER = 4;
+	public static final double SHOOTER_TOLERANCE = 0.2;
+	public static final int SHOOTER_AXIS = 3;
+	public static final int GEAR_GATHERER = 1;
+	public static final int BALL_GATHERER = 6;
+	public static final int CLIMBER = 2;
 }

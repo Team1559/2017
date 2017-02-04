@@ -64,13 +64,13 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener, Joy
 		drop.set(mecanumized); // Set the pistons to the new value
 	}
 
-	public void drive() {
-		if (mecanumized) {
-			driveMecanum(x, y, rotation);
-		} else {
-			driveTraction
-		}
-	}
+//	public void drive() {
+//		if (mecanumized) {
+//			driveMecanum(x, y, rotation);
+//		} else {
+//			driveTraction
+//		}
+//	}
 	
 	public void driveTraction(Joystick joy) { // The drive method for traction. Param: joy = Joystick)
 		drive.arcadeDrive(joy); // Does the actual driving
@@ -177,6 +177,5 @@ public class DriveTrain extends Subsystem implements JoystickButtonListener, Joy
 
 	@Override
 	public void axisMoved(JoystickAxisEvent e) {
-		if (e.getID() == Wiring.JOYSTICK0 && e.getID() == 0)
 	}
 }
