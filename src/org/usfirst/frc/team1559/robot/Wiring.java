@@ -9,7 +9,7 @@ public class Wiring {
 	public static final int FR_SRX = 2; //The front right TalonSRX
 	public static final int RL_SRX = 3; //The rear left TalonSRX
 	public static final int RR_SRX = 4; //The rear right TalonSRX
-	public static final int SHOOTER_TALON_PORT = 1; //The TalonSRX for shooting
+	public static final int SHOOTER_TALON_PORT = 1; //(Will change) The Port that the CANTalon will use.
 	
 	//Gear Gatherer
 	public static final int GEAR_IN = 1; //Port for the limit switch
@@ -28,5 +28,4 @@ public class Wiring {
 	//Gatherer/shooter controls
 	public static final int BTN_GATHER = 1; //Button to control the gatherer
 	public static final int BTN_SHOOT = 2; //Button to control the shooter
-	public static final int SHOOTER_BALL_OPENER_PORT = 1; //
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Servo;
 public class Shooter extends Subsystem {
 
 	private static Shooter instance;
-	public static Shooter getInstance() {
+	public static Shooter getInstance() { // Gets the instance of the Shooter.
 		if (instance == null) {
 			instance = new Shooter();
 		}
@@ -24,9 +24,8 @@ public class Shooter extends Subsystem {
 	CANTalon shooterTalon; // The motor that is used to fire them balls.
 	int velocity; // The velocity variable.
 	
-	public Shooter() {
+	public Shooter() { // Used to define the CANTalon and other variables.
 		super("shooter");
-		
 		// All the variables are defined here.
 		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON_PORT);// Will change for the actual Robot.
 
@@ -52,12 +51,12 @@ public class Shooter extends Subsystem {
 		if (OperatorInterface.getInstance().getDriverStick().getStick().getRawButton(Wiring.BTN_SHOOT)) {
 			set(420); //TODO: math and dont blaze
 		} else {
-			set(0);
+			set(0); //Sets the fire rate to 0, stopping the shooter.
 		}
 	}
 
 
-	public void getState(State s) { // Something, I'm sure.
+	public void getState(State s) { // The method that will set the state of s
 		s.put("shooter-velocity", 420); // TODO: fix
 	}
 }
