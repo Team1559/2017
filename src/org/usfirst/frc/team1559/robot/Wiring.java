@@ -13,8 +13,7 @@ public class Wiring {
 	
 	//Gear Gatherer
 	public static final int GEAR_IN = 1; //Port for the limit switch
-	public static final int SOLENOID_UP = 1; //Solenoid port for pulling the door up
-	public static final int SOLENOID_DOWN = 2; //Solenoid port for pushing the door down
+	public static final int SOLENOID = 2; //Solenoid port for pulling the door up
 	
 	//Dropper
 	public static final int DROPPER = 1; //Solenoid port for dropping the wheels/pulling them up
