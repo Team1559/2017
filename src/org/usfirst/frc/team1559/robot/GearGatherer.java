@@ -1,13 +1,10 @@
 package org.usfirst.frc.team1559.robot;
 
-import org.usfirst.frc.team1559.lib.JoystickButtonEvent;
-import org.usfirst.frc.team1559.lib.JoystickButtonListener;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-public class GearGatherer implements JoystickButtonListener {
+public class GearGatherer {
 
 	private static GearGatherer instance;
 
@@ -38,22 +35,6 @@ public class GearGatherer implements JoystickButtonListener {
 			piston.set(Value.kForward); // Sets the value to push
 		} else {
 			piston.set(Value.kReverse); // Sets the value to pull
-		}
-	}
-
-	@Override
-	public void buttonPressed(JoystickButtonEvent e) {
-		if (e.getButtonID() == 4) // TODO: ack
-		{
-
-		}
-	}
-
-	@Override
-	public void buttonReleased(JoystickButtonEvent e) {
-		if (e.getButtonID() == 4) // TODO: ack
-		{
-
 		}
 	}
 }

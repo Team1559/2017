@@ -27,7 +27,6 @@ public class DriveTrain extends Subsystem {
 	private CANTalon fl, fr, rl, rr; //The CANTalons for driving
 	private Solenoid drop; //Solenoid for shifting
 	private RobotDrive drive; //The robot's drive
-	private AnalogGyro g; //TODO: Delete
 	private double maxSpeed; //The max speed of the chassis
 	private boolean mecanumized; //Bool to check if the chassis is in mecanum
 	double gyroAngle; //TODO: Delete
@@ -40,7 +39,7 @@ public class DriveTrain extends Subsystem {
 		rr = new CANTalon(Wiring.RR_SRX); // Rear right talon
 		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the mecanum wheels or brings them up
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
-		g = new AnalogGyro(1); // replace with jetson (just to satify the code)
+		drive = new RobotDrive(fl, fr, rl, rr);
 
 		setupTalon(fl);
 		setupTalon(fr);
@@ -52,7 +51,6 @@ public class DriveTrain extends Subsystem {
 		fr.enable();
 		rl.enable();
 		rr.enable();
-		g = new AnalogGyro(1); // Replace with Jetson data (I knew we wouldnt ryan)
 	}
 
 	public void drop(boolean mecanumized) { // Control the versadrop
@@ -89,7 +87,7 @@ public class DriveTrain extends Subsystem {
 		//
 		// rotation += correctionAngle;
 
-		gyroAngle = g.getAngle(); // TODO: Replace with IMU data from TX1
+		//gyroAngle = g.getAngle(); // TODO: Replace with IMU data from TX1
 
 		double xIn = x;
 		double yIn = y;

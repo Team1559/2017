@@ -5,15 +5,16 @@ public class Wiring {
 	// thou shan't use magical digits
 	
 	//Talon stuffs
-	public static final int FL_SRX = 1; //The front left TalonSRX
-	public static final int FR_SRX = 2; //The front right TalonSRX
-	public static final int RL_SRX = 3; //The rear left TalonSRX
-	public static final int RR_SRX = 4; //The rear right TalonSRX
+	public static final int FL_SRX = 10; //The front left TalonSRX
+	public static final int FR_SRX = 11; //The front right TalonSRX
+	public static final int RL_SRX = 12; //The rear left TalonSRX
+	public static final int RR_SRX = 13; //The rear right TalonSRX
 	public static final int SHOOTER_TALON_PORT = 1; //(Will change) The Port that the CANTalon will use.
 	
 	//Gear Gatherer
 	public static final int GEAR_IN = 1; //Port for the limit switch
-	public static final int SOLENOID = 2; //Solenoid port for pulling the door up
+	public static final int SOLENOID_UP = 2; //Solenoid port for pulling the door up
+	public static final int SOLENOID_DOWN = 3; //Solenoid port for pulling the door down
 	
 	//Dropper
 	public static final int DROPPER = 1; //Solenoid port for dropping the wheels/pulling them up
