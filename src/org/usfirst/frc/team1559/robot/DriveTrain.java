@@ -61,9 +61,9 @@ public class DriveTrain extends Subsystem {
 
 	public void drive(Joystick stick) {
 		if (mecanumized) {
-			driveMecanum(stick.getX(), stick.getY(), stick.getTwist());
+			driveMecanum(stick.getX(), stick.getY(), stick.getRawAxis(4));
 		} else {
-			driveTraction(stick.getY(), stick.getX());
+			driveTraction(stick.getRawAxis(1), stick.getRawAxis(4));
 		}
 	}
 	

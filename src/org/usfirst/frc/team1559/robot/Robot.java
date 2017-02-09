@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
@@ -18,7 +19,6 @@ public class Robot extends IterativeRobot {
 	I2C imu;//QUICK AND DIRTY -NATE
 	
 	
-	@Override
 	public void robotInit() {
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
 		//shooter = Shooter.getInstance(); //Instantiate the Shooter
@@ -33,34 +33,35 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void setIMU(){//QUICK AND DIRTY -NATE
-		imu.write(0x3D, 0x03);
+		imu.write(0x3D, 0x0C);
 	}
 
-	@Override
 	public void autonomousInit() {
 		driveTrain.drop(false); //Make sure we are in traction mode
 	}
 
-	@Override
 	public void autonomousPeriodic() {
 
 	}
 
-	@Override
 	public void teleopInit() {
 		driveTrain.drop(false); //Make sure we are in traction mode
+		setIMU();
 	}
 
 	public double getIMUAngle(){//QUICK AND DIRTY -NATE
 		double angle = 0.0;
 		byte[] gyroZLSB = new byte[1];
 		byte[] gyroZMSB = new byte[1];
+		
 		imu.read(0x18, 1, gyroZLSB);
 		imu.read(0x19, 1, gyroZMSB);
-		angle = (double)((gyroZMSB[0] << 8) | gyroZLSB[0]);
+		SmartDashboard.putNumber("LSB", gyroZLSB[0]);
+		SmartDashboard.putNumber("MSB", gyroZMSB[0]);
+		angle = ((double)((gyroZMSB[0] << 8) | gyroZLSB[0]))/16;
 		return angle;
 	}
-	@Override
+
 	public void teleopPeriodic() {
 		//JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); //update controller values
@@ -75,23 +76,24 @@ public class Robot extends IterativeRobot {
 		//ballGatherer.pickUpBall(); //Ball pickup
 	
 		//climber.climbOnUp(); //climb up bois
+		SmartDashboard.putNumber("IMU", getIMUAngle());
 	}
 
-	@Override
+
 	public void testInit() {
 
 	}
-	
-	@Override
+
+
 	public void testPeriodic() {
 	}
 
-	@Override
+
 	public void disabledInit() {
 
 	}
 
-	@Override
+
 	public void disabledPeriodic() {
 		
 	}
