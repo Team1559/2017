@@ -4,6 +4,7 @@ package org.usfirst.frc.team1559.robot;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class Robot extends IterativeRobot {
 
@@ -64,13 +65,7 @@ public class Robot extends IterativeRobot {
 		//JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
-		
-		if (driveTrain.getMecanumized()) { //Driving
-			driveTrain.driveMecanum(oi.getDriverStick().getRawAxis(0), oi.getDriverStick().getRawAxis(1), oi.getDriverStick().getRawAxis(4));
-		} else {
-			driveTrain.driveTraction(oi.getDriverStick().getX(), oi.getDriverStick().getY());
-		}
-		
+		driveTrain.drive(oi.getDriverStick());
 		
 		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
@@ -86,10 +81,9 @@ public class Robot extends IterativeRobot {
 	public void testInit() {
 
 	}
-
+	
 	@Override
 	public void testPeriodic() {
-
 	}
 
 	@Override

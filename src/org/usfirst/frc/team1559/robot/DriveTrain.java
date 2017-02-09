@@ -7,11 +7,9 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 public class DriveTrain extends Subsystem {
 
@@ -39,13 +37,15 @@ public class DriveTrain extends Subsystem {
 		rr = new CANTalon(Wiring.RR_SRX); // Rear right talon
 		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the mecanum wheels or brings them up
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
-		drive = new RobotDrive(fl, fr, rl, rr);
+		drive = new RobotDrive(fl, rl, fr, rr);
+		mecanumized = false;
 
 		setupTalon(fl);
 		setupTalon(fr);
 		setupTalon(rl);
 		setupTalon(rr);
 
+		initTraction();
 		// Enables the PIDF loop
 		fl.enable();
 		fr.enable();
@@ -65,6 +65,17 @@ public class DriveTrain extends Subsystem {
 		} else {
 			driveTraction(stick.getY(), stick.getX());
 		}
+	}
+	
+	public void initTraction() {
+		fl.setInverted(false);
+		fr.setInverted(false);
+		rl.setInverted(false);
+		rr.setInverted(false);
+	}
+	
+	public void initMecanum() {
+		
 	}
 	
 	public void driveTraction(double move, double rot) {
@@ -148,15 +159,15 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void setupTalon(CANTalon talon) {
-		talon.changeControlMode(TalonControlMode.Speed);
-		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		talon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		talon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
-		talon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
-		talon.setProfile(Constants.PROFILE);
-		talon.setP(Constants.Pd);
-		talon.setI(Constants.Id);
-		talon.setD(Constants.Dd);
-		talon.setF(Constants.Fd);
+//		talon.changeControlMode(TalonControlMode.Speed);
+//		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+//		talon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
+//		talon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
+//		talon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
+//		talon.setProfile(Constants.PROFILE);
+//		talon.setP(Constants.Pd);
+//		talon.setI(Constants.Id);
+//		talon.setD(Constants.Dd);
+//		talon.setF(Constants.Fd);
 	}
 }
