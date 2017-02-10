@@ -4,6 +4,7 @@ package org.usfirst.frc.team1559.robot;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
@@ -17,9 +18,6 @@ public class Robot extends IterativeRobot {
 	OperatorInterface oi; //Create the OI
 	I2C imu;//QUICK AND DIRTY -NATE
 	
-	Ramp rx;
-	Ramp ry;
-	
 	
 	public void robotInit() {
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
@@ -27,8 +25,6 @@ public class Robot extends IterativeRobot {
 		//gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
 		//ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
 		oi = OperatorInterface.getInstance(); //Instantiate the OI
-		rx = new Ramp();
-		ry = new Ramp();
 		//diagnostics = new Diagnostics();
 		//climber = Climber.getInstance();
 		imu = new I2C(Port.kOnboard, 0x28);//QUICK AND DIRTY -NATE
@@ -50,7 +46,6 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		driveTrain.drop(false); //Make sure we are in traction mode
-		
 		setIMU();
 	}
 
@@ -66,13 +61,13 @@ public class Robot extends IterativeRobot {
 		angle = ((double)((gyroZMSB[0] << 8) | gyroZLSB[0]))/16;
 		return angle;
 	}
-	
+
 	public void teleopPeriodic() {
 		//JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
-//		driveTrain.drive(oi.getDriverStick());
-		driveTrain.driveTraction(oi.getDriverStick(), rx, ry); // with this setup, mecanum doesn't work, plz fix
+		driveTrain.drive(oi.getDriverStick());
+		
 		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
@@ -91,29 +86,6 @@ public class Robot extends IterativeRobot {
 
 
 	public void testPeriodic() {
-		driveTrain.set(Wiring.FL_SRX, 0);
-		driveTrain.set(Wiring.FR_SRX, 0);
-		driveTrain.set(Wiring.RR_SRX, 0);
-		driveTrain.set(Wiring.RL_SRX, 0);
-		
-		switch (oi.getDriverStick().getPOV()) {
-		case 45:
-//			driveTrain.set(Wiring.FR_SRX, -100);
-			driveTrain.getCANTalon(Wiring.FR_SRX).set(-1);
-			break;
-		case 135:
-			//driveTrain.set(Wiring.RR_SRX, -100);
-			driveTrain.getCANTalon(Wiring.RR_SRX).set(-1);
-			break;
-		case 180 + 45:
-			//driveTrain.set(Wiring.RL_SRX, 100);
-			driveTrain.getCANTalon(Wiring.RL_SRX).set(-1);
-			break;
-		case 360 - 45:
-			//driveTrain.set(Wiring.FL_SRX, 100);
-			driveTrain.getCANTalon(Wiring.FL_SRX).set(-1);
-			break;
-		}
 	}
 
 
