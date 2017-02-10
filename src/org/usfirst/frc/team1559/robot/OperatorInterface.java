@@ -8,6 +8,8 @@ public class OperatorInterface {
 	
 	public DTButton shoot, gather, drop;
 	
+	public DTButton testFR, testFL;
+	
 	private static OperatorInterface instance;
 	public static OperatorInterface getInstance() {
 		if (instance == null) {
