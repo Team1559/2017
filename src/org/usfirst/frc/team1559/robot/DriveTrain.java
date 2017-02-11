@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
+	private static final int MAX_SPEED_TRACTION = 2000;
+	private static final int MAX_SPEED_MECANUM = 400;
+	
 	public static final int FR = 0;
 	public static final int RR = 1;
 	public static final int RL = 2;
@@ -33,18 +36,17 @@ public class DriveTrain extends Subsystem {
 	private CANTalon[] talons;
 	private Solenoid drop; // Solenoid for shifting
 	private RobotDrive drive; // The robot's drive
-	private double maxSpeed; // The max speed of the chassis
 	private boolean mecanumized;
 	double gyroAngle; // TODO: Delete
 
 	public DriveTrain() {
 		super("drive-train");
+		talons = new CANTalon[4];
 		talons[FR] = new CANTalon(Wiring.FR_SRX);
 		talons[RR] = new CANTalon(Wiring.RR_SRX);
 		talons[RL] = new CANTalon(Wiring.RL_SRX);
 		talons[FL] = new CANTalon(Wiring.FL_SRX);
 		drop = new Solenoid(Wiring.DROPPER);
-		maxSpeed = Constants.MAX_DRIVE_SPEED;
 		drive = new RobotDrive(talons[FL], talons[RL], talons[FR], talons[RR]);
 		mecanumized = false;
 
@@ -65,15 +67,11 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void drive(Joystick stick) {
-		if (mecanumized) {
-			driveMecanum(stick.getX(), stick.getY(), stick.getRawAxis(4));
+		if (mecanumized /*&& stick.getRawAxis(4) >= 0.1*/) {
+			driveMecanum(stick.getX() * Math.abs(stick.getX()), stick.getY() * Math.abs(stick.getY()), stick.getRawAxis(4));
 		} else {
-			driveTraction(stick.getRawAxis(1), stick.getRawAxis(4));
+			driveTraction(stick.getRawAxis(1) * Math.abs(stick.getRawAxis(1)), stick.getRawAxis(4) * Math.abs(stick.getRawAxis(4)));
 		}
-	}
-
-	public void driveTraction(Joystick stick, Ramp rampX, Ramp rampY) {
-		driveTraction(rampY.rampMotorValue(stick.getRawAxis(1)), rampX.rampMotorValue(stick.getRawAxis(4)));
 	}
 
 	public void initTraction() {
@@ -81,11 +79,11 @@ public class DriveTrain extends Subsystem {
 		talons[FR].setInverted(false);
 		talons[RL].setInverted(false);
 		talons[RR].setInverted(false);
-		drive.setMaxOutput(200);
+		drive.setMaxOutput(MAX_SPEED_TRACTION);
 	}
 
 	public void initMecanum() {
-
+		drive.setMaxOutput(MAX_SPEED_MECANUM);
 	}
 
 	public void driveTraction(double move, double rot) {
@@ -129,11 +127,16 @@ public class DriveTrain extends Subsystem {
 		// rr.set(-rightMotorSpeed * 640);
 		// fl.set(leftMotorSpeed * 640);
 		// rl.set(leftMotorSpeed * 640);
-		SmartDashboard.putNumber("FR Encoder", talons[FR].getEncPosition());
-		SmartDashboard.putNumber("FL Encoder", talons[FL].getEncPosition());
-		SmartDashboard.putNumber("RR Encoder", talons[RR].getEncPosition());
-		SmartDashboard.putNumber("RL Encoder", talons[RL].getEncPosition());
+		SmartDashboard.putNumber("FR Encoder", talons[FR].getEncVelocity());
+		SmartDashboard.putNumber("FL Encoder", talons[FL].getEncVelocity());
+		SmartDashboard.putNumber("RR Encoder", talons[RR].getEncVelocity());
+		SmartDashboard.putNumber("RL Encoder", talons[RL].getEncVelocity());
+		SmartDashboard.putNumber("FL Voltage", talons[FL].getOutputVoltage());
 	}
+	
+//	public void driveMecanum(double x, double y, double rotation) {
+//		drive.mecanumDrive_Cartesian(x, y, rotation, 0);
+//	}
 
 	public void driveMecanum(double x, double y, double rotation) { // Mecanum
 																	// drive
@@ -163,6 +166,8 @@ public class DriveTrain extends Subsystem {
 		double rotated[] = rotateVector(xIn, yIn, gyroAngle);
 		xIn = rotated[0];
 		yIn = rotated[1];
+		
+		System.out.println(gyroAngle);
 
 		// Calculate the speeds
 		double[] speeds = new double[4];
@@ -173,10 +178,10 @@ public class DriveTrain extends Subsystem {
 		normalize(speeds);
 
 		// Set speeds
-		talons[FL].set(-speeds[FL] * maxSpeed);
-		talons[FR].set(speeds[FR] * maxSpeed);
-		talons[RL].set(-speeds[RL] * maxSpeed);
-		talons[RR].set(speeds[RR] * maxSpeed);
+		talons[FL].set(-speeds[FL] * MAX_SPEED_MECANUM);
+		talons[FR].set(speeds[FR] * MAX_SPEED_MECANUM);
+		talons[RL].set(-speeds[RL] * MAX_SPEED_MECANUM);
+		talons[RR].set(speeds[RR] * MAX_SPEED_MECANUM);
 
 	}
 

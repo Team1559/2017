@@ -16,7 +16,6 @@ public class Robot extends IterativeRobot {
 	//Diagnostics diagnostics; //Create the diagnostics tool
 	OperatorInterface oi; //Create the OI
 	I2C imu;//QUICK AND DIRTY -NATE
-	
 	Ramp rx;
 	Ramp ry;
 	
@@ -42,10 +41,24 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		driveTrain.drop(false); //Make sure we are in traction mode
+		ctr=0;
 	}
 
+	int ctr = 0;
 	public void autonomousPeriodic() {
-
+		
+		ctr++;
+		if (ctr >= 50) {
+			driveTrain.set(DriveTrain.FL, 0);
+			driveTrain.set(DriveTrain.FR, 0);
+			driveTrain.set(DriveTrain.RL, 0);
+			driveTrain.set(DriveTrain.RR, 0);
+		} else {
+			driveTrain.set(DriveTrain.FL, -300);
+			driveTrain.set(DriveTrain.FR, 300);
+			driveTrain.set(DriveTrain.RL, -300);
+			driveTrain.set(DriveTrain.RR, 300);
+		}
 	}
 
 	public void teleopInit() {
@@ -72,7 +85,7 @@ public class Robot extends IterativeRobot {
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
 //		driveTrain.drive(oi.getDriverStick());
-		driveTrain.driveTraction(oi.getDriverStick(), rx, ry); // with this setup, mecanum doesn't work, plz fix
+		driveTrain.drive(oi.getDriverStick()); // with this setup, mecanum doesn't work, plz fix
 		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
@@ -82,6 +95,9 @@ public class Robot extends IterativeRobot {
 	
 		//climber.climbOnUp(); //climb up bois
 		SmartDashboard.putNumber("IMU", getIMUAngle());
+		SmartDashboard.putNumber("JoyX", oi.getDriverStick().getX() * Math.abs(oi.getDriverStick().getX()));
+		SmartDashboard.putNumber("JoyY", oi.getDriverStick().getY() * Math.abs(oi.getDriverStick().getY()));
+		SmartDashboard.putNumber("JoyR", oi.getDriverStick().getRawAxis(4));
 	}
 
 
@@ -91,10 +107,10 @@ public class Robot extends IterativeRobot {
 
 
 	public void testPeriodic() {
-		driveTrain.set(Wiring.FL_SRX, 0);
-		driveTrain.set(Wiring.FR_SRX, 0);
-		driveTrain.set(Wiring.RR_SRX, 0);
-		driveTrain.set(Wiring.RL_SRX, 0);
+		driveTrain.set(DriveTrain.FL, 0);
+		driveTrain.set(DriveTrain.FR, 0);
+		driveTrain.set(DriveTrain.RL, 0);
+		driveTrain.set(DriveTrain.RR, 0);
 		
 		switch (oi.getDriverStick().getPOV()) {
 		case 45:

@@ -10,10 +10,10 @@ public class Constants {
 	public static final int SECONDARY_BUFFER_LENGTH = 4;
 	
 	//Talon stuffs
-	public static final double Pd = 0.1; //(This may change) The proportional value for the PIDF loop (Mecanum)
+	public static final double Pd = -200000; //(This may change) The proportional value for the PIDF loop (Mecanum)
 	public static final double Id = 0; //(This may change) The integral value for the PIDF loop (Mecanum)
-	public static final double Dd = 0.0; //(This may change) The derivative  value for the PIDF loop (Mecanum)
-	public static final double Fd = 0.32; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
+	public static final double Dd = 0; //(This may change) The derivative  value for the PIDF loop (Mecanum)
+	public static final double Fd = 0.0682; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
 	
 	public static final double Ps = 0.3; //(This may change) The proportional value for the PIDF loop (shooter)
 	public static final double Is = 0; //(This may change) The integral value for the PIDF loop (shooter)
