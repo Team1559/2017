@@ -14,6 +14,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
+	public static final int FR = 0;
+	public static final int RR = 1;
+	public static final int RL = 2;
+	public static final int FL = 3;
+
 	private static DriveTrain instance;
 
 	public static DriveTrain getInstance() {
@@ -23,37 +28,35 @@ public class DriveTrain extends Subsystem {
 		return instance;
 	}
 
-	private CANTalon fl, fr, rl, rr; // The CANTalons for driving
+	private boolean velocityControl = true;
+
+	private CANTalon[] talons;
 	private Solenoid drop; // Solenoid for shifting
 	private RobotDrive drive; // The robot's drive
 	private double maxSpeed; // The max speed of the chassis
-	private boolean mecanumized; // Bool to check if the chassis is in mecanum
+	private boolean mecanumized;
 	double gyroAngle; // TODO: Delete
 
 	public DriveTrain() {
 		super("drive-train");
-		fl = new CANTalon(Wiring.FL_SRX); // Front left talon
-		fr = new CANTalon(Wiring.FR_SRX); // Front right talon
-		rl = new CANTalon(Wiring.RL_SRX); // Rear left talon
-		rr = new CANTalon(Wiring.RR_SRX); // Rear right talon
-		drop = new Solenoid(Wiring.DROPPER); // The solenoid that drops the
-												// mecanum wheels or brings them
-												// up
+		talons[FR] = new CANTalon(Wiring.FR_SRX);
+		talons[RR] = new CANTalon(Wiring.RR_SRX);
+		talons[RL] = new CANTalon(Wiring.RL_SRX);
+		talons[FL] = new CANTalon(Wiring.FL_SRX);
+		drop = new Solenoid(Wiring.DROPPER);
 		maxSpeed = Constants.MAX_DRIVE_SPEED;
-		drive = new RobotDrive(fl, rl, fr, rr);
+		drive = new RobotDrive(talons[FL], talons[RL], talons[FR], talons[RR]);
 		mecanumized = false;
 
-		initVelocityControl(fl);
-		initVelocityControl(fr);
-		initVelocityControl(rl);
-		initVelocityControl(rr);
+		for (CANTalon t : talons) {
+			if (velocityControl) {
+				initVelocityControl(t);
+			}
+			t.enable();
+		}
 
 		initTraction();
 		// Enables the PIDF loop
-		fl.enable();
-		fr.enable();
-		rl.enable();
-		rr.enable();
 	}
 
 	public void drop(boolean mecanumized) { // Control the versadrop
@@ -74,12 +77,11 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void initTraction() {
-		fl.setInverted(false);
-		fr.setInverted(false);
-		rl.setInverted(false);
-		rr.setInverted(false);
+		talons[FL].setInverted(false);
+		talons[FR].setInverted(false);
+		talons[RL].setInverted(false);
+		talons[RR].setInverted(false);
 		drive.setMaxOutput(200);
-
 	}
 
 	public void initMecanum() {
@@ -127,10 +129,10 @@ public class DriveTrain extends Subsystem {
 		// rr.set(-rightMotorSpeed * 640);
 		// fl.set(leftMotorSpeed * 640);
 		// rl.set(leftMotorSpeed * 640);
-		SmartDashboard.putNumber("FR Encoder", fr.getEncPosition());
-		SmartDashboard.putNumber("FL Encoder", fl.getEncPosition());
-		SmartDashboard.putNumber("RR Encoder", rr.getEncPosition());
-		SmartDashboard.putNumber("RL Encoder", rl.getEncPosition());
+		SmartDashboard.putNumber("FR Encoder", talons[FR].getEncPosition());
+		SmartDashboard.putNumber("FL Encoder", talons[FL].getEncPosition());
+		SmartDashboard.putNumber("RR Encoder", talons[RR].getEncPosition());
+		SmartDashboard.putNumber("RL Encoder", talons[RL].getEncPosition());
 	}
 
 	public void driveMecanum(double x, double y, double rotation) { // Mecanum
@@ -163,18 +165,18 @@ public class DriveTrain extends Subsystem {
 		yIn = rotated[1];
 
 		// Calculate the speeds
-		double flSpeed = xIn + yIn + rotation;
-		double frSpeed = -xIn + yIn - rotation;
-		double rlSpeed = -xIn + yIn + rotation;
-		double rrSpeed = xIn + yIn - rotation;
-		double[] speeds = { flSpeed, frSpeed, rlSpeed, rrSpeed };
+		double[] speeds = new double[4];
+		speeds[FL] = xIn + yIn + rotation;
+		speeds[FR] = -xIn + yIn - rotation;
+		speeds[RL] = -xIn + yIn + rotation;
+		speeds[RR] = xIn + yIn - rotation;
 		normalize(speeds);
 
 		// Set speeds
-		fl.set(-speeds[0] * maxSpeed);
-		fr.set(speeds[1] * maxSpeed);
-		rl.set(-speeds[2] * maxSpeed);
-		rr.set(speeds[3] * maxSpeed);
+		talons[FL].set(-speeds[FL] * maxSpeed);
+		talons[FR].set(speeds[FR] * maxSpeed);
+		talons[RL].set(-speeds[RL] * maxSpeed);
+		talons[RR].set(speeds[RR] * maxSpeed);
 
 	}
 
@@ -225,27 +227,12 @@ public class DriveTrain extends Subsystem {
 		talon.setCloseLoopRampRate(6);
 	}
 
-	public void set(int port, double speed) {
-		if (fr.getDeviceID() == port) {
-			fr.set(speed);
-		} else if (fl.getDeviceID() == port) {
-			fl.set(speed);
-		} else if (rr.getDeviceID() == port) {
-			rr.set(speed);
-		} else if (rl.getDeviceID() == port) {
-			rl.set(speed);
-		}
-	}
-
-	public CANTalon getCANTalon(int port) {
-		if (fr.getDeviceID() == port) {
-			return fr;
-		} else if (fl.getDeviceID() == port) {
-			return fl;
-		} else if (rr.getDeviceID() == port) {
-			return rr;
-		} else {
-			return rl;
-		}
+	/**
+	 * Sets a particular {@link CANTalon} to the specified speed.
+	 * @param wheel The position of the wheel on the chassis. Use {@link DriveTrain} constants, such as {@link DriveTrain#FR}.
+	 * @param speed Speed of the wheel.
+	 */
+	public void set(int wheel, double speed) {
+		talons[wheel].set(speed);
 	}
 }

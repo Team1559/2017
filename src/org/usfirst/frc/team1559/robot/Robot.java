@@ -99,19 +99,19 @@ public class Robot extends IterativeRobot {
 		switch (oi.getDriverStick().getPOV()) {
 		case 45:
 //			driveTrain.set(Wiring.FR_SRX, -100);
-			driveTrain.getCANTalon(Wiring.FR_SRX).set(-1);
+			driveTrain.set(DriveTrain.FR, -1);
 			break;
 		case 135:
 			//driveTrain.set(Wiring.RR_SRX, -100);
-			driveTrain.getCANTalon(Wiring.RR_SRX).set(-1);
+			driveTrain.set(DriveTrain.RR, -1);
 			break;
 		case 180 + 45:
 			//driveTrain.set(Wiring.RL_SRX, 100);
-			driveTrain.getCANTalon(Wiring.RL_SRX).set(-1);
+			driveTrain.set(DriveTrain.RL, -1);
 			break;
 		case 360 - 45:
 			//driveTrain.set(Wiring.FL_SRX, 100);
-			driveTrain.getCANTalon(Wiring.FL_SRX).set(-1);
+			driveTrain.set(DriveTrain.FL, -1);
 			break;
 		}
 	}
