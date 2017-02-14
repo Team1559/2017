@@ -7,17 +7,23 @@ public class AutoRoutine {
 	Vector<AutoCommand> actions;
 
 	int currentCommand;
-	
+
 	public AutoRoutine() {
 		actions = new Vector<AutoCommand>();
 		currentCommand = 0;
 	}
 	
+	public void reset() {
+		currentCommand = 0;
+	}
+
 	public void put(AutoCommand auto) {
 		actions.add(auto);
 	}
-	
+
 	public void run() {
+		if (currentCommand >= actions.size())
+			return;
 		actions.get(currentCommand).init();
 		if (!actions.get(currentCommand).isFinished()) {
 			actions.get(currentCommand).update();
@@ -25,8 +31,6 @@ public class AutoRoutine {
 			actions.get(currentCommand).done();
 			currentCommand++;
 		}
-		
 	}
-	
-	
+
 }

@@ -241,7 +241,7 @@ public class DriveTrain extends Subsystem {
 	public double getAvgEncoderPos() {
 		double ret = 0;
 		for (int i = 0; i < talons.length; i++) {
-			ret += talons[i].getEncPosition();
+			ret += Math.abs(talons[i].getEncPosition());
 		}
 		ret /= talons.length;
 		return ret;
