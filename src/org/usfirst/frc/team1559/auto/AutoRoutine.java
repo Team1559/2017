@@ -4,28 +4,29 @@ import java.util.Vector;
 
 public class AutoRoutine {
 
-	Vector<AutoAction> actions;
+	Vector<AutoCommand> actions;
 
-	int count = 0;
+	int currentCommand;
 	
 	public AutoRoutine() {
-		actions = new Vector<AutoAction>();
-		count = 0;
+		actions = new Vector<AutoCommand>();
+		currentCommand = 0;
 	}
 	
-	public void put(AutoAction auto) {
+	public void put(AutoCommand auto) {
 		actions.add(auto);
 	}
 	
 	public void run() {
-		if (actions.get(count).init()) {
-			if (!actions.get(count).update()) {
-				actions.get(count).update();
-			} else {
-				actions.get(count).stop();
-			}
+		actions.get(currentCommand).init();
+		if (!actions.get(currentCommand).isFinished()) {
+			actions.get(currentCommand).update();
+		} else {
+			actions.get(currentCommand).done();
+			currentCommand++;
 		}
 		
-		count++;
 	}
+	
+	
 }

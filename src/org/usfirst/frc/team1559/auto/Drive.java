@@ -2,34 +2,39 @@ package org.usfirst.frc.team1559.auto;
 
 import org.usfirst.frc.team1559.robot.DriveTrain;
 
-public class Move extends AutoAction {
+public class Drive extends AutoCommand {
 
 	double distance, speedL, speedR;
 	
-	public Move(double distance, double speedR, double speedL) {
+	public Drive(double distance, double speedR, double speedL) {
 		this.distance = distance;
 		this.speedL= speedL;
 		this.speedR = speedR;
 	}
 	
-	public boolean init() {
+	@Override
+	public void init() {
 		DriveTrain.getInstance().resetEncoders();
-		return true;
 	}
 
-	public boolean update() {
+	@Override
+	public void update() {
 		DriveTrain.getInstance().set(DriveTrain.FL, -speedL);
 		DriveTrain.getInstance().set(DriveTrain.FR, speedR);
 		DriveTrain.getInstance().set(DriveTrain.RL, -speedL);
 		DriveTrain.getInstance().set(DriveTrain.RR, speedR);
-		return DriveTrain.getInstance().getAvgEncoderPos() >= distance;
 	}
 	
-	public boolean stop() {
+	@Override
+	public void done() {
 		DriveTrain.getInstance().set(DriveTrain.FL, 0);
 		DriveTrain.getInstance().set(DriveTrain.FR, 0);
 		DriveTrain.getInstance().set(DriveTrain.RL, 0);
 		DriveTrain.getInstance().set(DriveTrain.RR, 0);		
-		return true;
+	}
+
+	@Override
+	public boolean isFinished() {
+		return DriveTrain.getInstance().getAvgEncoderPos() >= distance;
 	}
 }
