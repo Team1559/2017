@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team1559.robot;
 
+import org.usfirst.frc.team1559.auto.*;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -16,6 +18,7 @@ public class Robot extends IterativeRobot {
 	//Diagnostics diagnostics; //Create the diagnostics tool
 	OperatorInterface oi; //Create the OI
 	I2C imu;//QUICK AND DIRTY -NATE
+	AutoRoutine autoR;//QUICK AND DIRTY - JOHN
 	Ramp rx;
 	Ramp ry;
 	
@@ -31,6 +34,7 @@ public class Robot extends IterativeRobot {
 		//diagnostics = new Diagnostics();
 		//climber = Climber.getInstance();
 		imu = new I2C(Port.kOnboard, 0x28);//QUICK AND DIRTY -NATE
+		autoR = new AutoRoutine();//QUICK AND DIRTY -JOHN
 		setIMU();//QUICK AND DIRTY -NATE
 		
 	}
@@ -41,24 +45,14 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		driveTrain.drop(false); //Make sure we are in traction mode
+		autoR.put(new Move(10, 2000, 2000));// left right
+		autoR.put(new Move(5, 1000, -500));// left right
 		ctr=0;
 	}
 
 	int ctr = 0;
 	public void autonomousPeriodic() {
-		
-		ctr++;
-		if (ctr >= 50) {
-			driveTrain.set(DriveTrain.FL, 0);
-			driveTrain.set(DriveTrain.FR, 0);
-			driveTrain.set(DriveTrain.RL, 0);
-			driveTrain.set(DriveTrain.RR, 0);
-		} else {
-			driveTrain.set(DriveTrain.FL, -300);
-			driveTrain.set(DriveTrain.FR, 300);
-			driveTrain.set(DriveTrain.RL, -300);
-			driveTrain.set(DriveTrain.RR, 300);
-		}
+		autoR.run();
 	}
 
 	public void teleopInit() {

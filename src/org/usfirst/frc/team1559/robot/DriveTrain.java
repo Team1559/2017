@@ -231,6 +231,21 @@ public class DriveTrain extends Subsystem {
 		talon.setF(Constants.Fd);
 		talon.setCloseLoopRampRate(6);
 	}
+	
+	public void resetEncoders() {
+		for (int i = 0; i < talons.length; i++) {
+			talons[i].setEncPosition(0);
+		}
+	}
+	
+	public double getAvgEncoderPos() {
+		double ret = 0;
+		for (int i = 0; i < talons.length; i++) {
+			ret += talons[i].getEncPosition();
+		}
+		ret /= talons.length;
+		return ret;
+	}
 
 	/**
 	 * Sets a particular {@link CANTalon} to the specified speed.
