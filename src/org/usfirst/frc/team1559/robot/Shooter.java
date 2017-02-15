@@ -7,6 +7,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.TalonSRX;
 
 public class Shooter extends Subsystem {
 
@@ -40,7 +41,6 @@ public class Shooter extends Subsystem {
 		shooterTalon.setI(Constants.Is); // Is = 0
 		shooterTalon.setD(Constants.Ds); // Ds = 0.05
 		shooterTalon.setF(Constants.Fs); // Fs = 0.32
-
 	}
 
 	public void set(int rpm) { // Starts up the motor so that them balls can be fired.
