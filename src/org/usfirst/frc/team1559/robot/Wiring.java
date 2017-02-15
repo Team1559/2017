@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1559.robot;
 
-public class Wiring {
+public class Wiring {//kristin was here :3
 
 	// thou shan't use magical digits
 
