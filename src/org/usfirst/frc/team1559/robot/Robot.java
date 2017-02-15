@@ -11,7 +11,7 @@ public class Robot extends IterativeRobot {
 
 	AutoRoutine routine;
 	DriveTrain driveTrain; //Create the Drive Train
-	//Shooter shooter; //Create the Shooter
+	Shooter shooter; //Create the Shooter
 	//GearGatherer gearGatherer; //Create the Gear Gatherer
 	//BallGatherer ballGatherer; //Create the Ball Gatherer
 	//Climber climber; //Creates the Climber
@@ -21,7 +21,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		routine = new TestRoutine();
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
-		//shooter = Shooter.getInstance(); //Instantiate the Shooter
+		shooter = Shooter.getInstance(); //Instantiate the Shooter
 		//gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
 		//ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
 		oi = OperatorInterface.getInstance(); //Instantiate the OI
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
-		//shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
+		shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
 		
 		//ballGatherer.pickUpBall(); //Ball pickup
 	
@@ -72,6 +72,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.set(DriveTrain.FR, 0);
 		driveTrain.set(DriveTrain.RL, 0);
 		driveTrain.set(DriveTrain.RR, 0);
+		shooter.fire(true);
 		
 		switch (oi.getDriverStick().getPOV()) {
 		case 45:
