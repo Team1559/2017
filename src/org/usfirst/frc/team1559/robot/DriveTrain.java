@@ -180,9 +180,9 @@ public class DriveTrain extends Subsystem {
 		normalize(speeds);
 
 		// Set speeds
-		talons[FL].set(speeds[FL] * MAX_SPEED_MECANUM);
+		talons[FL].set(-speeds[FL] * MAX_SPEED_MECANUM);
 		talons[FR].set(speeds[FR] * MAX_SPEED_MECANUM);
-		talons[RL].set(speeds[RL] * MAX_SPEED_MECANUM);
+		talons[RL].set(-speeds[RL] * MAX_SPEED_MECANUM);
 		talons[RR].set(speeds[RR] * MAX_SPEED_MECANUM);
 
 	}

@@ -27,6 +27,4 @@ public abstract class AutoCommand {
 	public void setInitialized(boolean b) {
 		initialized = b;
 	}
-
-	public abstract double getDistance();
 }
