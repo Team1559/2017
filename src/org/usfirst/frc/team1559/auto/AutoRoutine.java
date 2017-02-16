@@ -13,6 +13,7 @@ public class AutoRoutine {
 		currentCommand = 0;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	public void reset() {
 		currentCommand = 0;
@@ -21,11 +22,15 @@ public class AutoRoutine {
 =======
 	
 >>>>>>> parent of 60c6b1c... is not good yet
+=======
+	
+>>>>>>> parent of 60c6b1c... is not good yet
 	public void put(AutoCommand auto) {
 		commands.add(auto);
 	}
 	
 	public void run() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if (currentCommand >= commands.size())
 			return;
@@ -37,6 +42,8 @@ public class AutoRoutine {
 			commands.get(currentCommand).update();
 			System.out.println("UPDATE " + currentCommand);
 =======
+=======
+>>>>>>> parent of 60c6b1c... is not good yet
 		actions.get(currentCommand).init();
 		if (!actions.get(currentCommand).isFinished()) {
 			actions.get(currentCommand).update();
@@ -49,6 +56,11 @@ public class AutoRoutine {
 		
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	
+	
+>>>>>>> parent of 60c6b1c... is not good yet
 =======
 	
 	

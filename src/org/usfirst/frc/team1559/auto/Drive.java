@@ -43,9 +43,12 @@ public class Drive extends AutoCommand {
 	@Override
 	public boolean isFinished() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		System.out.println("JUST STOP");
 		return DriveTrain.getInstance().getAvgEncoderPos() >= distance + startDist;
 =======
+=======
+>>>>>>> parent of 60c6b1c... is not good yet
 		return DriveTrain.getInstance().getAvgEncoderPos() >= distance;
 >>>>>>> parent of 60c6b1c... is not good yet
 	}
