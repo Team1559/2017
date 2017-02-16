@@ -33,7 +33,6 @@ public class Drive extends AutoCommand {
 	
 	@Override
 	public void done() {
-		System.out.println("STOP NOW PLS");
 		DriveTrain.getInstance().set(DriveTrain.FL, 0);
 		DriveTrain.getInstance().set(DriveTrain.FR, 0);
 		DriveTrain.getInstance().set(DriveTrain.RL, 0);
@@ -43,7 +42,11 @@ public class Drive extends AutoCommand {
 
 	@Override
 	public boolean isFinished() {
+<<<<<<< HEAD
 		System.out.println("JUST STOP");
 		return DriveTrain.getInstance().getAvgEncoderPos() >= distance + startDist;
+=======
+		return DriveTrain.getInstance().getAvgEncoderPos() >= distance;
+>>>>>>> parent of 60c6b1c... is not good yet
 	}
 }

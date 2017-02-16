@@ -32,7 +32,6 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		driveTrain.drop(false); //Make sure we are in traction mode
-		routine.reset();
 	}
 
 	public void autonomousPeriodic() {
