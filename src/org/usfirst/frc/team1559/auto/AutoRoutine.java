@@ -24,7 +24,9 @@ public class AutoRoutine {
 	public void run() {
 		if (currentCommand >= actions.size())
 			return;
-		actions.get(currentCommand).init();
+		if (!actions.get(currentCommand).isInitialized()) {
+			actions.get(currentCommand).initialize();
+		}
 		if (!actions.get(currentCommand).isFinished()) {
 			actions.get(currentCommand).update();
 		} else {
