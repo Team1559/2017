@@ -233,18 +233,26 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void resetEncoders() {
+		getAvgEncoderPos(true);
 		for (int i = 0; i < talons.length; i++) {
 			talons[i].setEncPosition(0);
 		}
 	}
 	
-	public double getAvgEncoderPos() {
+	public double getAvgEncoderPos(boolean reset) {
 		double ret = 0;
 		for (int i = 0; i < talons.length; i++) {
 			ret += Math.abs(talons[i].getEncPosition());
 		}
 		ret /= talons.length;
+		if (reset) {
+			return 0;
+		}
 		return ret;
+	}
+	
+	public double getEncoderPos(int wheel) {
+		return Math.abs(talons[wheel].getEncPosition());
 	}
 
 	/**

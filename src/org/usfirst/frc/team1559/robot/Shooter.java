@@ -7,6 +7,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.TalonSRX;
 
 public class Shooter extends Subsystem {
 
@@ -40,7 +41,6 @@ public class Shooter extends Subsystem {
 		shooterTalon.setI(Constants.Is); // Is = 0
 		shooterTalon.setD(Constants.Ds); // Ds = 0.05
 		shooterTalon.setF(Constants.Fs); // Fs = 0.32
-
 	}
 
 	public void set(int rpm) { // Starts up the motor so that them balls can be fired.
@@ -49,7 +49,7 @@ public class Shooter extends Subsystem {
 
 	public void fire(boolean fire) { // Used to control the fire rate of the balls
 		if (fire) {
-			set(420); //TODO: math and dont blaze
+			set(Constants.SHOOTER_RPM); //TODO: math and dont blaze
 		} else {
 			set(0); //Sets the fire rate to 0, stopping the shooter.
 		}
@@ -57,6 +57,6 @@ public class Shooter extends Subsystem {
 
 
 	public void getState(State s) { // The method that will set the state of s
-		s.put("shooter-velocity", 420); // TODO: fix
+		s.put("shooter-velocity", shooterTalon.getEncVelocity()*Constants.RPM_CONVERSION); // TODO: fix
 	}
 }
