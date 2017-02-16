@@ -4,36 +4,23 @@ import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class Drive extends AutoCommand {
 
-<<<<<<< HEAD
 	double distance, speedL, speedR;
 	double startDist;
-=======
-	double distance, speedL, speedR, origin;
->>>>>>> origin/master
 	
-	public Drive(double distance, double speedR, double speedL, double origin) {
+	public Drive(double distance, double speedR, double speedL) {
 		this.distance = distance;
 		this.speedL= speedL;
 		this.speedR = speedR;
-<<<<<<< HEAD
 		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
-=======
-		this.origin = origin;
->>>>>>> origin/master
 	}
 	
 	@Override
 	public void init() {
-<<<<<<< HEAD
-
-=======
 		DriveTrain.getInstance().resetEncoders();
-		origin = 0;
 	}
 	
 	public double getDistance() {
 		return distance;
->>>>>>> origin/master
 	}
 
 	@Override
@@ -56,12 +43,7 @@ public class Drive extends AutoCommand {
 
 	@Override
 	public boolean isFinished() {
-<<<<<<< HEAD
 		System.out.println("JUST STOP");
 		return DriveTrain.getInstance().getAvgEncoderPos() >= distance + startDist;
-=======
-		return DriveTrain.getInstance().getEncoderPos(DriveTrain.FL) >= (distance + origin);
-		
->>>>>>> origin/master
 	}
 }

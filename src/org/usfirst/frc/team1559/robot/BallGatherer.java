@@ -20,7 +20,7 @@ public class BallGatherer {
 	Joystick joy;
 	
 	public BallGatherer(){
-		piston = new DoubleSolenoid(Wiring.SOLENOID_DOWN,Wiring.SOLENOID_UP);//forward is down
+//		piston = new DoubleSolenoid(Wiring.SOLENOID_DOWN,Wiring.SOLENOID_UP);//forward is down
 		joy = new Joystick(Wiring.JOYSTICK0);
 	}
     

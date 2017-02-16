@@ -6,7 +6,7 @@ public class OperatorInterface {
 	
 	private Joystick driverStick, copilotStick; //Creates BetterJoysticks
 	
-	public DTButton shoot, gather, drop;
+	public DTButton shoot, gather, drop, gear;
 	
 	private static OperatorInterface instance;
 	public static OperatorInterface getInstance() {
@@ -23,6 +23,7 @@ public class OperatorInterface {
 		shoot = new DTButton(driverStick, Wiring.BTN_SHOOT);
 		gather = new DTButton(driverStick, Wiring.BTN_GATHER);
 		drop = new DTButton(driverStick, Wiring.BTN_DROP);
+		gear = new DTButton(driverStick, Wiring.BTN_GEAR);
 	}
 	
 	public Joystick getDriverStick() { //Getter method to get the drivers joystick

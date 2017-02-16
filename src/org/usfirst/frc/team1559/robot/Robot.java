@@ -12,7 +12,7 @@ public class Robot extends IterativeRobot {
 	AutoRoutine routine;
 	DriveTrain driveTrain; //Create the Drive Train
 	Shooter shooter; //Create the Shooter
-	//GearGatherer gearGatherer; //Create the Gear Gatherer
+	GearGatherer gearGatherer; //Create the Gear Gatherer
 	//BallGatherer ballGatherer; //Create the Ball Gatherer
 	//Climber climber; //Creates the Climber
 	//Diagnostics diagnostics; //Create the diagnostics tool
@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
 		routine = new TestRoutine();
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
 		shooter = Shooter.getInstance(); //Instantiate the Shooter
-		//gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
+		gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
 		//ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
 		oi = OperatorInterface.getInstance(); //Instantiate the OI
 		//diagnostics = new Diagnostics();
@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
 		}
 		shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
 		
+		gearGatherer.set(oi.gear.isDown());
 		//ballGatherer.pickUpBall(); //Ball pickup
 	
 		//climber.climbOnUp(); //climb up bois

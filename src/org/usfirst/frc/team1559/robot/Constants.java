@@ -24,8 +24,8 @@ public class Constants {
 	
 	public static final float NOMIAL_OUTPUT_VOLTAGE = +0.0f; //The forward nomial output voltage for the talons
 	public static final float PEAK_OUTPUT_VOLTAGE = +12.0f; //The reverse nomial output voltage for the talons
-	public static final float NEGATIVE_NOMIAL_OUTPUT_VOLTAGE = 0.0f; //The forward peak output voltage for the talons
-	public static final float NEGATIVE_PEAK_OUTPUT_VOLTAGE = 12.0f; //The reverse peak output voltage for the talons
+	public static final float NEGATIVE_NOMIAL_OUTPUT_VOLTAGE = -0.0f; //The forward peak output voltage for the talons
+	public static final float NEGATIVE_PEAK_OUTPUT_VOLTAGE = -12.0f; //The reverse peak output voltage for the talons
 	public static final int PROFILE = 0; //The profile for the talons
 	public static final int SHOOTER_TALON_PROFILE = 0; //The TalonSRX profile for shooting
 	public static final int SHOOTER_RPM = 420;//Need to check, also could change based on distance

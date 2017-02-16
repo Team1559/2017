@@ -1,8 +1,7 @@
 package org.usfirst.frc.team1559.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class GearGatherer {
 
@@ -16,25 +15,14 @@ public class GearGatherer {
 	}
 
 	DigitalInput limit; // The limit switch
-	DoubleSolenoid piston; // The piston that releases the gear
+	Solenoid piston; // The piston that releases the gear
 
 	public GearGatherer() {
 		limit = new DigitalInput(Wiring.GEAR_IN); // instantiation
-		piston = new DoubleSolenoid(Wiring.SOLENOID_DOWN, Wiring.SOLENOID_UP);// forward
-																				// is
-																				// down
+		piston = new Solenoid(Wiring.GEAR_GATHERER);// forward
 	}
 
-	public boolean hasGear() {
-		return limit.get(); // Gets the position of the limit switch (on or off)
-	}
-
-	public void update(boolean triggered) { // Triggered is a joystick button
-		if (limit.get() && triggered) { // If the gear is there and the button
-										// was pressed then
-			piston.set(Value.kForward); // Sets the value to push
-		} else {
-			piston.set(Value.kReverse); // Sets the value to pull
-		}
+	public void set(boolean b) { // Triggered is a joystick button
+		piston.set(b);
 	}
 }

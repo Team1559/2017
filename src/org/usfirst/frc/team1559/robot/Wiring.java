@@ -15,10 +15,7 @@ public class Wiring {//kristin was here :3
 
 	// Gear Gatherer
 	public static final int GEAR_IN = 1; // Port for the limit switch
-	public static final int SOLENOID_UP = 2; // Solenoid port for pulling the
-												// door up
-	public static final int SOLENOID_DOWN = 3; // Solenoid port for pulling the
-												// door down
+	public static final int GEAR_GATHERER = 2;
 
 	// Dropper
 	public static final int DROPPER = 0; // Solenoid port for dropping the
@@ -34,4 +31,5 @@ public class Wiring {//kristin was here :3
 	public static final int BTN_GATHER = 1; // Button to control the gatherer
 	public static final int BTN_SHOOT = 2; // Button to control the shooter
 	public static final int BTN_DROP = 3;
+	public static final int BTN_GEAR = 4;
 }

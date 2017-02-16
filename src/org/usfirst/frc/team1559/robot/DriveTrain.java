@@ -16,7 +16,7 @@ public class DriveTrain extends Subsystem {
 
 	private static final int MAX_SPEED_TRACTION = 2000;
 	private static final int MAX_SPEED_MECANUM = 400;
-	
+
 	public static final int FR = 0;
 	public static final int RR = 1;
 	public static final int RL = 2;
@@ -67,10 +67,12 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void drive(Joystick stick) {
-		if (mecanumized /*&& stick.getRawAxis(4) >= 0.1*/) {
-			driveMecanum(stick.getX() * Math.abs(stick.getX()), stick.getY() * Math.abs(stick.getY()), stick.getRawAxis(4));
+		if (mecanumized /* && stick.getRawAxis(4) >= 0.1 */) {
+			driveMecanum(stick.getX() * Math.abs(stick.getX()), stick.getY() * Math.abs(stick.getY()),
+					stick.getRawAxis(4));
 		} else {
-			driveTraction(stick.getRawAxis(1) * Math.abs(stick.getRawAxis(1)), stick.getRawAxis(4) * Math.abs(stick.getRawAxis(4)));
+			driveTraction(stick.getRawAxis(1) * Math.abs(stick.getRawAxis(1)),
+					stick.getRawAxis(4) * Math.abs(stick.getRawAxis(4)));
 		}
 	}
 
@@ -133,10 +135,10 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("RL Encoder", talons[RL].getEncVelocity());
 		SmartDashboard.putNumber("FL Voltage", talons[FL].getOutputVoltage());
 	}
-	
-//	public void driveMecanum(double x, double y, double rotation) {
-//		drive.mecanumDrive_Cartesian(x, y, rotation, 0);
-//	}
+
+	// public void driveMecanum(double x, double y, double rotation) {
+	// drive.mecanumDrive_Cartesian(x, y, rotation, 0);
+	// }
 
 	public void driveMecanum(double x, double y, double rotation) { // Mecanum
 																	// drive
@@ -166,7 +168,7 @@ public class DriveTrain extends Subsystem {
 		double rotated[] = rotateVector(xIn, yIn, gyroAngle);
 		xIn = rotated[0];
 		yIn = rotated[1];
-		
+
 		System.out.println(gyroAngle);
 
 		// Calculate the speeds
@@ -231,34 +233,34 @@ public class DriveTrain extends Subsystem {
 		talon.setF(Constants.Fd);
 		talon.setCloseLoopRampRate(6);
 	}
-	
+
 	public void resetEncoders() {
-		getAvgEncoderPos(true);
 		for (int i = 0; i < talons.length; i++) {
 			talons[i].setEncPosition(0);
 		}
 	}
-	
-	public double getAvgEncoderPos(boolean reset) {
+
+	public double getAvgEncoderPos() {
 		double ret = 0;
 		for (int i = 0; i < talons.length; i++) {
 			ret += Math.abs(talons[i].getEncPosition());
 		}
 		ret /= talons.length;
-		if (reset) {
-			return 0;
-		}
 		return ret;
 	}
-	
+
 	public double getEncoderPos(int wheel) {
 		return Math.abs(talons[wheel].getEncPosition());
 	}
 
 	/**
 	 * Sets a particular {@link CANTalon} to the specified speed.
-	 * @param wheel The position of the wheel on the chassis. Use {@link DriveTrain} constants, such as {@link DriveTrain#FR}.
-	 * @param speed Speed of the wheel.
+	 * 
+	 * @param wheel
+	 *            The position of the wheel on the chassis. Use
+	 *            {@link DriveTrain} constants, such as {@link DriveTrain#FR}.
+	 * @param speed
+	 *            Speed of the wheel.
 	 */
 	public void set(int wheel, double speed) {
 		talons[wheel].set(speed);
