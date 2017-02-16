@@ -38,5 +38,6 @@ public class OperatorInterface {
 		shoot.update();
 		gather.update();
 		drop.update();
+		gear.update();
 	}
 }

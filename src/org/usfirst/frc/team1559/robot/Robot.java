@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousPeriodic() {
-		routine.run();
+//		routine.run();
 	}
 
 	public void teleopInit() {
@@ -53,6 +53,7 @@ public class Robot extends IterativeRobot {
 		}
 		shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
 		
+		System.out.println(oi.gear.isDown());
 		gearGatherer.set(oi.gear.isDown());
 		//ballGatherer.pickUpBall(); //Ball pickup
 	
