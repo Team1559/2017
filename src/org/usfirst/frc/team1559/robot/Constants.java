@@ -13,8 +13,9 @@ public class Constants {
 	public static final double Pd = -200000; //(This may change) The proportional value for the PIDF loop (Mecanum)
 	public static final double Id = 0; //(This may change) The integral value for the PIDF loop (Mecanum)
 	public static final double Dd = 0; //(This may change) The derivative  value for the PIDF loop (Mecanum)
-	public static final double Fd = 0.0682; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
-	
+	public static final double Fd = 0.0628; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
+	// Fd CHASSIS BLEU: 0.0682
+	// Fd CHASSIS OR: 
 	public static final double Ps = 0.3; //(This may change) The proportional value for the PIDF loop (shooter)
 	public static final double Is = 0; //(This may change) The integral value for the PIDF loop (shooter)
 	public static final double Ds = 0.0; //(This may change) The derivative  value for the PIDF loop (shooter)

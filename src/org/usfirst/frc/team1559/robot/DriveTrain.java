@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends Subsystem {
 
 	private static final int MAX_SPEED_TRACTION = 2000;
-	private static final int MAX_SPEED_MECANUM = 1000;
+	private static final int MAX_SPEED_MECANUM = 400;
 
 	public static final int FR = 0;
 	public static final int RR = 1;
