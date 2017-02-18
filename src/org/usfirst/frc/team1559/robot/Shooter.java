@@ -6,8 +6,6 @@ import org.usfirst.frc.team1559.lib.Subsystem;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.TalonSRX;
 
 public class Shooter extends Subsystem {
 
@@ -50,6 +48,7 @@ public class Shooter extends Subsystem {
 	public void fire(boolean fire) { // Used to control the fire rate of the balls
 		if (fire) {
 			set(Constants.SHOOTER_RPM); //TODO: math and dont blaze
+			System.out.println(shooterTalon.getEncVelocity());
 		} else {
 			set(0); //Sets the fire rate to 0, stopping the shooter.
 		}
