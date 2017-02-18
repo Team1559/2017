@@ -6,7 +6,7 @@ import org.usfirst.frc.team1559.auto.Drive;
 public class TestRoutine extends AutoRoutine {
 
 	public TestRoutine() {
-		put(new Drive(10000, 200, 200));
-		//put(new Drive(5000, 200, 200));
+		put(new Drive(10000, 200));
+		put(new Drive(5000, 200));
 	}
 }

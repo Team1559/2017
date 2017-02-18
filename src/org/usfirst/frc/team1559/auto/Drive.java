@@ -5,14 +5,12 @@ import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class Drive extends AutoCommand {
 
-	double distance, speedL, speedR;
+	double distance, speed;
 	double startDist;
 	Ramp ramp;
 
-	public Drive(double distance, double speedR, double speedL) {
+	public Drive(double distance, double speed) {
 		this.distance = distance;
-		this.speedL = speedL;
-		this.speedR = speedR;
 		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
 		ramp = new Ramp(3,2);
 	}
@@ -24,10 +22,10 @@ public class Drive extends AutoCommand {
 
 	@Override
 	public void update() {
-		DriveTrain.getInstance().set(DriveTrain.FL, ramp.rampMotorValueAuto(startDist, distance, -speedL));
-		DriveTrain.getInstance().set(DriveTrain.FR, ramp.rampMotorValueAuto(startDist, distance, speedR));
-		DriveTrain.getInstance().set(DriveTrain.RL, ramp.rampMotorValueAuto(startDist, distance, -speedL));
-		DriveTrain.getInstance().set(DriveTrain.RR, ramp.rampMotorValueAuto(startDist, distance, speedR));
+		DriveTrain.getInstance().set(DriveTrain.FL, ramp.rampMotorValueAuto(startDist, distance, -speed));
+		DriveTrain.getInstance().set(DriveTrain.FR, ramp.rampMotorValueAuto(startDist, distance, speed));
+		DriveTrain.getInstance().set(DriveTrain.RL, ramp.rampMotorValueAuto(startDist, distance, -speed));
+		DriveTrain.getInstance().set(DriveTrain.RR, ramp.rampMotorValueAuto(startDist, distance, speed));
 	}
 
 	@Override

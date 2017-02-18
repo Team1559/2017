@@ -23,6 +23,10 @@ public class GearGatherer {
 		piston.set(b);
 	}
 
+	public boolean isOpen() {
+		return open;
+	}
+
 	private static GearGatherer instance;
 
 	public static GearGatherer getInstance() {
@@ -30,9 +34,5 @@ public class GearGatherer {
 			instance = new GearGatherer();
 		}
 		return instance;
-	}
-	
-	public boolean isOpen() {
-		return open;
 	}
 }
