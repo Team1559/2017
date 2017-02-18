@@ -1,30 +1,25 @@
 package org.usfirst.frc.team1559.auto;
 
 import org.usfirst.frc.team1559.robot.DriveTrain;
+import org.usfirst.frc.team1559.robot.IMU;
 
 public class Turn extends AutoCommand {
 
-	double distance, speedL, speedR;
-	double startDist;
+	double angle, speed;
+	double startAngle;
 
-	public Turn(double distance, double speedR, double speedL) {
-		this.distance = distance;
-		this.speedL = speedL;
-		this.speedR = speedR;
-		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
+	public Turn(double angle, double speed) {
+		this.angle = angle;
+		this.speed = speed;
+		this.startAngle = IMU.getInstance().getAngle();
 	}
 
 	@Override
 	public void init() {
-		DriveTrain.getInstance().resetEncoders();
 	}
 
 	@Override
 	public void update() {
-		DriveTrain.getInstance().set(DriveTrain.FL, -speedL);
-		DriveTrain.getInstance().set(DriveTrain.FR, speedR);
-		DriveTrain.getInstance().set(DriveTrain.RL, -speedL);
-		DriveTrain.getInstance().set(DriveTrain.RR, speedR);
 	}
 
 	@Override
@@ -33,12 +28,14 @@ public class Turn extends AutoCommand {
 		DriveTrain.getInstance().set(DriveTrain.FR, 0);
 		DriveTrain.getInstance().set(DriveTrain.RL, 0);
 		DriveTrain.getInstance().set(DriveTrain.RR, 0);
-		DriveTrain.getInstance().resetEncoders();
 	}
 
 	@Override
 	public boolean isFinished() {
-		System.out.println("JUST STOP");
-		return DriveTrain.getInstance().getAvgEncoderPos() >= distance + startDist;
+		if (angle > 0) {
+			return IMU.getInstance().getAngle() >= startAngle + angle;
+		} else {
+			return IMU.getInstance().getAngle() <= startAngle + angle;
+		}
 	}
 }

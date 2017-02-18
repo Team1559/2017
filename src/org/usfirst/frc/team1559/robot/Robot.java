@@ -5,11 +5,9 @@ import org.usfirst.frc.team1559.auto.AutoRoutine;
 import org.usfirst.frc.team1559.auto.routines.TestRoutine;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-	IMU imu;
 	AutoRoutine routine;
 	DriveTrain driveTrain; //Create the Drive Train
 	Shooter shooter; //Create the Shooter
@@ -20,7 +18,6 @@ public class Robot extends IterativeRobot {
 	OperatorInterface oi; //Create the OI
 	
 	public void robotInit() {
-		imu = new IMU();
 		routine = new TestRoutine();
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
 		shooter = Shooter.getInstance(); //Instantiate the Shooter
@@ -38,6 +35,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousPeriodic() {
+		IMU.getInstance().update();
 		routine.run();
 	}
 
@@ -46,6 +44,8 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic() {
+		IMU.getInstance().update();
+		System.out.println(IMU.getInstance().getAngle());
 		//JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
@@ -76,8 +76,6 @@ public class Robot extends IterativeRobot {
 		if (oi.openUp.isPressed()) {
 			gearGatherer.open(!gearGatherer.isOpen());
 		}
-		
-		SmartDashboard.putNumber("ANGLE", imu.getAngle());
 	}
 
 
@@ -87,6 +85,7 @@ public class Robot extends IterativeRobot {
 
 
 	public void testPeriodic() {
+		IMU.getInstance().update();
 		driveTrain.set(DriveTrain.FL, 0);
 		driveTrain.set(DriveTrain.FR, 0);
 		driveTrain.set(DriveTrain.RL, 0);
