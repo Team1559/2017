@@ -4,17 +4,23 @@ public class Wiring {//kristin was here :3
 
 	// thou shan't use magical digits
 
-	// Talon stuffs
+	// Drive Train
 	public static final int FL_SRX = 10; // The front left TalonSRX
 	public static final int FR_SRX = 11; // The front right TalonSRX
 	public static final int RL_SRX = 12; // The rear left TalonSRX
 	public static final int RR_SRX = 13; // The rear right TalonSRX
-	public static final int SHOOTER_TALON_PORT = 0; // (Will change) The Port
-													// that the CANTalon will
-													// use.
 
+	// Climber
+	public static final int CLIMBER_TALON = 9;
+	
+	// Ball Gatherer
+	public static final int BGATHERER_TALON = 0;
+	public static final int BGATHERER_PISTON = 1;
+
+	// Shooter
+	public static final int SHOOTER_TALON = 0;
+	
 	// Gear Gatherer
-	public static final int GEAR_IN = 1; // Port for the limit switch
 	public static final int GEAR_GATHERER = 2;
 
 	// Dropper
@@ -33,5 +39,7 @@ public class Wiring {//kristin was here :3
 	public static final int BTN_FLIP = 2;
 	public static final int BTN_DROP = 9;
 	public static final int BTN_GEAR = 3;
-	
+	public static final int BTN_CLIMB = 8;
+	public static final int BTN_CLIMB_REV = 7;
+	public static final int BTN_MOUTH = 4;
 }

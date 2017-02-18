@@ -26,7 +26,7 @@ public class Shooter extends Subsystem {
 	public Shooter() { // Used to define the CANTalon and other variables.
 		super("shooter");
 		// All the variables are defined here.
-		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON_PORT);// Will change for the actual Robot.
+		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON);// Will change for the actual Robot.
 
 		// Initiation for the CANTalon
 		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder); // Sets the feedback device to a Quad Encoder.

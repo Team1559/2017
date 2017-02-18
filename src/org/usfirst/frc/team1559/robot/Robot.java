@@ -14,8 +14,8 @@ public class Robot extends IterativeRobot {
 	DriveTrain driveTrain; //Create the Drive Train
 	Shooter shooter; //Create the Shooter
 	GearGatherer gearGatherer; //Create the Gear Gatherer
-	//BallGatherer ballGatherer; //Create the Ball Gatherer
-	//Climber climber; //Creates the Climber
+	BallGatherer ballGatherer; //Create the Ball Gatherer
+	Climber climber; //Creates the Climber
 	//Diagnostics diagnostics; //Create the diagnostics tool
 	OperatorInterface oi; //Create the OI
 	
@@ -25,10 +25,10 @@ public class Robot extends IterativeRobot {
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
 		shooter = Shooter.getInstance(); //Instantiate the Shooter
 		gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
-		//ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
+		ballGatherer = BallGatherer.getInstance(); //Instantiate the Ball Gatherer
 		oi = OperatorInterface.getInstance(); //Instantiate the OI
 		//diagnostics = new Diagnostics();
-		//climber = Climber.getInstance();
+		climber = Climber.getInstance();
 		
 	}
 
@@ -54,14 +54,29 @@ public class Robot extends IterativeRobot {
 		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
-		shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
+		//shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
 	
 		gearGatherer.set(oi.gear.isDown());
-		//ballGatherer.pickUpBall(); //Ball pickup
+		if (oi.gather.isPressed()) {
+			ballGatherer.gather(!ballGatherer.isGathering());
+		}
 		
 		if (oi.flip.isPressed()) {
 			driveTrain.flipFront();
 		}
+		
+		if (oi.climb.isDown()) {
+			climber.climb();
+		} else if (oi.unclimb.isDown()) {
+			climber.unclimb();
+		} else {
+			climber.stop();
+		}
+		
+		if (oi.openUp.isPressed()) {
+			gearGatherer.open(!gearGatherer.isOpen());
+		}
+		
 		SmartDashboard.putNumber("ANGLE", imu.getAngle());
 	}
 

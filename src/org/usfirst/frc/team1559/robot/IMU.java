@@ -5,8 +5,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 
 public class IMU {
 
-	int port;
-	I2C imu;
+	private I2C imu;
 
 	public IMU() {
 		imu = new I2C(Port.kOnboard, 0x28);

@@ -1,34 +1,39 @@
 package org.usfirst.frc.team1559.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class BallGatherer {
 	
+	boolean gathering;
+	DoubleSolenoid piston;
+	CANTalon belt;
+
+	public BallGatherer() {
+		belt = new CANTalon(Wiring.BGATHERER_TALON);
+	}
+
+	public void gather(boolean b) {
+		if (b) {
+			gathering = true;
+			belt.set(0.7);
+		} else {
+			gathering = false;
+			belt.set(0);
+		}
+	}
+
+	public boolean isGathering() {
+		return gathering;
+	}
+	
 	private static BallGatherer instance;
+
 	public static BallGatherer getInstance() {
 		if (instance == null) {
 			instance = new BallGatherer();
 		}
 		return instance;
-	}
-
-	DoubleSolenoid piston;
-	Talon belt;
-	Joystick joy;
-	
-	public BallGatherer(){
-//		piston = new DoubleSolenoid(Wiring.SOLENOID_DOWN,Wiring.SOLENOID_UP);//forward is down
-		joy = new Joystick(Wiring.JOYSTICK0);
-	}
-    
-	public void pickUpBall(){
-		if(joy.getRawButton(Constants.BALL_GATHERER)){
-			belt.setSpeed(0.7);
-		} else {
-			belt.set(0);
-		}
 	}
 }
