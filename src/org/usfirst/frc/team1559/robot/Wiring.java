@@ -9,7 +9,7 @@ public class Wiring {//kristin was here :3
 	public static final int FR_SRX = 11; // The front right TalonSRX
 	public static final int RL_SRX = 12; // The rear left TalonSRX
 	public static final int RR_SRX = 13; // The rear right TalonSRX
-	public static final int SHOOTER_TALON_PORT = 0; // (Will change) The Port
+	public static final int SHOOTER_TALON_PORT = 9; // (Will change) The Port
 													// that the CANTalon will
 													// use.
 
