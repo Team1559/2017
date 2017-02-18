@@ -35,20 +35,22 @@ public class Shooter extends Subsystem {
 		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE); // Sets the output voltages.
 		shooterTalon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NOMIAL_OUTPUT_VOLTAGE); // Sets the peak voltage and the minimum voltage output.
 		shooterTalon.setProfile(Constants.PROFILE); // Sets the profile of the CANTalon.
-		shooterTalon.setP(Constants.Ps); // Ps = 0.3
+		shooterTalon.setP(Constants.Ps); // Ps = 0.2
 		shooterTalon.setI(Constants.Is); // Is = 0
-		shooterTalon.setD(Constants.Ds); // Ds = 0.05
-		shooterTalon.setF(Constants.Fs); // Fs = 0.32
+		shooterTalon.setD(Constants.Ds); // Ds = 0
+		shooterTalon.setF(Constants.Fs); // Fs = 0.0422
 	}
 
-	public void set(int rpm) { // Starts up the motor so that them balls can be fired.
-		shooterTalon.set(rpm * Constants.RPM_CONVERSION); // Motor is started up.
+	public void set(double rpm) { // Starts up the motor so that them balls can be fired.
+		shooterTalon.set(rpm); // Motor is started up.
 	}
 
 	public void fire(boolean fire) { // Used to control the fire rate of the balls
 		if (fire) {
-			set(Constants.SHOOTER_RPM); //TODO: math and dont blaze
-			System.out.println(shooterTalon.getEncVelocity());
+			set(Constants.SHOOTER_SPEED); //TODO: math and dont blaze
+			//System.out.println(shooterTalon.getEncVelocity());
+			//System.out.println(shooterTalon.getOutputVoltage());
+			//System.out.println(shooterTalon.getOutputCurrent());
 		} else {
 			set(0); //Sets the fire rate to 0, stopping the shooter.
 		}

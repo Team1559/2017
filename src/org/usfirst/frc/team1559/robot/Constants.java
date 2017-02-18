@@ -18,10 +18,10 @@ public class Constants {
 	public static final int ENCODER_CODES_PER_REV = 4096;// The number of times an encoder will move in one wheel revolution
 	
 	public static final float NOMIAL_OUTPUT_VOLTAGE = +0.0f; //The forward nomial output voltage for the talons
-	public static final float PEAK_OUTPUT_VOLTAGE = +12.0f; //The reverse nomial output voltage for the talons
+	public static final float PEAK_OUTPUT_VOLTAGE = +0.0f; //The reverse nomial output voltage for the talons
 	public static final float NEGATIVE_NOMIAL_OUTPUT_VOLTAGE = -0.0f; //The forward peak output voltage for the talons
 	public static final float NEGATIVE_PEAK_OUTPUT_VOLTAGE = -12.0f; //The reverse peak output voltage for the talons
 	public static final int PROFILE = 0; //The profile for the talons
-	public static final int SHOOTER_RPM = 250;//Need to check, also could change based on distance
+	public static final int SHOOTER_SPEED = 700;//The minimum to make it over the lip is 685, the maximum is 720, average of about 700.
 	public static final double RPM_CONVERSION = (300)/(4096); //This will change
 }
