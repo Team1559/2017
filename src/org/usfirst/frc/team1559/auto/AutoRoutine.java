@@ -22,8 +22,9 @@ public class AutoRoutine {
 	}
 
 	public void run() {
-		if (currentCommand >= commands.size())
+		if (currentCommand >= commands.size()) {
 			return;
+		}
 		if (!commands.get(currentCommand).isInitialized()) {
 			commands.get(currentCommand).initialize();
 			System.out.println("INIT " + currentCommand);

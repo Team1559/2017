@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
+	IMU imu;
 	AutoRoutine routine;
 	DriveTrain driveTrain; //Create the Drive Train
 	Shooter shooter; //Create the Shooter
@@ -19,6 +20,7 @@ public class Robot extends IterativeRobot {
 	OperatorInterface oi; //Create the OI
 	
 	public void robotInit() {
+		imu = new IMU();
 		routine = new TestRoutine();
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
 		shooter = Shooter.getInstance(); //Instantiate the Shooter
@@ -48,20 +50,19 @@ public class Robot extends IterativeRobot {
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
 //		driveTrain.drive(oi.getDriverStick());
-		driveTrain.drive(oi.getDriverStick()); // with this setup, mecanum doesn't work, plz fix
+		driveTrain.drive(oi.getDriverStick(), true); // with this setup, mecanum doesn't work, plz fix
 		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
 		shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
-		
-		System.out.println(oi.gear.isDown());
+	
 		gearGatherer.set(oi.gear.isDown());
 		//ballGatherer.pickUpBall(); //Ball pickup
-	
-		//climber.climbOnUp(); //climb up bois
-		SmartDashboard.putNumber("JoyX", oi.getDriverStick().getX() * Math.abs(oi.getDriverStick().getX()));
-		SmartDashboard.putNumber("JoyY", oi.getDriverStick().getY() * Math.abs(oi.getDriverStick().getY()));
-		SmartDashboard.putNumber("JoyR", oi.getDriverStick().getRawAxis(4));
+		
+		if (oi.flip.isPressed()) {
+			driveTrain.flipFront();
+		}
+		SmartDashboard.putNumber("ANGLE", imu.getAngle());
 	}
 
 

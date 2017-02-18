@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1559.robot;
 
+import org.usfirst.frc.team1559.lib.Ramp;
 import org.usfirst.frc.team1559.lib.State;
 import org.usfirst.frc.team1559.lib.Subsystem;
 
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends Subsystem {
 
 	private static final int MAX_SPEED_TRACTION = 2000;
-	private static final int MAX_SPEED_MECANUM = 400;
+	private static final int MAX_SPEED_MECANUM = 1000;
 
 	public static final int FR = 0;
 	public static final int RR = 1;
@@ -23,6 +24,8 @@ public class DriveTrain extends Subsystem {
 	public static final int FL = 3;
 
 	private static DriveTrain instance;
+
+	Ramp rampX, rampY, rampRot;
 
 	public static DriveTrain getInstance() {
 		if (instance == null) {
@@ -32,6 +35,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	private boolean velocityControl = true;
+	private boolean flipped = false;
 
 	private CANTalon[] talons;
 	private Solenoid drop; // Solenoid for shifting
@@ -57,6 +61,10 @@ public class DriveTrain extends Subsystem {
 			t.enable();
 		}
 
+		rampX = new Ramp(3, 2);
+		rampY = new Ramp(3, 2);
+		rampRot = new Ramp(3, 2);
+
 		initTraction();
 		// Enables the PIDF loop
 	}
@@ -66,13 +74,24 @@ public class DriveTrain extends Subsystem {
 		drop.set(mecanumized); // Set the pistons to the new value
 	}
 
-	public void drive(Joystick stick) {
+	public void drive(Joystick stick, boolean ramp) {
+		double xIn = Math.pow(stick.getX(), 3);
+		double yIn = Math.pow(stick.getY(), 3);
+		double rotIn = Math.pow(stick.getRawAxis(4), 3);
+
+		if (ramp && !mecanumized) {
+			xIn = rampX.rampMotorValue(xIn);
+			yIn = rampY.rampMotorValue(yIn);
+			rotIn = rampRot.rampMotorValue(rotIn);
+		}
+		if (flipped) {
+			rotIn = -rotIn;
+		}
+
 		if (mecanumized /* && stick.getRawAxis(4) >= 0.1 */) {
-			driveMecanum(stick.getX() * Math.abs(stick.getX()), stick.getY() * Math.abs(stick.getY()),
-					stick.getRawAxis(4));
+			driveMecanum(xIn, yIn, rotIn);
 		} else {
-			driveTraction(stick.getRawAxis(1) * Math.abs(stick.getRawAxis(1)),
-					stick.getRawAxis(4) * Math.abs(stick.getRawAxis(4)));
+			driveTraction(yIn, rotIn);
 		}
 	}
 
@@ -243,7 +262,7 @@ public class DriveTrain extends Subsystem {
 	public double getAvgEncoderPos() {
 		double ret = 0;
 		for (int i = 0; i < talons.length; i++) {
-			ret += talons[i].getEncPosition();
+			ret += Math.abs(talons[i].getEncPosition());
 		}
 		ret /= talons.length;
 		return ret;
@@ -264,5 +283,13 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void set(int wheel, double speed) {
 		talons[wheel].set(speed);
+	}
+
+	public void flipFront() {
+		flipped = !flipped;
+		talons[FL].setInverted(!talons[FL].getInverted());
+		talons[FR].setInverted(!talons[FR].getInverted());
+		talons[RL].setInverted(!talons[RL].getInverted());
+		talons[RR].setInverted(!talons[RR].getInverted());
 	}
 }
