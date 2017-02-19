@@ -35,7 +35,7 @@ public class Wiring {//kristin was here :3
 	public static final int JOYSTICK3 = 3;
 
 	// Gatherer/shooter controls
-	public static final int BTN_GATHER = 1; // Button to control the gatherer
+	public static final int BTN_GATHER = 5; // Button to control the gatherer
 	public static final int BTN_SHOOT = 10; // Button to control the shooter & feeder
 	public static final int BTN_FLIP = 2;
 	public static final int BTN_DROP = 9;

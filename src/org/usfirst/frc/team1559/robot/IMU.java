@@ -34,6 +34,14 @@ public class IMU {
 	public double getZ() {
 		return zAngle;
 	}
+	
+	public double getX() {
+		return xAngle;
+	}
+	
+	public double getY() {
+		return yAngle;
+	}
 
 	private static IMU instance;
 

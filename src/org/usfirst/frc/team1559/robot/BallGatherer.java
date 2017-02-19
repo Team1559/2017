@@ -1,24 +1,26 @@
 package org.usfirst.frc.team1559.robot;
 
-import com.ctre.CANTalon;
-
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Talon;
 
 public class BallGatherer {
 
-	private CANTalon belt;
+	private static final double GATHER_SPEED = 1;
+	
+	private Talon belt;
 	private Solenoid piston;
 	private boolean gathering;
 
 	private BallGatherer(int talonPort, int pistonPort) {
-		belt = new CANTalon(talonPort);
+		belt = new Talon(talonPort);
 		piston = new Solenoid(pistonPort);
+		belt.setInverted(true);
 	}
 
 	public void gather(boolean b) {
 		if (b) {
 			gathering = true;
-			belt.set(0.7);
+			belt.set(GATHER_SPEED);
 		} else {
 			gathering = false;
 			belt.set(0);

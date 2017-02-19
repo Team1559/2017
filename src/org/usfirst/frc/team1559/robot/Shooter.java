@@ -20,9 +20,9 @@ public class Shooter extends Subsystem {
 		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterTalon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
 		shooterTalon.changeControlMode(TalonControlMode.Speed);
-		shooterTalon.configNominalOutputVoltage(Constants.NOMIAL_FWD_VOUT,
+		shooterTalon.configNominalOutputVoltage(Constants.NOMINAL_FWD_VOUT,
 				Constants.PEAK_REV_VOUT);
-		shooterTalon.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.NOMIAL_FWD_VOUT);
+		shooterTalon.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.NOMINAL_FWD_VOUT);
 		shooterTalon.setProfile(Constants.PROFILE);
 		shooterTalon.setP(Constants.Ps);
 		shooterTalon.setI(Constants.Is);

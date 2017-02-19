@@ -5,6 +5,7 @@ import org.usfirst.frc.team1559.auto.AutoRoutine;
 import org.usfirst.frc.team1559.auto.routines.TestRoutine;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Robot extends IterativeRobot {
 
@@ -16,9 +17,11 @@ public class Robot extends IterativeRobot {
 	Climber climber; //Creates the Climber
 	//Diagnostics diagnostics; //Create the diagnostics tool
 	OperatorInterface oi; //Create the OI
+	PowerDistributionPanel pdp;
 	
 	public void robotInit() {
 		routine = new TestRoutine();
+		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance(); //Instantiate the Drive Train
 		shooter = Shooter.getInstance(); //Instantiate the Shooter
 		gearGatherer = GearGatherer.getInstance(); //Instantiate the Gear Gatherer
@@ -36,16 +39,17 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousPeriodic() {
 		IMU.getInstance().update();
-		routine.run();
+		//routine.run();
 	}
 
 	public void teleopInit() {
-		driveTrain.drop(false); //Make sure we are in traction mode
+		driveTrain.drop(false); //Make sure we are in traction mode      
+		ballGatherer.setPiston(true);
 	}
 	
 	public void teleopPeriodic() {
 		IMU.getInstance().update();
-		System.out.println(IMU.getInstance().getZ());
+		System.out.println(pdp.getCurrent(2));
 		//JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
@@ -58,12 +62,10 @@ public class Robot extends IterativeRobot {
 		shooter.fire(oi.shoot.isPressed());
 	
 		gearGatherer.set(oi.gear.isDown());
-		if (oi.gather.isPressed()) {
-			ballGatherer.gather(!ballGatherer.isGathering());
-		}
-		
+		ballGatherer.gather(oi.gather.isDown());
+
 		if (oi.flip.isPressed()) {
-			driveTrain.flipFront();
+			driveTrain.setFlipped(!driveTrain.isFlipped());
 		}
 		
 		if (oi.climb.isDown()) {

@@ -22,7 +22,7 @@ public class DriveTrain extends Subsystem {
 	Ramp rampX, rampY, rampRot;
 
 	private boolean velocityControl = true;
-	private boolean flipped = false; // controls which side is the front
+	private boolean flipped; // controls which side is the front
 
 	private CANTalon[] talons;
 	private Solenoid drop; // Solenoid for shifting
@@ -56,6 +56,7 @@ public class DriveTrain extends Subsystem {
 		} else {
 			initTraction();
 		}
+		setFlipped(true);
 	}
 
 	public void drop(boolean mecanumized) { // Control the versadrop
@@ -101,8 +102,8 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void driveMecanum(double x, double y, double rotation) {
-
-		double angle = IMU.getInstance().getZ();
+		double angle = 0;
+//		double angle = IMU.getInstance().getZ();
 		double xIn = x;
 		double yIn = y;
 		// Negate y for the joystick.
@@ -165,7 +166,7 @@ public class DriveTrain extends Subsystem {
 		talon.changeControlMode(TalonControlMode.Speed);
 		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		talon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		talon.configNominalOutputVoltage(Constants.NOMIAL_FWD_VOUT, Constants.NOMIAL_REV_VOUT);
+		talon.configNominalOutputVoltage(Constants.NOMINAL_FWD_VOUT, Constants.NOMINAL_REV_VOUT);
 		talon.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.PEAK_REV_VOUT);
 		talon.setProfile(Constants.PROFILE);
 		talon.setP(Constants.Pd);
@@ -206,12 +207,16 @@ public class DriveTrain extends Subsystem {
 		talons[wheel].set(speed);
 	}
 
-	public void flipFront() {
-		flipped = !flipped;
+	public void setFlipped(boolean b) {
+		flipped = b;
 		talons[FL].setInverted(!talons[FL].getInverted());
 		talons[FR].setInverted(!talons[FR].getInverted());
 		talons[RL].setInverted(!talons[RL].getInverted());
 		talons[RR].setInverted(!talons[RR].getInverted());
+	}
+	
+	public boolean isFlipped() {
+		return flipped;
 	}
 
 	private static DriveTrain instance;

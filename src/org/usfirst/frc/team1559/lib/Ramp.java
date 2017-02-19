@@ -2,8 +2,6 @@ package org.usfirst.frc.team1559.lib;
 
 import java.util.Arrays;
 
-import org.usfirst.frc.team1559.robot.Wiring;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Ramp {
