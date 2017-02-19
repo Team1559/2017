@@ -18,7 +18,8 @@ public class Wiring {//kristin was here :3
 	public static final int BGATHERER_PISTON = 1;
 
 	// Shooter
-	public static final int SHOOTER_TALON = 0;
+	public static final int SHOOTER_TALON = 1; // Will change (The port it is on)
+	public static final int FEEDER_TALON = 3; // Will change (The port it is on)
 	
 	// Gear Gatherer
 	public static final int GEAR_GATHERER = 2;
@@ -35,7 +36,7 @@ public class Wiring {//kristin was here :3
 
 	// Gatherer/shooter controls
 	public static final int BTN_GATHER = 1; // Button to control the gatherer
-	public static final int BTN_SHOOT = 10; // Button to control the shooter
+	public static final int BTN_SHOOT = 10; // Button to control the shooter & feeder
 	public static final int BTN_FLIP = 2;
 	public static final int BTN_DROP = 9;
 	public static final int BTN_GEAR = 3;

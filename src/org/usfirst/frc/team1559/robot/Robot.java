@@ -55,6 +55,7 @@ public class Robot extends IterativeRobot {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
 		//shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) > Constants.SHOOTER_TOLERANCE); //Shooter
+		shooter.fire(oi.shoot.isPressed());
 	
 		gearGatherer.set(oi.gear.isDown());
 		if (oi.gather.isPressed()) {
