@@ -20,6 +20,7 @@ public class Turn extends AutoCommand {
 
 	@Override
 	public void update() {
+		
 	}
 
 	@Override
@@ -33,9 +34,9 @@ public class Turn extends AutoCommand {
 	@Override
 	public boolean isFinished() {
 		if (angle > 0) {
-			return IMU.getInstance().getAngle() >= startAngle + angle;
+			return IMU.getInstance().getZ() >= startAngle + angle;
 		} else {
-			return IMU.getInstance().getAngle() <= startAngle + angle;
+			return IMU.getInstance().getZ() <= startAngle + angle;
 		}
 	}
 }

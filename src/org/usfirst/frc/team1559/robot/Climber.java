@@ -6,8 +6,8 @@ public class Climber {
 
 	Talon talon;
 	
-	private Climber() {
-		talon = new Talon(Wiring.CLIMBER_TALON);
+	private Climber(int port) {
+		talon = new Talon(port);
 	}
 
 	public void climb() {
@@ -26,7 +26,7 @@ public class Climber {
 
 	public static Climber getInstance() {
 		if (instance == null) {
-			instance = new Climber();
+			instance = new Climber(Wiring.CLIMBER_TALON);
 		}
 		return instance;
 	}

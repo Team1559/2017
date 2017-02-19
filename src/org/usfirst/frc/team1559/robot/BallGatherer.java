@@ -10,9 +10,9 @@ public class BallGatherer {
 	private Solenoid piston;
 	private boolean gathering;
 
-	private BallGatherer() {
-		belt = new CANTalon(Wiring.BGATHERER_TALON);
-		piston = new Solenoid(Wiring.BGATHERER_PISTON);
+	private BallGatherer(int talonPort, int pistonPort) {
+		belt = new CANTalon(talonPort);
+		piston = new Solenoid(pistonPort);
 	}
 
 	public void gather(boolean b) {
@@ -37,7 +37,7 @@ public class BallGatherer {
 
 	public static BallGatherer getInstance() {
 		if (instance == null) {
-			instance = new BallGatherer();
+			instance = new BallGatherer(Wiring.BGATHERER_TALON, Wiring.BGATHERER_PISTON);
 		}
 		return instance;
 	}
