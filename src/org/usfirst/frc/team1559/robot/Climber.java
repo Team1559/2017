@@ -4,22 +4,22 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Climber {
 
-	Talon spin; // motor that will spin the climber bar
-
-	public Climber() {
-		spin = new Talon(Wiring.CLIMBER_TALON);
+	Talon talon;
+	
+	private Climber() {
+		talon = new Talon(Wiring.CLIMBER_TALON);
 	}
 
 	public void climb() {
-		spin.set(-0.7);
+		talon.set(-0.7);
 	}
 
 	public void unclimb() {
-		spin.set(0.7);
+		talon.set(0.7);
 	}
 	
 	public void stop() {
-		spin.set(0);
+		talon.set(0);
 	}
 
 	private static Climber instance;

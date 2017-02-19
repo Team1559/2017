@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 public class GearGatherer {
 
-	boolean open;
-	Servo mouth;
-	Solenoid piston; // The piston that releases the gear
+	private Servo mouth; // blocks balls
+	private Solenoid piston; // releases gear
+	private boolean open;
 
-	public GearGatherer() {
-		mouth = new Servo(4);
-		piston = new Solenoid(Wiring.GEAR_GATHERER);// forward
+	private GearGatherer() {
+		mouth = new Servo(4); // TODO: find correct port and add to Wiring
+		piston = new Solenoid(Wiring.GEAR_GATHERER);
 	}
 
 	public void open(boolean b) {
@@ -19,7 +19,7 @@ public class GearGatherer {
 		open = b;
 	}
 	
-	public void set(boolean b) { // Triggered is a joystick button
+	public void set(boolean b) {
 		piston.set(b);
 	}
 

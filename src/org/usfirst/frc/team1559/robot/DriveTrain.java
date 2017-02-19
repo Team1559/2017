@@ -11,39 +11,25 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
 	private static final int MAX_SPEED_TRACTION = 2000;
 	private static final int MAX_SPEED_MECANUM = 1000;
 
-	public static final int FR = 0;
-	public static final int RR = 1;
-	public static final int RL = 2;
-	public static final int FL = 3;
-
-	private static DriveTrain instance;
+	public static final int FR = 0, RR = 1, RL = 2, FL = 3;
 
 	Ramp rampX, rampY, rampRot;
 
-	public static DriveTrain getInstance() {
-		if (instance == null) {
-			instance = new DriveTrain();
-		}
-		return instance;
-	}
-
 	private boolean velocityControl = true;
-	private boolean flipped = false;
+	private boolean flipped = false; // controls which side is the front
 
 	private CANTalon[] talons;
 	private Solenoid drop; // Solenoid for shifting
-	private RobotDrive drive; // The robot's drive
+	private RobotDrive drive;
 	private boolean mecanumized;
-	double gyroAngle; // TODO: Delete
 
-	public DriveTrain() {
+	private DriveTrain(boolean mecanumized) {
 		super("drive-train");
 		talons = new CANTalon[4];
 		talons[FR] = new CANTalon(Wiring.FR_SRX);
@@ -52,26 +38,29 @@ public class DriveTrain extends Subsystem {
 		talons[FL] = new CANTalon(Wiring.FL_SRX);
 		drop = new Solenoid(Wiring.DROPPER);
 		drive = new RobotDrive(talons[FL], talons[RL], talons[FR], talons[RR]);
-		mecanumized = false;
+		this.mecanumized = mecanumized;
 
-		for (CANTalon t : talons) {
-			if (velocityControl) {
+		if (velocityControl) {
+			for (CANTalon t : talons) {
 				initVelocityControl(t);
+				t.enable();
 			}
-			t.enable();
 		}
 
 		rampX = new Ramp(3, 2);
 		rampY = new Ramp(3, 2);
 		rampRot = new Ramp(3, 2);
 
-		initTraction();
-		// Enables the PIDF loop
+		if (mecanumized) {
+			initMecanum();
+		} else {
+			initTraction();
+		}
 	}
 
 	public void drop(boolean mecanumized) { // Control the versadrop
 		this.mecanumized = mecanumized;
-		drop.set(mecanumized); // Set the pistons to the new value
+		drop.set(mecanumized);
 	}
 
 	public void drive(Joystick stick, boolean ramp) {
@@ -88,7 +77,7 @@ public class DriveTrain extends Subsystem {
 			rotIn = -rotIn;
 		}
 
-		if (mecanumized /* && stick.getRawAxis(4) >= 0.1 */) {
+		if (mecanumized) {
 			driveMecanum(xIn, yIn, rotIn);
 		} else {
 			driveTraction(yIn, rotIn);
@@ -109,86 +98,19 @@ public class DriveTrain extends Subsystem {
 
 	public void driveTraction(double move, double rot) {
 		drive.arcadeDrive(move, rot);
-		// double leftMotorSpeed;
-		// double rightMotorSpeed;
-		// boolean squaredInputs = false;
-		// if (squaredInputs) {
-		// if (move >= 0.0) {
-		// move = move * move;
-		// } else {
-		// move = -(move * move);
-		// }
-		// if (rot >= 0.0) {
-		// rot = rot * rot;
-		// } else {
-		// rot = -(rot * rot);
-		// }
-		// }
-		//
-		// if (move > 0.0)
-		//
-		// {
-		// if (rot > 0.0) {
-		// leftMotorSpeed = move - rot;
-		// rightMotorSpeed = Math.max(move, rot);
-		// } else {
-		// leftMotorSpeed = Math.max(move, -rot);
-		// rightMotorSpeed = move + rot;
-		// }
-		// } else {
-		// if (rot > 0.0) {
-		// leftMotorSpeed = -Math.max(-move, rot);
-		// rightMotorSpeed = move + rot;
-		// } else {
-		// leftMotorSpeed = move - rot;
-		// rightMotorSpeed = -Math.max(-move, -rot);
-		// }
-		// }
-		// fr.set(-rightMotorSpeed * 640);
-		// rr.set(-rightMotorSpeed * 640);
-		// fl.set(leftMotorSpeed * 640);
-		// rl.set(leftMotorSpeed * 640);
-		SmartDashboard.putNumber("FR Encoder", talons[FR].getEncVelocity());
-		SmartDashboard.putNumber("FL Encoder", talons[FL].getEncVelocity());
-		SmartDashboard.putNumber("RR Encoder", talons[RR].getEncVelocity());
-		SmartDashboard.putNumber("RL Encoder", talons[RL].getEncVelocity());
-		SmartDashboard.putNumber("FL Voltage", talons[FL].getOutputVoltage());
 	}
 
-	// public void driveMecanum(double x, double y, double rotation) {
-	// drive.mecanumDrive_Cartesian(x, y, rotation, 0);
-	// }
+	public void driveMecanum(double x, double y, double rotation) {
 
-	public void driveMecanum(double x, double y, double rotation) { // Mecanum
-																	// drive
-																	// method
-		//
-		// gAngle = g.getAngle();
-
-		// desiredAngle += rotation;
-		//
-		// if(desiredAngle > gyroAngle+1){
-		// correctionAngle-=0.01;
-		// } else if(desiredAngle < gyroAngle-1){
-		// correctionAngle+=0.01;
-		// } else {
-		// correctionAngle = 0.0;
-		// }
-		//
-		// rotation += correctionAngle;
-
-		// gyroAngle = g.getAngle(); // TODO: Replace with IMU data from TX1
-
+		double angle = IMU.getInstance().getAngle();
 		double xIn = x;
 		double yIn = y;
 		// Negate y for the joystick.
 		yIn = -yIn;
 		// Compenstate for gyro angle.
-		double rotated[] = rotateVector(xIn, yIn, gyroAngle);
+		double rotated[] = rotateVector(xIn, yIn, angle);
 		xIn = rotated[0];
 		yIn = rotated[1];
-
-		System.out.println(gyroAngle);
 
 		// Calculate the speeds
 		double[] speeds = new double[4];
@@ -243,14 +165,13 @@ public class DriveTrain extends Subsystem {
 		talon.changeControlMode(TalonControlMode.Speed);
 		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		talon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		talon.configNominalOutputVoltage(Constants.NOMIAL_OUTPUT_VOLTAGE, Constants.NEGATIVE_NOMIAL_OUTPUT_VOLTAGE);
-		talon.configPeakOutputVoltage(Constants.PEAK_OUTPUT_VOLTAGE, Constants.NEGATIVE_PEAK_OUTPUT_VOLTAGE);
+		talon.configNominalOutputVoltage(Constants.NOMIAL_FWD_VOUT, Constants.NOMIAL_REV_VOUT);
+		talon.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.PEAK_REV_VOUT);
 		talon.setProfile(Constants.PROFILE);
 		talon.setP(Constants.Pd);
 		talon.setI(Constants.Id);
 		talon.setD(Constants.Dd);
 		talon.setF(Constants.Fd);
-		talon.setCloseLoopRampRate(6);
 	}
 
 	public void resetEncoders() {
@@ -291,5 +212,14 @@ public class DriveTrain extends Subsystem {
 		talons[FR].setInverted(!talons[FR].getInverted());
 		talons[RL].setInverted(!talons[RL].getInverted());
 		talons[RR].setInverted(!talons[RR].getInverted());
+	}
+
+	private static DriveTrain instance;
+
+	public static DriveTrain getInstance() {
+		if (instance == null) {
+			instance = new DriveTrain(false);
+		}
+		return instance;
 	}
 }

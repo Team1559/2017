@@ -2,16 +2,17 @@ package org.usfirst.frc.team1559.robot;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class BallGatherer {
-	
-	boolean gathering;
-	DoubleSolenoid piston;
-	CANTalon belt;
 
-	public BallGatherer() {
+	private CANTalon belt;
+	private Solenoid piston;
+	private boolean gathering;
+
+	private BallGatherer() {
 		belt = new CANTalon(Wiring.BGATHERER_TALON);
+		piston = new Solenoid(Wiring.BGATHERER_PISTON);
 	}
 
 	public void gather(boolean b) {
@@ -24,10 +25,14 @@ public class BallGatherer {
 		}
 	}
 
+	public void setPiston(boolean b) {
+		piston.set(b);
+	}
+
 	public boolean isGathering() {
 		return gathering;
 	}
-	
+
 	private static BallGatherer instance;
 
 	public static BallGatherer getInstance() {

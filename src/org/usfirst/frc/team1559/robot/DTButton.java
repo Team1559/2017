@@ -3,7 +3,7 @@ package org.usfirst.frc.team1559.robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class DTButton {
-
+	
 	boolean old, current;
 	Joystick stick;
 	int button;

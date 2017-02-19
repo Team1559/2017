@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1559.robot;
 
-//                   : )
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;

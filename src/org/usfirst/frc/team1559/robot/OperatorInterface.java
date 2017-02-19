@@ -1,25 +1,31 @@
 package org.usfirst.frc.team1559.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 public class OperatorInterface {
-	
-	private Joystick driverStick, copilotStick; //Creates BetterJoysticks
-	
+
+	private Joystick driverStick, copilotStick;
+
+	public List<DTButton> buttons;
 	public DTButton shoot, gather, drop, gear, flip, climb, unclimb, openUp;
-	
+
 	private static OperatorInterface instance;
+
 	public static OperatorInterface getInstance() {
 		if (instance == null) {
 			instance = new OperatorInterface();
 		}
 		return instance;
 	}
-	
+
 	public OperatorInterface() {
 		assert Wiring.JOYSTICK0 != Wiring.JOYSTICK1;
-		driverStick = new Joystick(Wiring.JOYSTICK0); //The drivers joystick
-		copilotStick = new Joystick(Wiring.JOYSTICK1); //The copilots joystick
+		driverStick = new Joystick(Wiring.JOYSTICK0); // The drivers joystick
+		copilotStick = new Joystick(Wiring.JOYSTICK1); // The copilots joystick
+		buttons = new ArrayList<DTButton>();
 		shoot = new DTButton(driverStick, Wiring.BTN_SHOOT);
 		gather = new DTButton(driverStick, Wiring.BTN_GATHER);
 		drop = new DTButton(driverStick, Wiring.BTN_DROP);
@@ -29,15 +35,15 @@ public class OperatorInterface {
 		unclimb = new DTButton(driverStick, Wiring.BTN_CLIMB_REV);
 		openUp = new DTButton(driverStick, Wiring.BTN_MOUTH);
 	}
-	
-	public Joystick getDriverStick() { //Getter method to get the drivers joystick
+
+	public Joystick getDriverStick() {
 		return driverStick;
 	}
-	
-	public Joystick getCopilotStick() { //Getter method to get the copilots joystick
+
+	public Joystick getCopilotStick() {
 		return copilotStick;
 	}
-	
+
 	public void updateButtons() {
 		shoot.update();
 		gather.update();
