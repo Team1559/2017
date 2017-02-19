@@ -7,6 +7,8 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Talon;
+
 public class Shooter extends Subsystem {
 
 	private static Shooter instance;
@@ -16,18 +18,14 @@ public class Shooter extends Subsystem {
 		}
 		return instance;
 	}
-	
 	// The Shooter is a Fly Wheel Shooter.
 	// This is where most of the variables are instantiated.
-
-	CANTalon shooterTalon; // The motor that is used to fire them balls.
-	int velocity; // The velocity variable.
-	
+	CANTalon shooterTalon; Talon shooterFeeder; // The motor that is used to fire them balls & The motor used to feed the balls.
 	public Shooter() { // Used to define the CANTalon and other variables.
 		super("shooter");
 		// All the variables are defined here.
 		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON);// Will change for the actual Robot.
-
+		shooterFeeder = new Talon(Wiring.FEEDER_TALON);
 		// Initiation for the CANTalon
 		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder); // Sets the feedback device to a Quad Encoder.
 		shooterTalon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV); // Encoder codes per Revolution.
@@ -40,23 +38,20 @@ public class Shooter extends Subsystem {
 		shooterTalon.setD(Constants.Ds); // Ds = 0
 		shooterTalon.setF(Constants.Fs); // Fs = 0.0422
 	}
-
-	public void set(double rpm) { // Starts up the motor so that them balls can be fired.
+	public void setShooter(double rpm) { // Starts up the motor so that them balls can be fired.
 		shooterTalon.set(rpm); // Motor is started up.
 	}
-
+	public void setFeeder(double feedSpeed) {
+		shooterFeeder.set(feedSpeed);
+	}
 	public void fire(boolean fire) { // Used to control the fire rate of the balls
 		if (fire) {
-			set(Constants.SHOOTER_SPEED); //TODO: math and dont blaze
-			//System.out.println(shooterTalon.getEncVelocity());
-			//System.out.println(shooterTalon.getOutputVoltage());
-			//System.out.println(shooterTalon.getOutputCurrent());
+			setShooter(Constants.SHOOTER_SPEED); //TODO: Set to the right speed
+			setFeeder(Constants.FEEDER_SPEED); //TODO: Find the perfect speed.
 		} else {
-			set(0); //Sets the fire rate to 0, stopping the shooter.
+			setShooter(0); //Sets the fire rate to 0, stopping the shooter.
 		}
 	}
-
-
 	public void getState(State s) { // The method that will set the state of s
 		s.put("shooter-velocity", shooterTalon.getEncVelocity()*Constants.RPM_CONVERSION); // TODO: fix
 	}
