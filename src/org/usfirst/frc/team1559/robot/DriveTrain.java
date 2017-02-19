@@ -102,7 +102,7 @@ public class DriveTrain extends Subsystem {
 
 	public void driveMecanum(double x, double y, double rotation) {
 
-		double angle = IMU.getInstance().getAngle();
+		double angle = IMU.getInstance().getZ();
 		double xIn = x;
 		double yIn = y;
 		// Negate y for the joystick.

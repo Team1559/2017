@@ -11,7 +11,7 @@ public class Turn extends AutoCommand {
 	public Turn(double angle, double speed) {
 		this.angle = angle;
 		this.speed = speed;
-		this.startAngle = IMU.getInstance().getAngle();
+		this.startAngle = IMU.getInstance().getZ();
 	}
 
 	@Override

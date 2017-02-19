@@ -45,7 +45,7 @@ public class Robot extends IterativeRobot {
 	
 	public void teleopPeriodic() {
 		IMU.getInstance().update();
-		System.out.println(IMU.getInstance().getAngle());
+		System.out.println(IMU.getInstance().getZ());
 		//JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
