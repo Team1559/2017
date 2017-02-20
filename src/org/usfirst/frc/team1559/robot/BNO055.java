@@ -3,12 +3,12 @@ package org.usfirst.frc.team1559.robot;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 
-public class IMU {
+public class BNO055 {
 
 	private double xAngle, yAngle, zAngle;
 	private I2C imu;
 
-	private IMU() {
+	private BNO055() {
 		imu = new I2C(Port.kOnboard, 0x28);
 		imu.write(0x3D, 0x0C);
 	}
@@ -43,11 +43,11 @@ public class IMU {
 		return yAngle;
 	}
 
-	private static IMU instance;
+	private static BNO055 instance;
 
-	public static IMU getInstance() {
+	public static BNO055 getInstance() {
 		if (instance == null) {
-			instance = new IMU();
+			instance = new BNO055();
 		}
 		return instance;
 	}

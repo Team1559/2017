@@ -21,13 +21,18 @@ public class DriveTrain extends Subsystem {
 
 	Ramp rampX, rampY, rampRot;
 
+	private boolean operatorControlled = true;
 	private boolean velocityControl = true;
 	private boolean flipped; // controls which side is the front
+	private boolean rampedControls = true;
 
 	private CANTalon[] talons;
 	private Solenoid drop; // Solenoid for shifting
 	private RobotDrive drive;
 	private boolean mecanumized;
+	
+	RobotPosition currentPos;
+	RobotPosition desiredPos;
 
 	private DriveTrain(boolean mecanumized) {
 		super("drive-train");
@@ -39,6 +44,8 @@ public class DriveTrain extends Subsystem {
 		drop = new Solenoid(Wiring.DROPPER);
 		drive = new RobotDrive(talons[FL], talons[RL], talons[FR], talons[RR]);
 		this.mecanumized = mecanumized;
+		currentPos = new RobotPosition();
+		desiredPos = new RobotPosition();
 
 		if (velocityControl) {
 			for (CANTalon t : talons) {
@@ -64,16 +71,43 @@ public class DriveTrain extends Subsystem {
 		drop.set(mecanumized);
 	}
 
-	public void drive(Joystick stick, boolean ramp) {
+	public void update(Joystick stick) {
+		if (operatorControlled) {
+			drive(stick);
+		} else {
+			driveTo(desiredPos);
+		}
+	}
+	
+	public void driveTo(RobotPosition pos) {
+		// only traction for now
+		currentPos.enc = getAvgEncoderPos();
+		currentPos.angle = BNO055.getInstance().getZ();
+		double dist = pos.enc - currentPos.enc;
+		double dAngle = pos.angle - currentPos.angle;
+		if (!mecanumized) {
+			double outLeft = -dAngle + dist;
+			double outRight = dAngle + dist;
+			talons[FL].set(outLeft);
+			talons[RL].set(outLeft);
+			talons[FR].set(outRight);
+			talons[RR].set(outRight);
+		} else {
+			
+		}
+	}
+
+	public void drive(Joystick stick) {
 		double xIn = Math.pow(stick.getX(), 3);
 		double yIn = Math.pow(stick.getY(), 3);
 		double rotIn = Math.pow(stick.getRawAxis(4), 3);
 
-		if (ramp && !mecanumized) {
+		if (rampedControls && !mecanumized) { // ramping breaks mecanum apparently...
 			xIn = rampX.rampMotorValue(xIn);
 			yIn = rampY.rampMotorValue(yIn);
 			rotIn = rampRot.rampMotorValue(rotIn);
 		}
+
 		if (flipped) {
 			rotIn = -rotIn;
 		}
@@ -103,7 +137,7 @@ public class DriveTrain extends Subsystem {
 
 	public void driveMecanum(double x, double y, double rotation) {
 		double angle = 0;
-//		double angle = IMU.getInstance().getZ();
+		// double angle = IMU.getInstance().getZ();
 		double xIn = x;
 		double yIn = y;
 		// Negate y for the joystick.
@@ -214,9 +248,17 @@ public class DriveTrain extends Subsystem {
 		talons[RL].setInverted(!talons[RL].getInverted());
 		talons[RR].setInverted(!talons[RR].getInverted());
 	}
-	
+
 	public boolean isFlipped() {
 		return flipped;
+	}
+	
+	public boolean isOperatorControlled() {
+		return operatorControlled;
+	}
+	
+	public void setOperatorControlled(boolean b) {
+		operatorControlled = b;
 	}
 
 	private static DriveTrain instance;

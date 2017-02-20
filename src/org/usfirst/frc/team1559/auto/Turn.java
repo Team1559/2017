@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1559.auto;
 
 import org.usfirst.frc.team1559.robot.DriveTrain;
-import org.usfirst.frc.team1559.robot.IMU;
+import org.usfirst.frc.team1559.robot.BNO055;
 
 public class Turn extends AutoCommand {
 
@@ -11,7 +11,7 @@ public class Turn extends AutoCommand {
 	public Turn(double angle, double speed) {
 		this.angle = angle;
 		this.speed = speed;
-		this.startAngle = IMU.getInstance().getZ();
+		this.startAngle = BNO055.getInstance().getZ();
 	}
 
 	@Override
@@ -34,9 +34,9 @@ public class Turn extends AutoCommand {
 	@Override
 	public boolean isFinished() {
 		if (angle > 0) {
-			return IMU.getInstance().getZ() >= startAngle + angle;
+			return BNO055.getInstance().getZ() >= startAngle + angle;
 		} else {
-			return IMU.getInstance().getZ() <= startAngle + angle;
+			return BNO055.getInstance().getZ() <= startAngle + angle;
 		}
 	}
 }

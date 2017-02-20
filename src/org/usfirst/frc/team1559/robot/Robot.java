@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousPeriodic() {
-		IMU.getInstance().update();
+		BNO055.getInstance().update();
 		//routine.run();
 	}
 
@@ -48,13 +48,13 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void teleopPeriodic() {
-		IMU.getInstance().update();
+		BNO055.getInstance().update();
 		System.out.println(pdp.getCurrent(2));
 		//JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); //update controller values
 		//gearGatherer.update(oi.getDriverStick().getRawButton(Constants.GEAR_GATHERER)); //Update gear gatherer
 //		driveTrain.drive(oi.getDriverStick());
-		driveTrain.drive(oi.getDriverStick(), true); // with this setup, mecanum doesn't work, plz fix
+		driveTrain.update(oi.getDriverStick()); // with this setup, mecanum doesn't work, plz fix
 		if (oi.drop.isPressed()) {
 			driveTrain.drop(!driveTrain.getMecanumized());
 		}
@@ -88,7 +88,7 @@ public class Robot extends IterativeRobot {
 
 
 	public void testPeriodic() {
-		IMU.getInstance().update();
+		BNO055.getInstance().update();
 		driveTrain.set(DriveTrain.FL, 0);
 		driveTrain.set(DriveTrain.FR, 0);
 		driveTrain.set(DriveTrain.RL, 0);

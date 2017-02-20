@@ -7,11 +7,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 
 /**
- * This class is responsible for communicating to a server over UDP. For the
- * 2017 season, this class connects to the Jetson TX1.
+ * This class is responsible for communicating to a server over UDP.
  */
 public class UDPClient {
 
@@ -26,11 +24,6 @@ public class UDPClient {
 	private DatagramSocket socket;
 
 	DatagramPacket receivePacket;
-	
-	double hx, hy;
-	double angle;
-	double dist;
-	boolean target;
 
 	public UDPClient(String host, int port) {
 		this.strAddress = host;
@@ -39,7 +32,7 @@ public class UDPClient {
 		if (connect()) {
 
 		} else {
-			System.err.println("Client failed to connect to ");
+			System.err.println("Client failed to connect to " + host);
 		}
 	}
 
@@ -79,10 +72,6 @@ public class UDPClient {
 		}
 	}
 
-	/**
-	 * Receive a packet from the server. Packet can be accessed with
-	 * <blockquote><code>client.getReceivePacket()</code></blockquote>dank
-	 */
 	public void receive() {
 		try {
 			socket.receive(receivePacket);
@@ -99,15 +88,5 @@ public class UDPClient {
 
 	public byte[] getRawReceiveData() {
 		return receivePacket.getData();
-	}
-	
-	public void parseData() {
-		byte[] data = receivePacket.getData();
-		for (int i = 0; i < data.length; i++) {
-			if (ByteBuffer.wrap(data).getChar(i) == 'h') {
-				hx = ByteBuffer.wrap(data, i + 1, 8).getDouble();
-				hy = ByteBuffer.wrap(data, i + 9, 8).getDouble();
-			}
-		}
 	}
 }
