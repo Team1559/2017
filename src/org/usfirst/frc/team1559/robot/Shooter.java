@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Shooter extends Subsystem {
 
-	private CANTalon shooterTalon; private Talon shooterFeeder;
+	private CANTalon shooterTalon;
+	private Talon shooterFeeder;
 
 	public Shooter() {
 		super("shooter");
@@ -28,6 +29,7 @@ public class Shooter extends Subsystem {
 		shooterTalon.setD(Constants.Ds);
 		shooterTalon.setF(Constants.Fs);
 	}
+
 	public void shooterInit() {
 		shooterTalon.enable();
 	}
@@ -35,14 +37,17 @@ public class Shooter extends Subsystem {
 	public void setShooter(double shootSpeed) {
 		shooterTalon.set(shootSpeed);
 	}
+
 	public void setFeeder(double feedSpeed) {
 		shooterFeeder.set(feedSpeed);
 	}
 
 	public void fire(boolean fire) {
 		if (fire) {
-			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed. (Max is 720, Min is 685)
-			setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed that works.
+			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed.
+			if (shooterTalon.getClosedLoopError() < Constants.SHOOTER_TOLERANCE) {
+				setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed
+			}
 		} else {
 			setShooter(0);
 			setFeeder(0);

@@ -25,4 +25,5 @@ public class Constants {
 	public static final int SHOOTER_SPEED = 700;//The minimum to make it over the lip is 685, the maximum is 720, average of about 700.
 	public static final int FEEDER_SPEED = 2; // The speed for the feeder of the balls. (Will change)
 	public static final double RPM_CONVERSION = (300)/(4096); //This will change
+	public static final int SHOOTER_TOLERANCE = 420; //needs tp be found
 }
