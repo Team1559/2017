@@ -19,10 +19,11 @@ public class Wiring {//kristin was here :3
 
 	// Shooter
 	public static final int SHOOTER_TALON = 1; // Will change (The port it is on)
-	public static final int FEEDER_TALON = 3; // Will change (The port it is on)
+	public static final int FEEDER_TALON = 4; // Will change (The port it is on)
 	
 	// Gear Gatherer
 	public static final int GEAR_GATHERER = 2;
+	public static final int GEAR_GATHERER_SERVO = 3;
 
 	// Dropper
 	public static final int DROPPER = 0; // Solenoid port for dropping the

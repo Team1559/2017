@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1559.auto;
 
+import org.usfirst.frc.team1559.robot.Constants;
 import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class Drive extends AutoCommand {
@@ -7,10 +8,9 @@ public class Drive extends AutoCommand {
 	double distance, speed;
 	double startDist;
 
-	public Drive(double distance, double speed) {
-		this.distance = distance;
+	public Drive(double inches, double speed) {
+		this.distance = inches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI);
 		this.speed = speed;
-		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
 	}
 
 	@Override
@@ -20,10 +20,12 @@ public class Drive extends AutoCommand {
 
 	@Override
 	public void update() {
-		DriveTrain.getInstance().set(DriveTrain.FL, -speed);
-		DriveTrain.getInstance().set(DriveTrain.FR, speed);
-		DriveTrain.getInstance().set(DriveTrain.RL, -speed);
-		DriveTrain.getInstance().set(DriveTrain.RR, speed);
+		double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
+		double kP = 0.0003;
+		DriveTrain.getInstance().set(DriveTrain.FL, -speed * kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.RL, -speed * kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.RR, speed * kP * distFromTarget);
 	}
 
 	@Override
@@ -37,7 +39,6 @@ public class Drive extends AutoCommand {
 
 	@Override
 	public boolean isFinished() {
-		System.out.println("" + (distance + startDist + " : " + DriveTrain.getInstance().getAvgEncoderPos()));
-		return DriveTrain.getInstance().getAvgEncoderPos() >= ((distance * 0.95) + startDist);
+		return DriveTrain.getInstance().getAvgEncoderPos() >= distance + startDist;
 	}
 }

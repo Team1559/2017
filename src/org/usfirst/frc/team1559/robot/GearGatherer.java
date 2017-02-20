@@ -15,7 +15,7 @@ public class GearGatherer {
 
 	private GearGatherer() {
 		
-		mouth = new Servo(3); // TODO: find correct port and add to Wiring
+		mouth = new Servo(Wiring.GEAR_GATHERER_SERVO); // TODO: find correct port and add to Wiring
 		mouth.setBounds(2, .005, 1.5, .005, 1);
 		piston = new Solenoid(Wiring.GEAR_GATHERER);
 	}

@@ -3,7 +3,6 @@ package org.usfirst.frc.team1559.robot;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
 import org.usfirst.frc.team1559.auto.routines.TestRoutine;
-import org.usfirst.frc.team1559.lib.BNO055;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -37,21 +36,23 @@ public class Robot extends IterativeRobot {
 	
 	public void autonomousInit() {
 		driveTrain.drop(false); // Make sure we are in traction mode
+		driveTrain.setOperatorControlled(false);
 		routine.reset();
 		shooter.shooterInit();
 	}
 
 	public void autonomousPeriodic() {
 		 routine.run();
+		 driveTrain.update();
 	}
 
 	public void teleopInit() {
 		driveTrain.drop(false); // Make sure we are in traction mode
 		ballGatherer.setPiston(true);
+		driveTrain.setOperatorControlled(true);
 	}
 
 	public void teleopPeriodic() {
-		System.out.println(imu.getVector()[0]);
 		// JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS
 		// WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); // update controller values
@@ -86,8 +87,6 @@ public class Robot extends IterativeRobot {
 			gearGatherer.open(!gearGatherer.isOpen());
 		}
 	}
-
-	BNO055 imu = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER);
 
 	public void testInit() {
 	}

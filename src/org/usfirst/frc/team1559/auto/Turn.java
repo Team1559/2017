@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1559.auto;
 
+import org.usfirst.frc.team1559.lib.BNO055;
 import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class Turn extends AutoCommand {
@@ -10,11 +11,11 @@ public class Turn extends AutoCommand {
 	public Turn(double angle, double speed) {
 		this.angle = angle;
 		this.speed = speed;
-//		this.startAngle = BNO055.getInstance().getZ();
 	}
 
 	@Override
 	public void init() {
+		this.startAngle = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading();
 	}
 
 	@Override
@@ -33,10 +34,9 @@ public class Turn extends AutoCommand {
 	@Override
 	public boolean isFinished() {
 		if (angle > 0) {
-//			return BNO055.getInstance().getZ() >= startAngle + angle;
+			 return BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading() >= startAngle + angle;
 		} else {
-//			return BNO055.getInstance().getZ() <= startAngle + angle;
+			 return BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading() <= startAngle + angle;
 		}
-		return false;
 	}
 }

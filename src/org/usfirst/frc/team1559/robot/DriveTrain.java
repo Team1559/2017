@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1559.robot;
 
+import org.usfirst.frc.team1559.lib.BNO055;
 import org.usfirst.frc.team1559.lib.Ramp;
 import org.usfirst.frc.team1559.lib.State;
 import org.usfirst.frc.team1559.lib.Subsystem;
@@ -33,6 +34,8 @@ public class DriveTrain extends Subsystem {
 
 	RobotPosition currentPos;
 	RobotPosition desiredPos;
+
+	BNO055 imu = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER);
 
 	private DriveTrain(boolean mecanumized) {
 		super("drive-train");
@@ -71,17 +74,21 @@ public class DriveTrain extends Subsystem {
 		drop.set(mecanumized);
 	}
 
-	public void update(Joystick stick) {
+	public void update() {
+		operatorControlled = false;
 		currentPos.enc = getAvgEncoderPos();
-		// currentPos.angle = BNO055.getInstance().getZ();
+		currentPos.angle = imu.getVector()[0];
+	}
+
+	public void update(Joystick stick) {
 		if (operatorControlled) {
 			drive(stick);
 		} else {
-			driveTo(desiredPos);
+			update();
 		}
 	}
 
-	public void driveTo(RobotPosition pos) {
+	public void driveTo(RobotPosition pos, double speed) {
 		// only traction for now
 		double dist = pos.enc - currentPos.enc;
 		double dAngle = pos.angle - currentPos.angle;
@@ -125,11 +132,15 @@ public class DriveTrain extends Subsystem {
 		talons[FR].setInverted(false);
 		talons[RL].setInverted(false);
 		talons[RR].setInverted(false);
-		drive.setMaxOutput(MAX_SPEED_TRACTION);
+		if (velocityControl) {
+			drive.setMaxOutput(MAX_SPEED_TRACTION);
+		}
 	}
 
 	public void initMecanum() {
-		drive.setMaxOutput(MAX_SPEED_MECANUM);
+		if (velocityControl) {
+			drive.setMaxOutput(MAX_SPEED_MECANUM);
+		}
 	}
 
 	public void driveTraction(double move, double rot) {
@@ -137,14 +148,13 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void driveMecanum(double x, double y, double rotation) {
-		double angle = 0;
-		// double angle = IMU.getInstance().getZ();
+
 		double xIn = x;
 		double yIn = y;
 		// Negate y for the joystick.
 		yIn = -yIn;
 		// Compenstate for gyro angle.
-		double rotated[] = rotateVector(xIn, yIn, angle);
+		double rotated[] = rotateVector(xIn, yIn, currentPos.angle);
 		xIn = rotated[0];
 		yIn = rotated[1];
 
