@@ -30,7 +30,7 @@ public class DriveTrain extends Subsystem {
 	private Solenoid drop; // Solenoid for shifting
 	private RobotDrive drive;
 	private boolean mecanumized;
-	
+
 	RobotPosition currentPos;
 	RobotPosition desiredPos;
 
@@ -72,17 +72,17 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void update(Joystick stick) {
+		currentPos.enc = getAvgEncoderPos();
+		// currentPos.angle = BNO055.getInstance().getZ();
 		if (operatorControlled) {
 			drive(stick);
 		} else {
 			driveTo(desiredPos);
 		}
 	}
-	
+
 	public void driveTo(RobotPosition pos) {
 		// only traction for now
-		currentPos.enc = getAvgEncoderPos();
-		currentPos.angle = BNO055.getInstance().getZ();
 		double dist = pos.enc - currentPos.enc;
 		double dAngle = pos.angle - currentPos.angle;
 		if (!mecanumized) {
@@ -93,7 +93,7 @@ public class DriveTrain extends Subsystem {
 			talons[FR].set(outRight);
 			talons[RR].set(outRight);
 		} else {
-			
+
 		}
 	}
 
@@ -102,7 +102,8 @@ public class DriveTrain extends Subsystem {
 		double yIn = Math.pow(stick.getY(), 3);
 		double rotIn = Math.pow(stick.getRawAxis(4), 3);
 
-		if (rampedControls && !mecanumized) { // ramping breaks mecanum apparently...
+		if (rampedControls && !mecanumized) { // ramping breaks mecanum
+												// apparently...
 			xIn = rampX.rampMotorValue(xIn);
 			yIn = rampY.rampMotorValue(yIn);
 			rotIn = rampRot.rampMotorValue(rotIn);
@@ -217,10 +218,14 @@ public class DriveTrain extends Subsystem {
 
 	public double getAvgEncoderPos() {
 		double ret = 0;
-		for (int i = 0; i < talons.length; i++) {
-			ret += Math.abs(talons[i].getEncPosition());
+		ret += -talons[FL].getEncPosition();
+		ret += -talons[RL].getEncPosition();
+		ret += talons[FR].getEncPosition();
+		ret += talons[RR].getEncPosition();
+		ret /= 4;
+		if (flipped) {
+			ret *= -1;
 		}
-		ret /= talons.length;
 		return ret;
 	}
 
@@ -252,11 +257,11 @@ public class DriveTrain extends Subsystem {
 	public boolean isFlipped() {
 		return flipped;
 	}
-	
+
 	public boolean isOperatorControlled() {
 		return operatorControlled;
 	}
-	
+
 	public void setOperatorControlled(boolean b) {
 		operatorControlled = b;
 	}

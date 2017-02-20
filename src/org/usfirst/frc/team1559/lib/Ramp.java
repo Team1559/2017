@@ -62,16 +62,6 @@ public class Ramp {
 
 	}
 
-	public double rampMotorValueAuto(double encVal, double distance, double speed) {
-		if (encVal < 4096) {
-			return 50 + encVal / 4096 * (speed - 50);
-		} else if ((distance - encVal) < 4096) {
-			return 50 + ((distance - encVal) / 4096) * (speed - 50);
-		} else {
-			return speed;
-		}
-	}
-
 	public double takeAverage(double[] array) {
 		double sum = 0.0;
 

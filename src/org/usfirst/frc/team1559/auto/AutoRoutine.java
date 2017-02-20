@@ -37,6 +37,5 @@ public class AutoRoutine {
 			System.out.println("DONE " + currentCommand);
 			currentCommand++;
 		}
-
 	}
 }
