@@ -7,21 +7,20 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Talon;
+
 public class Shooter extends Subsystem {
 
-	// The Shooter is a Fly Wheel Shooter.
-	// This is where most of the variables are instantiated.
-
-	private CANTalon shooterTalon;
+	private CANTalon shooterTalon; private Talon shooterFeeder;
 
 	public Shooter() {
 		super("shooter");
+		shooterFeeder = new Talon(Wiring.FEEDER_TALON);
 		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON);
 		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooterTalon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
 		shooterTalon.changeControlMode(TalonControlMode.Speed);
-		shooterTalon.configNominalOutputVoltage(Constants.NOMINAL_FWD_VOUT,
-				Constants.PEAK_REV_VOUT);
+		shooterTalon.configNominalOutputVoltage(Constants.NOMINAL_FWD_VOUT, Constants.PEAK_REV_VOUT);
 		shooterTalon.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.NOMINAL_FWD_VOUT);
 		shooterTalon.setProfile(Constants.PROFILE);
 		shooterTalon.setP(Constants.Ps);
@@ -29,19 +28,24 @@ public class Shooter extends Subsystem {
 		shooterTalon.setD(Constants.Ds);
 		shooterTalon.setF(Constants.Fs);
 	}
+	public void shooterInit() {
+		shooterTalon.enable();
+	}
 
-	public void set(double rpm) {
-		shooterTalon.set(rpm);
+	public void setShooter(double shootSpeed) {
+		shooterTalon.set(shootSpeed);
+	}
+	public void setFeeder(double feedSpeed) {
+		shooterFeeder.set(feedSpeed);
 	}
 
 	public void fire(boolean fire) {
 		if (fire) {
-			set(Constants.SHOOTER_SPEED); // TODO: math and dont blaze
-			// System.out.println(shooterTalon.getEncVelocity());
-			// System.out.println(shooterTalon.getOutputVoltage());
-			// System.out.println(shooterTalon.getOutputCurrent());
+			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed. (Max is 720, Min is 685)
+			setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed that works.
 		} else {
-			set(0); // stop
+			setShooter(0);
+			setFeeder(0);
 		}
 	}
 
