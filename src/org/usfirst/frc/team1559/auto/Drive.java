@@ -21,7 +21,7 @@ public class Drive extends AutoCommand {
 	@Override
 	public void update() {
 		double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
-		double kP = 0.0003;
+		double kP = 0.0005;
 		DriveTrain.getInstance().set(DriveTrain.FL, -speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, -speed * kP * distFromTarget);
@@ -39,6 +39,8 @@ public class Drive extends AutoCommand {
 
 	@Override
 	public boolean isFinished() {
-		return DriveTrain.getInstance().getAvgEncoderPos() >= distance + startDist;
+		double currentEnc = DriveTrain.getInstance().getAvgEncoderPos();
+		double desiredEnc = distance + startDist;
+		return Math.abs(currentEnc - desiredEnc) < 150;
 	}
 }

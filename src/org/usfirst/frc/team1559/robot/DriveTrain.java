@@ -74,14 +74,19 @@ public class DriveTrain extends Subsystem {
 		drop.set(mecanumized);
 	}
 
-	public void update() {
-		operatorControlled = false;
+	public void updatePosition() {
 		currentPos.enc = getAvgEncoderPos();
 		currentPos.angle = imu.getVector()[0];
 	}
 
+	public void update() {
+		updatePosition();
+		operatorControlled = false;
+	}
+
 	public void update(Joystick stick) {
 		if (operatorControlled) {
+			updatePosition();
 			drive(stick);
 		} else {
 			update();

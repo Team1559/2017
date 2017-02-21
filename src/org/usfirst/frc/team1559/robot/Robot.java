@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot {
 	PowerDistributionPanel pdp;
 
 	public void robotInit() {
+		Vision.getInstance();
 		routine = new TestRoutine();
 		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance(); // Instantiate the Drive Train
@@ -42,6 +43,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousPeriodic() {
+		Vision.getInstance().update();
 		 routine.run();
 		 driveTrain.update();
 	}
@@ -53,6 +55,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
+		Vision.getInstance().update();
 		// JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS
 		// WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); // update controller values
@@ -119,11 +122,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledInit() {
-
 	}
 
 	public void disabledPeriodic() {
-
 	}
 
 }
