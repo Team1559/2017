@@ -10,6 +10,8 @@ import java.net.Socket;
  */
 public class UDPClient {
 
+	
+	
 	public String receive() {
 		String modifiedSentence = "";
 		try {
@@ -17,13 +19,12 @@ public class UDPClient {
 //			String sentence;
 //			BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
-			Socket clientSocket = new Socket("10.15.59.6", 26);
+			Socket clientSocket = new Socket("10.15.59.75", 26);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 //			sentence = inFromUser.readLine();
 			modifiedSentence = inFromServer.readLine();
-			System.out.println(modifiedSentence);
 			clientSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();

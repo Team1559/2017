@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1559.robot;
 
-public class Wiring {//kristin was here :3
+public class Wiring {// kristin was here :3
 
 	// thou shan't use magical digits
 
@@ -12,22 +12,21 @@ public class Wiring {//kristin was here :3
 
 	// Climber
 	public static final int CLIMBER_TALON = 9;
-	
+
 	// Ball Gatherer
 	public static final int BGATHERER_TALON = 0;
 	public static final int BGATHERER_PISTON = 1;
 
 	// Shooter
-	public static final int SHOOTER_TALON = 1; // Will change (The port it is on)
-	public static final int FEEDER_TALON = 4; // Will change (The port it is on)
-	
+	public static final int SHOOTER_TALON = 9; // Will change (The port it is on)
+	public static final int FEEDER_TALON = 5; // Will change (The port it is on)
+
 	// Gear Gatherer
 	public static final int GEAR_GATHERER = 2;
 	public static final int GEAR_GATHERER_SERVO = 3;
 
 	// Dropper
-	public static final int DROPPER = 0; // Solenoid port for dropping the
-											// wheels/pulling them up
+	public static final int DROPPER = 0; // Solenoid port for dropping the wheels/pulling them up
 
 	// Joysticks
 	public static final int JOYSTICK0 = 0;
@@ -37,7 +36,8 @@ public class Wiring {//kristin was here :3
 
 	// Gatherer/shooter controls
 	public static final int BTN_GATHER = 5; // Button to control the gatherer
-	public static final int BTN_SHOOT = 10; // Button to control the shooter & feeder
+	public static final int BTN_SHOOT = 6; // Button to control the shooter &
+											// feeder
 	public static final int BTN_FLIP = 2;
 	public static final int BTN_DROP = 9;
 	public static final int BTN_GEAR = 3;

@@ -8,45 +8,52 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
 
-	private CANTalon shooterTalon;
-	private Talon shooterFeeder;
+	private CANTalon shooter;
+	private Talon feeder;
 
 	public Shooter() {
 		super("shooter");
-		shooterFeeder = new Talon(Wiring.FEEDER_TALON);
-		shooterTalon = new CANTalon(Wiring.SHOOTER_TALON);
-		shooterTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		shooterTalon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		shooterTalon.changeControlMode(TalonControlMode.Speed);
-		shooterTalon.configNominalOutputVoltage(Constants.NOMINAL_FWD_VOUT, Constants.PEAK_REV_VOUT);
-		shooterTalon.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.NOMINAL_FWD_VOUT);
-		shooterTalon.setProfile(Constants.PROFILE);
-		shooterTalon.setP(Constants.Ps);
-		shooterTalon.setI(Constants.Is);
-		shooterTalon.setD(Constants.Ds);
-		shooterTalon.setF(Constants.Fs);
+		feeder = new Talon(Wiring.FEEDER_TALON);
+		shooter = new CANTalon(Wiring.SHOOTER_TALON);
+		shooter.changeControlMode(TalonControlMode.Speed);
+		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		shooter.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
+		shooter.configNominalOutputVoltage(Constants.NOMINAL_FWD_VOUT, Constants.NOMINAL_REV_VOUT);
+		shooter.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.PEAK_REV_VOUT);
+		shooter.setProfile(Constants.PROFILE);
+		shooter.setP(Constants.Ps);
+		shooter.setI(Constants.Is);
+		shooter.setD(Constants.Ds);
+		shooter.setF(Constants.Fs);
+		shooter.enable();
+		shooter.setInverted(true);
 	}
 
 	public void shooterInit() {
-		shooterTalon.enable();
+		shooter.enable();
 	}
 
 	public void setShooter(double shootSpeed) {
-		shooterTalon.set(shootSpeed);
+		shooter.set(shootSpeed);
 	}
 
 	public void setFeeder(double feedSpeed) {
-		shooterFeeder.set(feedSpeed);
+		feeder.set(feedSpeed);
+	}
+
+	public CANTalon getShooter() {
+		return shooter;
 	}
 
 	public void fire(boolean fire) {
+		SmartDashboard.putNumber("SHOOTER: ", shooter.getEncVelocity());
 		if (fire) {
 			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed.
-			if (shooterTalon.getClosedLoopError() < Constants.SHOOTER_TOLERANCE) {
-				setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed
+			if (shooter.getClosedLoopError() < Constants.SHOOTER_TOLERANCE) {
 			}
 		} else {
 			setShooter(0);
@@ -55,7 +62,7 @@ public class Shooter extends Subsystem {
 	}
 
 	public void getState(State s) {
-		s.put("shooter-velocity", shooterTalon.getEncVelocity() * Constants.RPM_CONVERSION);
+		s.put("shooter-velocity", shooter.getEncVelocity() * Constants.RPM_CONVERSION);
 	}
 
 	private static Shooter instance;

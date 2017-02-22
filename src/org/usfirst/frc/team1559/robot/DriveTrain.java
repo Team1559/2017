@@ -252,8 +252,7 @@ public class DriveTrain extends Subsystem {
 	 * Sets a particular {@link CANTalon} to the specified speed.
 	 * 
 	 * @param wheel
-	 *            The position of the wheel on the chassis. Use
-	 *            {@link DriveTrain} constants, such as {@link DriveTrain#FR}.
+	 *            The position of the wheel on the chassis. Use {@link DriveTrain} constants, such as {@link DriveTrain#FR}.
 	 * @param speed
 	 *            Speed of the wheel.
 	 */

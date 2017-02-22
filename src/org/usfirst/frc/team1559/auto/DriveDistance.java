@@ -3,12 +3,12 @@ package org.usfirst.frc.team1559.auto;
 import org.usfirst.frc.team1559.robot.Constants;
 import org.usfirst.frc.team1559.robot.DriveTrain;
 
-public class Drive extends AutoCommand {
+public class DriveDistance extends AutoCommand {
 
 	double distance, speed;
 	double startDist;
 
-	public Drive(double inches, double speed) {
+	public DriveDistance(double inches, double speed) {
 		this.distance = inches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI);
 		this.speed = speed;
 	}
@@ -21,7 +21,7 @@ public class Drive extends AutoCommand {
 	@Override
 	public void update() {
 		double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
-		double kP = 0.0005;
+		double kP = 0.00035;
 		DriveTrain.getInstance().set(DriveTrain.FL, -speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, -speed * kP * distFromTarget);

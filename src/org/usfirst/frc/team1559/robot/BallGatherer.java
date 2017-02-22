@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class BallGatherer {
 
-	private static final double GATHER_SPEED = 1;
-	
+	private static final double GATHER_SPEED = 0.7;
+
 	private Talon belt;
 	private Solenoid piston;
 	private boolean gathering;

@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 		climber = Climber.getInstance();
 
 	}
-	
+
 	public void autonomousInit() {
 		driveTrain.drop(false); // Make sure we are in traction mode
 		driveTrain.setOperatorControlled(false);
@@ -44,8 +44,8 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousPeriodic() {
 		Vision.getInstance().update();
-		 routine.run();
-		 driveTrain.update();
+		routine.run();
+		driveTrain.update();
 	}
 
 	public void teleopInit() {
@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		Vision.getInstance().update();
+		// Vision.getInstance().update();
 		// JOHN, GRAB AN ANGLE FROM THE GYRO WITH THE getIMUAngle METHOD. THIS
 		// WS WRITTEN IN TEN MINUTES SO I WOULD TEST THE METHOD OUT FIRST -NATE
 		oi.updateButtons(); // update controller values
@@ -69,7 +69,6 @@ public class Robot extends IterativeRobot {
 		}
 		// shooter.fire(oi.getDriverStick().getRawAxis(Constants.SHOOTER_AXIS) >
 		// Constants.SHOOTER_TOLERANCE); //Shooter
-		shooter.fire(oi.shoot.isPressed());
 
 		gearGatherer.set(oi.gear.isDown());
 		ballGatherer.gather(oi.gather.isDown());
@@ -89,6 +88,8 @@ public class Robot extends IterativeRobot {
 		if (oi.openUp.isPressed()) {
 			gearGatherer.open(!gearGatherer.isOpen());
 		}
+
+		shooter.fire(oi.shoot.isDown());
 	}
 
 	public void testInit() {
@@ -99,7 +100,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.set(DriveTrain.FR, 0);
 		driveTrain.set(DriveTrain.RL, 0);
 		driveTrain.set(DriveTrain.RR, 0);
-		shooter.fire(true);
+		// shooter.fire(true);
 
 		switch (oi.getDriverStick().getPOV()) {
 		case 45:
@@ -119,6 +120,7 @@ public class Robot extends IterativeRobot {
 			driveTrain.set(DriveTrain.FL, 300);
 			break;
 		}
+		System.out.println("Enc" + shooter.getShooter().getEncPosition());
 	}
 
 	public void disabledInit() {
