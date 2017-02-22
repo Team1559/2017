@@ -53,7 +53,7 @@ public class Shooter extends Subsystem {
 //		SmartDashboard.putNumber("SHOOTER: ", shooter.getEncVelocity());
 		if (fire) {
 			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed.
-			if (shooter.getClosedLoopError() < Constants.SHOOTER_TOLERANCE) {
+			if (Math.abs(shooter.getClosedLoopError()) < Constants.SHOOTER_TOLERANCE) {
 				 setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed
 			}
 			else{
