@@ -10,7 +10,8 @@ import java.net.Socket;
  */
 public class UDPClient {
 
-	
+	private static final String HOST = "10.15.59.6";
+	private static final int PORT = 26;
 	
 	public String receive() {
 		String modifiedSentence = "";
@@ -19,7 +20,7 @@ public class UDPClient {
 //			String sentence;
 //			BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
-			Socket clientSocket = new Socket("10.15.59.75", 26);
+			Socket clientSocket = new Socket(HOST, PORT);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 

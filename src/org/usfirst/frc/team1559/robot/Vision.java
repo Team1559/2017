@@ -2,9 +2,6 @@ package org.usfirst.frc.team1559.robot;
 
 public class Vision {
 
-//	private static final String HOST = "10.15.59.6";
-//	private static final int PORT = 23;
-
 	UDPClient client;
 	private double angle;
 
