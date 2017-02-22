@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1559.auto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import org.usfirst.frc.team1559.lib.BNO055;
 import org.usfirst.frc.team1559.robot.DriveTrain;
@@ -12,8 +11,8 @@ public class Target extends AutoCommand {
 	double speed;
 	double startAngle;
 	double currentAngle;
-	List<Double> angleBuffer;
-
+	double[] angleBuffer;
+	
 	public Target() {
 		this.speed = 100;
 	}
@@ -26,19 +25,22 @@ public class Target extends AutoCommand {
 		this.startAngle = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER)
 				.getHeading();
 		currentAngle = Vision.getInstance().getAngle();
-		angleBuffer = new ArrayList<Double>();
+		angleBuffer = new double[25];
+		for (int i = 0; i < angleBuffer.length; i++) {
+			angleBuffer[i] = -1000;
+		}
 	}
 
 	@Override
 	public void update() {
 		currentAngle = Vision.getInstance().getAngle();
-		angleBuffer.add(currentAngle);
-		if (angleBuffer.size() > 5) {
-			angleBuffer.remove(5);
+		for (int i = angleBuffer.length - 2; i >= 0; i--) {
+			angleBuffer[i + 1] = angleBuffer[i];
 		}
-		System.out.println(angleBuffer);
+		angleBuffer[0] = currentAngle;
+		System.out.println(Arrays.toString(angleBuffer));
 		double distFromTarget = currentAngle;
-		double kP = 0.120;
+		double kP = 0.220;
 		DriveTrain.getInstance().set(DriveTrain.FL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, speed * kP * distFromTarget);
@@ -55,13 +57,10 @@ public class Target extends AutoCommand {
 
 	@Override
 	public boolean isFinished() {
-		if (angleBuffer.size() < 5) {
-			return false;
-		}
 		double error = 0;
 		for (double x : angleBuffer) {
 			error += Math.abs(x);
 		}
-		return error <= 5;
+		return error <= 1 * angleBuffer.length;
 	}
 }

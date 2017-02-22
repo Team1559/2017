@@ -5,12 +5,11 @@ import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class Turn extends AutoCommand {
 
-	double angle, speed;
+	double angle;
 	double startAngle;
 
-	public Turn(double angle, double speed) {
+	public Turn(double angle) {
 		this.angle = angle;
-		this.speed = speed;
 	}
 
 	@Override
@@ -21,11 +20,11 @@ public class Turn extends AutoCommand {
 	@Override
 	public void update() {
 		double distFromTarget = angle - (BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading() - startAngle);
-		double kP = 0.14;
-		DriveTrain.getInstance().set(DriveTrain.FL, speed * kP * distFromTarget);
-		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
-		DriveTrain.getInstance().set(DriveTrain.RL, speed * kP * distFromTarget);
-		DriveTrain.getInstance().set(DriveTrain.RR, speed * kP * distFromTarget);
+		double kP = 8.5;
+		DriveTrain.getInstance().set(DriveTrain.FL, kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.FR, kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.RL, kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.RR, kP * distFromTarget);
 	}
 
 	@Override
@@ -38,10 +37,8 @@ public class Turn extends AutoCommand {
 
 	@Override
 	public boolean isFinished() {
-		if (angle > 0) {
-			 return BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading() >= startAngle + angle;
-		} else {
-			 return BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading() <= startAngle + angle;
-		}
+		double currentAngle = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading();
+		double desiredAngle = startAngle + angle;
+		return Math.abs(currentAngle - desiredAngle) <= 2;
 	}
 }

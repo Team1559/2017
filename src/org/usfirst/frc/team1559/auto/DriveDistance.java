@@ -5,12 +5,11 @@ import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class DriveDistance extends AutoCommand {
 
-	double distance, speed;
+	double distance;
 	double startDist;
 
-	public DriveDistance(double inches, double speed) {
+	public DriveDistance(double inches) {
 		this.distance = inches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI);
-		this.speed = speed;
 	}
 
 	@Override
@@ -21,11 +20,11 @@ public class DriveDistance extends AutoCommand {
 	@Override
 	public void update() {
 		double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
-		double kP = 0.00038;
-		DriveTrain.getInstance().set(DriveTrain.FL, -speed * kP * distFromTarget);
-		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
-		DriveTrain.getInstance().set(DriveTrain.RL, -speed * kP * distFromTarget);
-		DriveTrain.getInstance().set(DriveTrain.RR, speed * kP * distFromTarget);
+		double kP = 0.033;
+		DriveTrain.getInstance().set(DriveTrain.FL, -kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.FR, kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.RL, -kP * distFromTarget);
+		DriveTrain.getInstance().set(DriveTrain.RR, kP * distFromTarget);
 	}
 
 	@Override
@@ -41,6 +40,6 @@ public class DriveDistance extends AutoCommand {
 	public boolean isFinished() {
 		double currentEnc = DriveTrain.getInstance().getAvgEncoderPos();
 		double desiredEnc = distance + startDist;
-		return Math.abs(currentEnc - desiredEnc) < 150;
+		return Math.abs(currentEnc - desiredEnc) < 170;
 	}
 }
