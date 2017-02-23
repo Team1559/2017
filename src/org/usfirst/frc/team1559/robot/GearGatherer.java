@@ -8,7 +8,6 @@ public class GearGatherer {
 	private static final double CLOSED_POSITION = 0.25;
 	private static final double OPEN_POSITION = 0.85;
 	
-	
 	private Servo mouth; // blocks balls
 	private Solenoid piston; // releases gear
 	private boolean open;
@@ -20,7 +19,7 @@ public class GearGatherer {
 		piston = new Solenoid(Wiring.GEAR_GATHERER);
 	}
 
-	public void open(boolean b) {
+	public void openMouth(boolean b) {
 		mouth.set(b ? OPEN_POSITION : CLOSED_POSITION);
 		open = b;
 	}

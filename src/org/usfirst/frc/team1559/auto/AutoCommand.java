@@ -24,7 +24,7 @@ public abstract class AutoCommand {
 		return initialized;
 	}
 
-	public void setInitialized(boolean b) {
-		initialized = b;
+	public void reset() {
+		initialized = false;
 	}
 }

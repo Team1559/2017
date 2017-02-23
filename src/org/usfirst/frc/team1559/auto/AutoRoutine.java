@@ -16,7 +16,7 @@ public class AutoRoutine {
 	public void reset() {
 		currentCommand = 0;
 		for (AutoCommand c : commands) {
-			c.setInitialized(false);
+			c.reset();
 		}
 	}
 

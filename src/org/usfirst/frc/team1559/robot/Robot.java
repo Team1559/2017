@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		if (oi.openUp.isPressed()) {
-			gearGatherer.open(!gearGatherer.isOpen());
+			gearGatherer.openMouth(!gearGatherer.isOpen());
 		}
 
 		shooter.fire(oi.shoot.isDown());

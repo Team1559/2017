@@ -8,6 +8,8 @@ import org.usfirst.frc.team1559.robot.Vision;
 
 public class Target extends AutoCommand {
 
+	private static final double TOLERANCE = 1.0;
+	
 	double speed;
 	double startAngle;
 	double currentAngle;
@@ -61,6 +63,6 @@ public class Target extends AutoCommand {
 		for (double x : angleBuffer) {
 			error += Math.abs(x);
 		}
-		return error <= 1 * angleBuffer.length;
+		return error <= TOLERANCE * angleBuffer.length;
 	}
 }

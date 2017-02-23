@@ -2,21 +2,23 @@ package org.usfirst.frc.team1559.auto;
 
 import org.usfirst.frc.team1559.robot.Constants;
 import org.usfirst.frc.team1559.robot.DriveTrain;
+import org.usfirst.frc.team1559.robot.GearGatherer;
 
-public class DriveDistance extends AutoCommand {
+public class Peg extends AutoCommand {
 
 	private static final double TOLERANCE = 170; // in encoder ticks
 	
 	double distance;
 	double startDist;
 
-	public DriveDistance(double inches) {
-		this.distance = inches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI);
+	public Peg() {
+		this.distance = -12 * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI);
 	}
 
 	@Override
 	public void init() {
 		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
+		GearGatherer.getInstance().set(true);
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public class DriveDistance extends AutoCommand {
 		DriveTrain.getInstance().set(DriveTrain.FR, 0);
 		DriveTrain.getInstance().set(DriveTrain.RL, 0);
 		DriveTrain.getInstance().set(DriveTrain.RR, 0);
-		// DriveTrain.getInstance().resetEncoders();
+		GearGatherer.getInstance().set(false);
 	}
 
 	@Override
