@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1559.robot;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
+import org.usfirst.frc.team1559.auto.routines.PegRoutine;
 import org.usfirst.frc.team1559.auto.routines.TestRoutine;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -21,7 +22,7 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		Vision.getInstance();
-		routine = new TestRoutine();
+		routine = new PegRoutine();
 		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance(); // Instantiate the Drive Train
 		shooter = Shooter.getInstance(); // Instantiate the Shooter
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
 	}
 	//data 9 -el frutch
 	public void autonomousInit() {
-		driveTrain.drop(false); // Make sure we are in traction mode
+		driveTrain.drop(true); //mecanum // Make sure we are in traction mode
 		driveTrain.setOperatorControlled(false);
 		routine.reset();
 		shooter.shooterInit();

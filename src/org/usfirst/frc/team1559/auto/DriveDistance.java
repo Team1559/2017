@@ -22,7 +22,7 @@ public class DriveDistance extends AutoCommand {
 	@Override
 	public void update() {
 		double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
-		double kP = 0.033;
+		double kP = 0.022; //0.033
 		DriveTrain.getInstance().set(DriveTrain.FL, -kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, -kP * distFromTarget);

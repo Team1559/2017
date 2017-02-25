@@ -8,7 +8,7 @@ import org.usfirst.frc.team1559.robot.Vision;
 
 public class Target extends AutoCommand {
 
-	private static final double TOLERANCE = 1.0;
+	private static final double TOLERANCE = 2.5;
 	
 	double speed;
 	double startAngle;
@@ -42,7 +42,7 @@ public class Target extends AutoCommand {
 		angleBuffer[0] = currentAngle;
 		System.out.println(Arrays.toString(angleBuffer));
 		double distFromTarget = currentAngle;
-		double kP = 0.220;
+		double kP = 0.24; //.220
 		DriveTrain.getInstance().set(DriveTrain.FL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, speed * kP * distFromTarget);
