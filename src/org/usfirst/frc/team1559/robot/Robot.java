@@ -3,7 +3,6 @@ package org.usfirst.frc.team1559.robot;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
 import org.usfirst.frc.team1559.auto.routines.PegRoutine;
-import org.usfirst.frc.team1559.auto.routines.TestRoutine;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -18,7 +17,7 @@ public class Robot extends IterativeRobot {
 	Climber climber; // Creates the Climber
 	// Diagnostics diagnostics; //Create the diagnostics tool
 	OperatorInterface oi; // Create the OI
-	PowerDistributionPanel pdp;
+	PowerDistributionPanel pdp; //snek
 
 	public void robotInit() {
 		Vision.getInstance();
@@ -34,10 +33,12 @@ public class Robot extends IterativeRobot {
 		// diagnostics = new Diagnostics();
 		climber = Climber.getInstance();
 		
+		
+		System.out.println("snekked");
 	}
 	//data 9 -el frutch
 	public void autonomousInit() {
-		driveTrain.drop(true); //mecanum // Make sure we are in traction mode
+		driveTrain.drop(false); // Make sure we are in traction mode
 		driveTrain.setOperatorControlled(false);
 		routine.reset();
 		shooter.shooterInit();

@@ -1,15 +1,16 @@
 package org.usfirst.frc.team1559.auto;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AutoRoutine {
 
-	Vector<AutoCommand> commands;
+	List<AutoCommand> commands;
 
 	int currentCommand;
 
 	public AutoRoutine() {
-		commands = new Vector<AutoCommand>();
+		commands = new ArrayList<AutoCommand>();
 		currentCommand = 0;
 	}
 
@@ -20,7 +21,7 @@ public class AutoRoutine {
 		}
 	}
 
-	public void put(AutoCommand auto) {
+	public void putSeries(AutoCommand auto) {
 		commands.add(auto);
 	}
 

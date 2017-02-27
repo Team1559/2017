@@ -11,8 +11,11 @@ public class Vision {
 
 	public void update() {
 		try {
-		angle = Double.parseDouble(client.receive());
-		} catch(NumberFormatException e) {
+			double temp = Double.parseDouble(client.get());
+			if (temp != -1000) {
+				angle = temp;
+			}
+		} catch (NumberFormatException | NullPointerException e) {
 			System.err.println("nothing happening here");
 		}
 	}
