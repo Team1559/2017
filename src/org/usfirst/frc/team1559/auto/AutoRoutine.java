@@ -21,7 +21,7 @@ public class AutoRoutine {
 		}
 	}
 
-	public void putSeries(AutoCommand auto) {
+	public void put(AutoCommand auto) {
 		commands.add(auto);
 	}
 

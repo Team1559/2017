@@ -268,6 +268,13 @@ public class DriveTrain extends Subsystem {
 		talons[RR].setInverted(!talons[RR].getInverted());
 	}
 
+	public void stopDriving() {
+		set(FL, 0);
+		set(FR, 0);
+		set(RL, 0);
+		set(RR, 0);
+	}
+
 	public boolean isFlipped() {
 		return flipped;
 	}
@@ -288,4 +295,5 @@ public class DriveTrain extends Subsystem {
 		}
 		return instance;
 	}
+
 }

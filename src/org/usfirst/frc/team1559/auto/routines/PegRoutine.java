@@ -9,8 +9,9 @@ public class PegRoutine extends AutoRoutine {
 
 	public PegRoutine() {
 		//put(new DriveDistance(48));
-		putSeries(new Peg());
-		putSeries(new Wait(3));
-		putSeries(new DriveDistance(-48)); // subtract 11 thousand
+		//putSeries(new Peg());
+		//putSeries(new Wait(3));
+		put(new DriveMecanum(0, 48, 0));
+//		put(new DriveDistance(48)); // subtract 11 thousand
 	}
 }

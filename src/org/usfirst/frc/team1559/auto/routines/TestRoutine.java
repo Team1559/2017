@@ -7,6 +7,6 @@ public class TestRoutine extends AutoRoutine {
 
 	public TestRoutine() {
 		// put(new Drive(48, 100));
-		putSeries(new Target());
+		put(new Target());
 	}
 }

@@ -26,7 +26,10 @@ public class UDPClient implements Runnable{
 	public void run() {
 		running = true;
 		while (running) {
-			data = receive();
+			String rec = receive();
+			if (rec != null) {
+				data = rec;
+			}
 		}
 	}
 	
@@ -35,7 +38,7 @@ public class UDPClient implements Runnable{
 	}
 	
 	public String receive() {
-		String modifiedSentence = "";
+		String modifiedSentence = null;
 		try {
 
 //			String sentence;
@@ -51,6 +54,7 @@ public class UDPClient implements Runnable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return modifiedSentence;
 	}
 }

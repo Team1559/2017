@@ -8,8 +8,8 @@ public class SquareRoutine extends AutoRoutine {
 
 	public SquareRoutine() {
 		for (int x = 0; x < 4; x++) {
-			putSeries(new DriveDistance(48));
-			putSeries(new Turn(90));
+			put(new DriveDistance(48));
+			put(new Turn(90));
 		}
 	}
 }
