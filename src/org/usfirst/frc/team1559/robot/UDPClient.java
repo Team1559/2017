@@ -37,6 +37,14 @@ public class UDPClient implements Runnable{
 		return data;
 	}
 	
+	public String getAngle(){
+		return data.substring(0, data.indexOf('d'));
+	}
+	
+	public String getDistance(){
+		return data.substring(data.indexOf('d'));
+	}
+	
 	public String receive() {
 		String modifiedSentence = null;
 		try {
