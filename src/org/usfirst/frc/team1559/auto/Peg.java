@@ -25,7 +25,8 @@ public class Peg extends AutoCommand {
 
 	@Override
 	public void update() {
-		double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
+		//double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
+		double distFromTarget = Vision.getInstance().getDistance();
 		System.out.println(distFromTarget);
 		double angleFromTarget = Vision.getInstance().getAngle();
 		double kP_angle = 0.033;
