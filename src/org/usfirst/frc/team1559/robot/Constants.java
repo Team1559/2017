@@ -29,4 +29,5 @@ public class Constants {
 	public static final double FEEDER_SPEED = 0.25; // The speed for the feeder of the balls. (Will change)
 	public static final double RPM_CONVERSION = (300)/(4096); //This will change
 	public static final double SHOOTER_TOLERANCE = 0.5; //needs to be found
+	public static final int ARDUINO_ADDRESS = 4;
 }
