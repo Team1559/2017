@@ -42,7 +42,7 @@ public class UDPClient implements Runnable{
 	}
 	
 	public String getDistance(){
-		return data.substring(data.indexOf('d'));
+		return data.substring(data.indexOf('d') + 1);
 	}
 	
 	public String receive() {
