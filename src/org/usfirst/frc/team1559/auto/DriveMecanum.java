@@ -32,7 +32,7 @@ public class DriveMecanum extends AutoCommand {
 		rotErr = rot - BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getVector()[0];
 		double kP_rot = 0.033;
 		double kP_dist = 0.3; //0.000003
-		DriveTrain.getInstance().driveMecanum(0, yErr * kP_dist, rotErr * kP_rot);
+		DriveTrain.getInstance().driveMecanum(0, yErr * kP_dist, rotErr * kP_rot, true);
 		System.out.println(yErr);
 		//QUICK AND DIRTY -John
 //		if(yErr >= 8000) {

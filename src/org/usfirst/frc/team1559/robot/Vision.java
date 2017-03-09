@@ -12,21 +12,21 @@ public class Vision {
 
 	public void update() {
 		try {
-			double temp = Double.parseDouble(client.getAngle());
+			double temp = Double.parseDouble(client.get());
 			if (temp != -1000) {
 				angle = temp;
 			}
 		} catch (NumberFormatException | NullPointerException e) {
 			System.err.println("nothing happening here");
 		}
-		try {
-			double tempd = Double.parseDouble(client.getDistance());
-			if (tempd != -1000) {
-				distance = tempd;
-			}
-		} catch (NumberFormatException | NullPointerException e) {
-			System.err.println("rats for lunch");
-		}
+		//try {
+			//double tempd = Double.parseDouble(client.getDistance());
+			//if (tempd != -1000) {
+				//distance = tempd;
+			//}
+		//} catch (NumberFormatException | NullPointerException e) {
+			//System.err.println("rats for lunch");
+		//}
 	}
 
 	private static Vision instance;

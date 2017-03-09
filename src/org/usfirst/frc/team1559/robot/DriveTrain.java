@@ -24,13 +24,14 @@ public class DriveTrain extends Subsystem {
 
 	private boolean operatorControlled = true;
 	private boolean velocityControl = true;
-	private boolean flipped; // controls which side is the front
 	private boolean rampedControls = true;
+	private boolean fieldCentric = false;
 
 	private CANTalon[] talons;
 	private Solenoid drop; // Solenoid for shifting
 	private RobotDrive drive;
 	private boolean mecanumized;
+	private boolean flipped; // controls which side is the front
 
 	RobotPosition currentPos;
 	RobotPosition desiredPos;
@@ -110,8 +111,8 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void drive(Joystick stick) {
-		double xIn = Math.pow(stick.getX(), 3);
-		double yIn = Math.pow(stick.getY(), 3);
+		double xIn = Math.pow(stick.getX(), 1);
+		double yIn = Math.pow(stick.getY(), 1);
 		double rotIn = Math.pow(stick.getRawAxis(4), 3);
 
 		if (rampedControls && !mecanumized) { // ramping breaks mecanum
@@ -126,7 +127,7 @@ public class DriveTrain extends Subsystem {
 		}
 
 		if (mecanumized) {
-			driveMecanum(xIn, yIn, rotIn);
+			driveMecanum(xIn, yIn, rotIn, fieldCentric);
 		} else {
 			driveTraction(yIn, rotIn);
 		}
@@ -152,14 +153,14 @@ public class DriveTrain extends Subsystem {
 		drive.arcadeDrive(move, rot);
 	}
 
-	public void driveMecanum(double x, double y, double rotation) {
+	public void driveMecanum(double x, double y, double rotation, boolean fieldCentric) {
 
 		double xIn = x;
 		double yIn = y;
 		// Negate y for the joystick.
 		yIn = -yIn;
 		// Compenstate for gyro angle.
-		double rotated[] = rotateVector(xIn, yIn, currentPos.angle);
+		double[] rotated = rotateVector(xIn, yIn, fieldCentric ? currentPos.angle : 0);
 		xIn = rotated[0];
 		yIn = rotated[1];
 

@@ -2,7 +2,9 @@
 package org.usfirst.frc.team1559.robot;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
+import org.usfirst.frc.team1559.auto.routines.CrossLineRoutine;
 import org.usfirst.frc.team1559.auto.routines.PegRoutine;
+import org.usfirst.frc.team1559.auto.routines.SquareRoutine;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -10,11 +12,14 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Robot extends IterativeRobot {
 
+	public static final int WIDTH = 36; // inches
+	public static final int LENGTH = 40; // inches
+	
 	Compressor compressor;
 	AutoRoutine routine;
 	DriveTrain driveTrain; // Create the Drive Train
 	Shooter shooter; // Create the Shooter
-	GearGatherer gearGatherer; // Create the Gear Gatherer
+	GearPlacer gearGatherer; // Create the Gear Gatherer
 	BallGatherer ballGatherer; // Create the Ball Gatherer
 	Climber climber; // Creates the Climber
 	// Diagnostics diagnostics; //Create the diagnostics tool
@@ -23,11 +28,11 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		Vision.getInstance();
-		routine = new PegRoutine();
+		routine = new PegRoutine(PegRoutine.CENTER, false);
 		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance(); // Instantiate the Drive Train
 		shooter = Shooter.getInstance(); // Instantiate the Shooter
-		gearGatherer = GearGatherer.getInstance(); // Instantiate the Gear
+		gearGatherer = GearPlacer.getInstance(); // Instantiate the Gear
 													// Gatherer
 		ballGatherer = BallGatherer.getInstance(); // Instantiate the Ball
 													// Gatherer
@@ -90,13 +95,14 @@ public class Robot extends IterativeRobot {
 		}
 
 		if (oi.openUp.isPressed()) {
-			gearGatherer.openMouth(!gearGatherer.isOpen());
+			gearGatherer.openMouth(!gearGatherer.isMouthOpen());
 		}
 
 		shooter.fire(oi.shoot.isDown());
 	}
 
 	public void testInit() {
+		compressor.start();
 	}
 
 	public void testPeriodic() {
@@ -128,7 +134,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledInit() {
-		compressor.start();
 	}
 
 	public void disabledPeriodic() {

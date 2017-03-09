@@ -8,11 +8,11 @@ import java.net.Socket;
 /**
  * This class is responsible for communicating to a server over UDP.
  */
-public class UDPClient implements Runnable{
+public class UDPClient implements Runnable {
 
-	private static final String HOST = "10.15.59.6";
-	private static final int PORT = 26;
-	
+	private static final String HOST = "10.15.59.6"; //169.254.227.6
+	private static final int PORT = 5801;
+
 	Thread clientThread;
 	boolean running;
 	
@@ -20,6 +20,7 @@ public class UDPClient implements Runnable{
 	
 	public UDPClient() {
 		clientThread = new Thread(this);
+		clientThread.start();
 	}
 	
 	@Override
@@ -27,6 +28,7 @@ public class UDPClient implements Runnable{
 		running = true;
 		while (running) {
 			String rec = receive();
+//			System.out.println("from jetson: " + rec);
 			if (rec != null) {
 				data = rec;
 			}
@@ -60,9 +62,10 @@ public class UDPClient implements Runnable{
 			modifiedSentence = inFromServer.readLine();
 			clientSocket.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+//			System.err.println("No data from camera");
 		}
 		
 		return modifiedSentence;
 	}
+	
 }

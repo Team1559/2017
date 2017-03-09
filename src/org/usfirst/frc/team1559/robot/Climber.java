@@ -11,11 +11,11 @@ public class Climber {
 	}
 
 	public void climb() {
-		talon.set(-0.7);
+		talon.set(-0.85);
 	}
 
 	public void unclimb() {
-		talon.set(0.7);
+		talon.set(0.85);
 	}
 	
 	public void stop() {

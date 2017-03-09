@@ -23,7 +23,7 @@ public class Follow extends AutoCommand {
 		errAngle = Vision.getInstance().getAngle();
 		
 		double kP = 8.5;
-		DriveTrain.getInstance().driveMecanum(kP * errAngle, 0, 0);
+		DriveTrain.getInstance().driveMecanum(kP * errAngle, 0, 0, true);
 	}
 
 	@Override

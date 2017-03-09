@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1559.auto;
 
-import java.util.Arrays;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.usfirst.frc.team1559.lib.BNO055;
 import org.usfirst.frc.team1559.robot.DriveTrain;
@@ -40,13 +43,20 @@ public class Target extends AutoCommand {
 			angleBuffer[i + 1] = angleBuffer[i];
 		}
 		angleBuffer[0] = currentAngle;
-		System.out.println(Arrays.toString(angleBuffer));
 		double distFromTarget = currentAngle;
 		double kP = 0.24; //.220
 		DriveTrain.getInstance().set(DriveTrain.FL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RR, speed * kP * distFromTarget);
+
+		try (FileWriter fw = new FileWriter("C:/Users/firstmentor/My Documents/targetlog.txt", true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println("target angle: " + currentAngle);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

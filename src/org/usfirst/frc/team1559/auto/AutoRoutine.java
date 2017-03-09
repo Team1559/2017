@@ -35,7 +35,7 @@ public class AutoRoutine {
 		}
 		if (!commands.get(currentCommand).isFinished()) {
 			commands.get(currentCommand).tick();
-			System.out.println("UPDATE " + currentCommand);
+			System.out.println("UPDATE " + currentCommand + ": (" + commands.get(currentCommand).getClass().getName() + ")");
 		} else {
 			commands.get(currentCommand).done();
 			System.out.println("DONE " + currentCommand);

@@ -50,7 +50,7 @@ public class Turn extends AutoCommand {
 			currentAngle = (BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getHeading() - startAngle);
 		}
 		double distFromTarget = angle - currentAngle;
-		double kP = 8.5;
+		double kP = 7.5;
 		DriveTrain.getInstance().set(DriveTrain.FL, kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, kP * distFromTarget);

@@ -2,7 +2,7 @@ package org.usfirst.frc.team1559.auto;
 
 import org.usfirst.frc.team1559.robot.Constants;
 import org.usfirst.frc.team1559.robot.DriveTrain;
-import org.usfirst.frc.team1559.robot.GearGatherer;
+import org.usfirst.frc.team1559.robot.GearPlacer;
 import org.usfirst.frc.team1559.robot.Vision;
 
 public class Peg extends AutoCommand {
@@ -20,7 +20,7 @@ public class Peg extends AutoCommand {
 	public void init() {
 		DriveTrain.getInstance().drop(true);
 		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
-		GearGatherer.getInstance().set(false);
+		GearPlacer.getInstance().set(false);
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class Peg extends AutoCommand {
 		double angleFromTarget = Vision.getInstance().getAngle();
 		double kP_angle = 0.033;
 		double kP_dist = 0.0000000003;
-		DriveTrain.getInstance().driveMecanum(angleFromTarget * kP_angle, -distFromTarget * kP_dist, 0);
+		DriveTrain.getInstance().driveMecanum(angleFromTarget * kP_angle, -distFromTarget * kP_dist, 0, true);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class Peg extends AutoCommand {
 		DriveTrain.getInstance().set(DriveTrain.FR, 0);
 		DriveTrain.getInstance().set(DriveTrain.RL, 0);
 		DriveTrain.getInstance().set(DriveTrain.RR, 0);
-		GearGatherer.getInstance().set(true);
+		GearPlacer.getInstance().set(true);
 	}
 	
 	@Override
