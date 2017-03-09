@@ -3,14 +3,14 @@ package org.usfirst.frc.team1559.auto;
 import org.usfirst.frc.team1559.robot.Constants;
 import org.usfirst.frc.team1559.robot.DriveTrain;
 
-public class DriveDistance extends AutoCommand {
+public class DriveForward extends AutoCommand {
 
 	private static final double TOLERANCE = 170; // in encoder ticks
 	
-	double distance;
-	double startDist;
+	private double distance;
+	private double startDist;
 
-	public DriveDistance(double inches) {
+	public DriveForward(double inches) {
 		this.distance = inches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI);
 	}
 
@@ -35,7 +35,6 @@ public class DriveDistance extends AutoCommand {
 		DriveTrain.getInstance().set(DriveTrain.FR, 0);
 		DriveTrain.getInstance().set(DriveTrain.RL, 0);
 		DriveTrain.getInstance().set(DriveTrain.RR, 0);
-		// DriveTrain.getInstance().resetEncoders();
 	}
 
 	@Override

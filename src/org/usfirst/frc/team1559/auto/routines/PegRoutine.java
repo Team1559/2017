@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1559.auto.routines;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
+import org.usfirst.frc.team1559.auto.DriveMecanum;
 
 public class PegRoutine extends AutoRoutine {
 

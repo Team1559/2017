@@ -1,6 +1,5 @@
-package org.usfirst.frc.team1559.auto.routines;
+package org.usfirst.frc.team1559.auto;
 
-import org.usfirst.frc.team1559.auto.AutoCommand;
 import org.usfirst.frc.team1559.lib.BNO055;
 import org.usfirst.frc.team1559.robot.Constants;
 import org.usfirst.frc.team1559.robot.DriveTrain;
