@@ -4,11 +4,13 @@ package org.usfirst.frc.team1559.robot;
 import org.usfirst.frc.team1559.auto.AutoRoutine;
 import org.usfirst.frc.team1559.auto.routines.PegRoutine;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Robot extends IterativeRobot {
 
+	Compressor compressor;
 	AutoRoutine routine;
 	DriveTrain driveTrain; // Create the Drive Train
 	Shooter shooter; // Create the Shooter
@@ -32,7 +34,7 @@ public class Robot extends IterativeRobot {
 		oi = OperatorInterface.getInstance(); // Instantiate the OI
 		// diagnostics = new Diagnostics();
 		climber = Climber.getInstance();
-		
+		compressor = new Compressor();
 		
 		System.out.println("snekked");
 	}
@@ -126,6 +128,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledInit() {
+		compressor.start();
 	}
 
 	public void disabledPeriodic() {

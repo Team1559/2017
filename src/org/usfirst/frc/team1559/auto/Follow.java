@@ -4,7 +4,7 @@ import org.usfirst.frc.team1559.robot.DriveTrain;
 import org.usfirst.frc.team1559.robot.Vision;
 
 /**
- * Use for verifying working vision.
+ * Use for verifying working vision. Will run forever.
  */
 public class Follow extends AutoCommand {
 
