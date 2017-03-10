@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
 			driveTrain.setFlipped(!driveTrain.isFlipped());
 		}
 
-		if (oi.climb.isDown()) {
+		if (oi.climb.isDown() || oi.climb2.isDown()) {
 			climber.climb();
 		} else if (oi.unclimb.isDown()) {
 			climber.unclimb();

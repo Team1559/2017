@@ -10,7 +10,7 @@ public class OperatorInterface {
 	private Joystick driverStick, copilotStick;
 
 	public List<DTButton> buttons;
-	public DTButton shoot, gather, drop, gear, flip, climb, unclimb, openUp;
+	public DTButton shoot, gather, drop, gear, flip, climb, climb2, unclimb, openUp;
 
 	private static OperatorInterface instance;
 
@@ -32,6 +32,7 @@ public class OperatorInterface {
 		gear = new DTButton(driverStick, Wiring.BTN_GEAR);
 		flip = new DTButton(driverStick, Wiring.BTN_FLIP);
 		climb = new DTButton(driverStick, Wiring.BTN_CLIMB);
+		climb2 = new DTButton(driverStick, Wiring.BTN_CLIMB_JOHN);
 		unclimb = new DTButton(driverStick, Wiring.BTN_CLIMB_REV);
 		openUp = new DTButton(driverStick, Wiring.BTN_MOUTH);
 	}
@@ -51,6 +52,7 @@ public class OperatorInterface {
 		gear.update();
 		flip.update();
 		climb.update();
+		climb2.update();
 		unclimb.update();
 		openUp.update();
 	}
