@@ -44,7 +44,7 @@ public class OperatorInterface {
 	public Joystick getCopilotStick() {
 		return copilotStick;
 	}
-
+//the 2 gear auto
 	public void updateButtons() {
 		shoot.update();
 		gather.update();

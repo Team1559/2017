@@ -3,6 +3,8 @@ package org.usfirst.frc.team1559.auto;
 import org.usfirst.frc.team1559.robot.Constants;
 import org.usfirst.frc.team1559.robot.DriveTrain;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class DriveForward extends AutoCommand {
 
 	private static final double TOLERANCE = 200; // in encoder ticks
@@ -39,8 +41,10 @@ public class DriveForward extends AutoCommand {
 
 	@Override
 	public boolean isFinished() {
+		
 		double currentEnc = DriveTrain.getInstance().getAvgEncoderPos();
 		double desiredEnc = distance + startDist;
+		
 		return Math.abs(currentEnc - desiredEnc) < TOLERANCE;
 	}
 }
