@@ -52,8 +52,8 @@ public class OperatorInterface {
 		gear.update();
 		flip.update();
 		climb.update();
+		climb2.update();
 		unclimb.update();
 		openUp.update();
-		climb2.update();
 	}
 }
