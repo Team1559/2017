@@ -30,7 +30,7 @@ public class Target extends AutoCommand {
 		this.startAngle = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER)
 				.getHeading();
 		currentAngle = Vision.getInstance().getAngle();
-		angleBuffer = new double[20];
+		angleBuffer = new double[25];
 		for (int i = 0; i < angleBuffer.length; i++) {
 			angleBuffer[i] = -1000;
 		}
@@ -49,6 +49,14 @@ public class Target extends AutoCommand {
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RR, speed * kP * distFromTarget);
+
+		try (FileWriter fw = new FileWriter("C:/Users/firstmentor/My Documents/targetlog.txt", true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println("target angle: " + currentAngle);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
