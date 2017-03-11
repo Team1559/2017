@@ -19,7 +19,7 @@ public class Target extends AutoCommand {
 	double[] angleBuffer;
 	
 	public Target() {
-		this.speed = 100;
+		this.speed = 80;
 	}
 	public Target(double speed) {
 		this.speed = speed;
@@ -44,19 +44,11 @@ public class Target extends AutoCommand {
 		}
 		angleBuffer[0] = currentAngle;
 		double distFromTarget = currentAngle;
-		double kP = 0.17; //.220
+		double kP = 0.15; //.220
 		DriveTrain.getInstance().set(DriveTrain.FL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RR, speed * kP * distFromTarget);
-
-		try (FileWriter fw = new FileWriter("C:/Users/firstmentor/My Documents/targetlog.txt", true);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter out = new PrintWriter(bw)) {
-			out.println("target angle: " + currentAngle);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override

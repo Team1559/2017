@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		Vision.getInstance();
-		routine = new PegRoutine(PegRoutine.LEFT, true);
+		routine = new PegRoutine(PegRoutine.CENTER, false);
 		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance(); // Instantiate the Drive Train
 		shooter = Shooter.getInstance(); // Instantiate the Shooter
