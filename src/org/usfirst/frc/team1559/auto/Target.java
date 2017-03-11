@@ -44,7 +44,7 @@ public class Target extends AutoCommand {
 		}
 		angleBuffer[0] = currentAngle;
 		double distFromTarget = currentAngle;
-		double kP = 0.24; //.220
+		double kP = 0.17; //.220
 		DriveTrain.getInstance().set(DriveTrain.FL, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, speed * kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, speed * kP * distFromTarget);

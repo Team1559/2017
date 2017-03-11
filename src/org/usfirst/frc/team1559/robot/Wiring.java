@@ -42,6 +42,7 @@ public class Wiring {// kristin was here :3
 	public static final int BTN_DROP = 9;
 	public static final int BTN_GEAR = 3;
 	public static final int BTN_CLIMB = 8;
+	public static final int BTN_CLIMB_JOHN = 1;
 	public static final int BTN_CLIMB_REV = 7;
 	public static final int BTN_MOUTH = 4;
 }

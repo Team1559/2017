@@ -2,9 +2,7 @@
 package org.usfirst.frc.team1559.robot;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
-import org.usfirst.frc.team1559.auto.routines.CrossLineRoutine;
 import org.usfirst.frc.team1559.auto.routines.PegRoutine;
-import org.usfirst.frc.team1559.auto.routines.SquareRoutine;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,7 +26,7 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		Vision.getInstance();
-		routine = new PegRoutine(PegRoutine.CENTER, false);
+		routine = new PegRoutine(PegRoutine.LEFT, true);
 		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance(); // Instantiate the Drive Train
 		shooter = Shooter.getInstance(); // Instantiate the Shooter
@@ -41,12 +39,10 @@ public class Robot extends IterativeRobot {
 		climber = Climber.getInstance();
 		compressor = new Compressor();
 		
-		System.out.println("snekked");
 	}
 	//data 9 -el frutch
 	public void autonomousInit() {
-		driveTrain.drop(false); // Make sure we are in traction mode
-		driveTrain.setOperatorControlled(false);
+		driveTrain.drop(false); // Make sure we are i47OperatorControlled(false);
 		routine.reset();
 		shooter.shooterInit();
 	}
@@ -86,7 +82,7 @@ public class Robot extends IterativeRobot {
 			driveTrain.setFlipped(!driveTrain.isFlipped());
 		}
 
-		if (oi.climb.isDown()) {
+		if (oi.climb.isDown() || oi.climb2.isDown()) {
 			climber.climb();
 		} else if (oi.unclimb.isDown()) {
 			climber.unclimb();
@@ -130,12 +126,11 @@ public class Robot extends IterativeRobot {
 			driveTrain.set(DriveTrain.FL, 300);
 			break;
 		}
-		System.out.println("Enc" + shooter.getShooter().getEncPosition());
 	}
 
 	public void disabledInit() {
 	}
-
+	
 	public void disabledPeriodic() {
 	}
 

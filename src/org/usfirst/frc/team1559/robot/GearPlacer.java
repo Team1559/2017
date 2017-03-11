@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class GearPlacer {
 
 	private static final double CLOSED_POSITION = 0.15;
-	private static final double OPEN_POSITION = 0.45;
+	private static final double OPEN_POSITION = 0.57;
 	private Servo mouth; // blocks balls
 	private Solenoid piston; // releases gear
 	private boolean open;

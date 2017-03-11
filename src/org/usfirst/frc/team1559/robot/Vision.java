@@ -5,6 +5,7 @@ public class Vision {
 	UDPClient client;
 	private double angle;
 	private double distance;
+	private String raw;
 
 	private Vision() {
 		client = new UDPClient();
@@ -12,6 +13,7 @@ public class Vision {
 
 	public void update() {
 		try {
+			raw = client.get();
 			double temp = Double.parseDouble(client.get());
 			if (temp != -1000) {
 				angle = temp;
@@ -45,5 +47,9 @@ public class Vision {
 	
 	public double getDistance(){
 		return distance;
+	}
+	
+	public String getRaw() {
+		return raw;
 	}
 }

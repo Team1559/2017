@@ -5,7 +5,7 @@ import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class DriveForward extends AutoCommand {
 
-	private static final double TOLERANCE = 170; // in encoder ticks
+	private static final double TOLERANCE = 200; // in encoder ticks
 	
 	private double distance;
 	private double startDist;
@@ -22,7 +22,7 @@ public class DriveForward extends AutoCommand {
 	@Override
 	public void update() {
 		double distFromTarget = distance - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
-		double kP = 0.037; //0.033
+		double kP = 0.029; //0.033
 		DriveTrain.getInstance().set(DriveTrain.FL, -kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.FR, kP * distFromTarget);
 		DriveTrain.getInstance().set(DriveTrain.RL, -kP * distFromTarget);
