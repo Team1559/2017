@@ -14,7 +14,7 @@ public class Wiring {// kristin was here :3
 	public static final int CLIMBER_TALON = 9;
 
 	// Ball Gatherer
-	public static final int BGATHERER_TALON = 8;
+	public static final int BGATHERER_SERVO = 8;
 	public static final int BGATHERER_PISTON = 1;
 
 	// Shooter
