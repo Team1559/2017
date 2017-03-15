@@ -5,7 +5,8 @@ import org.usfirst.frc.team1559.auto.DriveForward;
 
 public class CrossLineRoutine extends AutoRoutine {
 
-	public CrossLineRoutine() {
+	@Override
+	public void init() {
 		put(new DriveForward(93));
 	}
 }

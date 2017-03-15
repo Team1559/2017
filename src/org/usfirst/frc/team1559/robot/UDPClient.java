@@ -28,7 +28,6 @@ public class UDPClient implements Runnable {
 		running = true;
 		while (running) {
 			String rec = receive();
-			 System.out.println("from jetson: " + rec);
 			if (rec != null) {
 				data = rec;
 			}
@@ -39,33 +38,28 @@ public class UDPClient implements Runnable {
 		return data;
 	}
 
-	public String getAngle() {
-		return data.substring(0, data.indexOf('d'));
-	}
-
-	public String getDistance() {
-		return data.substring(data.indexOf('d') + 1);
-	}
-
 	public String receive() {
 		String ret = null;
 		try {
-
-			// String sentence;
-			// BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-
 			Socket clientSocket = new Socket(HOST, PORT);
-			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-			// sentence = inFromUser.readLine();
 			ret = inFromServer.readLine();
 			clientSocket.close();
 		} catch (Exception e) {
-			// System.err.println("No data from camera");
 		}
 
 		return ret;
+	}
+
+	public void send(String s) {
+		try {
+			Socket clientSocket = new Socket(HOST, PORT);
+			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+			outToServer.write(s.getBytes());
+			clientSocket.close();
+		} catch (Exception e) {
+			System.out.println("Failed to send: " + s);
+		}
 	}
 
 }

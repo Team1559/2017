@@ -2,7 +2,7 @@
 package org.usfirst.frc.team1559.robot;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
-import org.usfirst.frc.team1559.auto.routines.PegRoutine;
+import org.usfirst.frc.team1559.auto.routines.TrustWillRightRoutine;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -12,45 +12,45 @@ public class Robot extends IterativeRobot {
 
 	public static final int WIDTH = 36; // inches
 	public static final int LENGTH = 40; // inches
-	
+
 	Compressor compressor;
 	AutoRoutine routine;
-	DriveTrain driveTrain; // Create the Drive Train
-	Shooter shooter; // Create the Shooter
-	GearPlacer gearGatherer; // Create the Gear Gatherer
-	BallGatherer ballGatherer; // Create the Ball Gatherer
-	Climber climber; // Creates the Climber
-	// Diagnostics diagnostics; //Create the diagnostics tool
-	OperatorInterface oi; // Create the OI
-	PowerDistributionPanel pdp; //snek
+	DriveTrain driveTrain;
+	Shooter shooter;
+	GearPlacer gearGatherer;
+	BallGatherer ballGatherer;
+	Climber climber;
+	OperatorInterface oi;
+	PowerDistributionPanel pdp;
 
 	public void robotInit() {
 		Vision.getInstance();
-		routine = new PegRoutine(PegRoutine.CENTER, false);
+		routine = new TrustWillRightRoutine();
 		pdp = new PowerDistributionPanel();
-		driveTrain = DriveTrain.getInstance(); // Instantiate the Drive Train
-		shooter = Shooter.getInstance(); // Instantiate the Shooter
-		gearGatherer = GearPlacer.getInstance(); // Instantiate the Gear
-													// Gatherer
-		ballGatherer = BallGatherer.getInstance(); // Instantiate the Ball
-													// Gatherer
-		oi = OperatorInterface.getInstance(); // Instantiate the OI
-		// diagnostics = new Diagnostics();
+		driveTrain = DriveTrain.getInstance();
+		shooter = Shooter.getInstance();
+		gearGatherer = GearPlacer.getInstance();
+		ballGatherer = BallGatherer.getInstance();
+		oi = OperatorInterface.getInstance();
 		climber = Climber.getInstance();
 		compressor = new Compressor();
-		
 	}
-	//data 9 -el frutch
+
+	// data 9 -el frutch
 	public void autonomousInit() {
-		driveTrain.drop(false); // Make sure we are i47OperatorControlled(false);
+		driveTrain.drop(false);
 		routine.reset();
 		shooter.shooterInit();
+		// Vision.getInstance().checkConnection();
 	}
 
 	public void autonomousPeriodic() {
 		Vision.getInstance().update();
 		routine.run();
-		driveTrain.update();
+		// if (!Vision.getInstance().isConnected()) {
+		// Vision.getInstance().checkConnection();
+		// }
+		// routine.setVisionEnabled(Vision.getInstance().isConnected());
 	}
 
 	public void teleopInit() {
@@ -102,10 +102,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void testPeriodic() {
-		driveTrain.set(DriveTrain.FL, 0);
-		driveTrain.set(DriveTrain.FR, 0);
-		driveTrain.set(DriveTrain.RL, 0);
-		driveTrain.set(DriveTrain.RR, 0);
+		driveTrain.stopDriving();
 		// shooter.fire(true);
 
 		switch (oi.getDriverStick().getPOV()) {
@@ -130,7 +127,7 @@ public class Robot extends IterativeRobot {
 
 	public void disabledInit() {
 	}
-	
+
 	public void disabledPeriodic() {
 	}
 
