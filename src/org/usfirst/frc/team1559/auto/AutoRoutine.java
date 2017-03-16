@@ -3,16 +3,20 @@ package org.usfirst.frc.team1559.auto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutoRoutine {
+public abstract class AutoRoutine {
 
-	List<AutoCommand> commands;
-
-	int currentCommand;
+	private List<AutoCommand> commands;
+	private int currentCommand;
+	protected boolean visionEnabled;
 
 	public AutoRoutine() {
+		visionEnabled = true;
 		commands = new ArrayList<AutoCommand>();
 		currentCommand = 0;
+		init();
 	}
+
+	public abstract void init();
 
 	public void reset() {
 		currentCommand = 0;
@@ -41,5 +45,9 @@ public class AutoRoutine {
 			System.out.println("DONE " + currentCommand);
 			currentCommand++;
 		}
+	}
+
+	public void setVisionEnabled(boolean b) {
+		visionEnabled = b;
 	}
 }

@@ -13,21 +13,28 @@ import org.usfirst.frc.team1559.robot.Robot;
 
 public class PegRoutine extends AutoRoutine {
 
-	public static final int LEFT = 0;
-	public static final int CENTER = 1;
-	public static final int RIGHT = 2;
+	public static enum Side {
+		LEFT, CENTER, RIGHT
+	}
 
-	public PegRoutine(int pegId, boolean vision) {
-		if (pegId == LEFT || pegId == RIGHT) {
+	private Side peg;
+
+	public PegRoutine(Side peg) {
+		this.peg = peg;
+	}
+
+	@Override
+	public void init() {
+		if (peg == Side.LEFT || peg == Side.RIGHT) {
 			put(new DriveForward(93 - Robot.WIDTH / 2));
-			put(new Turn(pegId == LEFT ? 60 : -60, false));
+			put(new Turn(peg == Side.LEFT ? 60 : -60, false));
 			put(new TargetMecanum());
 			put(new DriveTime(1.8, -0.3)); // TODO: figure out drive distances
 			put(new OpenGear());
 			put(new DriveForward(-30));
 			put(new CloseGear());
 		} else {
-			if (vision) {
+			if (visionEnabled) {
 				put(new DriveForward((111 - Robot.WIDTH) * 0.5));
 				put(new Target());
 				put(new DriveForward((111 - Robot.WIDTH) * 0.5));

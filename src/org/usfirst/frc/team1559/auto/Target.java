@@ -1,11 +1,5 @@
 package org.usfirst.frc.team1559.auto;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import org.usfirst.frc.team1559.lib.BNO055;
 import org.usfirst.frc.team1559.robot.DriveTrain;
 import org.usfirst.frc.team1559.robot.Vision;
 
@@ -14,7 +8,6 @@ public class Target extends AutoCommand {
 	private static final double TOLERANCE = 2.5;
 	
 	double speed;
-	double startAngle;
 	double currentAngle;
 	double[] angleBuffer;
 	
@@ -27,8 +20,6 @@ public class Target extends AutoCommand {
 
 	@Override
 	public void init() {
-		this.startAngle = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER)
-				.getHeading();
 		currentAngle = Vision.getInstance().getAngle();
 		angleBuffer = new double[25];
 		for (int i = 0; i < angleBuffer.length; i++) {

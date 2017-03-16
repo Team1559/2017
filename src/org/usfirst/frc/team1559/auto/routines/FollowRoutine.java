@@ -5,7 +5,8 @@ import org.usfirst.frc.team1559.auto.Follow;
 
 public class FollowRoutine extends AutoRoutine {
 
-	public FollowRoutine() {
+	@Override
+	public void init() {
 		put(new Follow());
 	}
 }

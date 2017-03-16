@@ -5,7 +5,7 @@ import org.usfirst.frc.team1559.robot.DriveTrain;
 
 public class DriveForward extends AutoCommand {
 
-	private static final double TOLERANCE = 210; // in encoder ticks
+	private static final double TOLERANCE = 240; // in encoder ticks
 	
 	private double distance;
 	private double startDist;
@@ -13,7 +13,7 @@ public class DriveForward extends AutoCommand {
 	public DriveForward(double inches) {
 		this.distance = inches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI);
 	}
-
+	
 	@Override
 	public void init() {
 		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
