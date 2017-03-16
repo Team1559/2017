@@ -2,7 +2,8 @@
 package org.usfirst.frc.team1559.robot;
 
 import org.usfirst.frc.team1559.auto.AutoRoutine;
-import org.usfirst.frc.team1559.auto.routines.TrustWillRightRoutine;
+import org.usfirst.frc.team1559.auto.routines.PegRoutine;
+import org.usfirst.frc.team1559.auto.routines.Test;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -13,19 +14,19 @@ public class Robot extends IterativeRobot {
 	public static final int WIDTH = 36; // inches
 	public static final int LENGTH = 40; // inches
 
-	Compressor compressor;
-	AutoRoutine routine;
-	DriveTrain driveTrain;
-	Shooter shooter;
-	GearPlacer gearGatherer;
-	BallGatherer ballGatherer;
-	Climber climber;
-	OperatorInterface oi;
-	PowerDistributionPanel pdp;
+	private Compressor compressor;
+	private AutoRoutine routine;
+	private DriveTrain driveTrain;
+	private Shooter shooter;
+	private GearPlacer gearGatherer;
+	private BallGatherer ballGatherer;
+	private Climber climber;
+	private OperatorInterface oi;
+	private PowerDistributionPanel pdp;
 
 	public void robotInit() {
 		Vision.getInstance();
-		routine = new TrustWillRightRoutine();
+		routine = new Test();
 		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance();
 		shooter = Shooter.getInstance();

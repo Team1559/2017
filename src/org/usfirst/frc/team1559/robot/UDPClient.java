@@ -31,6 +31,7 @@ public class UDPClient implements Runnable {
 			if (rec != null) {
 				data = rec;
 			}
+			System.out.println(rec);
 		}
 	}
 

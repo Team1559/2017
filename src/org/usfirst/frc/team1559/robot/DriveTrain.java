@@ -111,8 +111,10 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void drive(Joystick stick) {
-		double xIn = Math.pow(stick.getX(), 1);
-		double yIn = Math.pow(stick.getY(), 1);
+		double xs = Math.signum(stick.getX());
+		double ys = Math.signum(stick.getY());
+		double xIn = Math.pow(stick.getX(), 2) * xs;
+		double yIn = Math.pow(stick.getY(), 2) * ys;
 		double rotIn = Math.pow(stick.getRawAxis(4), 3);
 
 		if (rampedControls && !mecanumized) { // ramping breaks mecanum

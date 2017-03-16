@@ -16,6 +16,7 @@ public interface Wiring {// kristin was here :3
 	// Ball Gatherer
 	final int BGATHERER_TALON = 8;
 	final int BGATHERER_PISTON = 1;
+	final int BGATHERER_SERVO = 1;
 
 	// Shooter
 	final int SHOOTER_TALON = 9; // Will change (The port it is on)

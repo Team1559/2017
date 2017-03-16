@@ -25,8 +25,8 @@ public interface Constants {
 	final float PEAK_FWD_VOUT = +12.0f; //The reverse nomial output voltage for the talons
 	final float PEAK_REV_VOUT = -12.0f; //The reverse peak output voltage for the talons
 	final int PROFILE = 0; //The profile for the talons
-	final double SHOOTER_SPEED = 550;//The minimum to make it over the lip is 685, the maximum is 720, average of about 700.
-	final double FEEDER_SPEED = 0.25; // The speed for the feeder of the balls. (Will change)
+	final double SHOOTER_SPEED = 540;//The minimum to make it over the lip is 685, the maximum is 720, average of about 700.
+	final double FEEDER_SPEED = 0.50; // The speed for the feeder of the balls. (Will change)
 	final double RPM_CONVERSION = (300)/(4096); //This will change
 	final double SHOOTER_TOLERANCE = 0.5; //needs to be found
 	final int ARDUINO_ADDRESS = 4;

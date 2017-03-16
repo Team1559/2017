@@ -18,6 +18,7 @@ public class Shooter extends Subsystem {
 	public Shooter() {
 		super("shooter");
 		feeder = new Talon(Wiring.FEEDER_TALON);
+		feeder.setInverted(true);
 		shooter = new CANTalon(Wiring.SHOOTER_TALON);
 		shooter.changeControlMode(TalonControlMode.Speed);
 		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -53,12 +54,12 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("SHOOTER: ", shooter.getEncVelocity());
 		if (fire) {
 			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed.
-//			if (Math.abs(shooter.getClosedLoopError()) < Constants.SHOOTER_TOLERANCE) {
-//				 setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed
-//			}
-//			else{
-//				setFeeder(0);
-//			}
+			if (Math.abs(shooter.getClosedLoopError()) < Constants.SHOOTER_TOLERANCE) {
+				System.out.println("feed me daddy");
+				setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed
+			} else {
+				setFeeder(0);
+			}
 		} else {
 			setShooter(0);
 			setFeeder(0);

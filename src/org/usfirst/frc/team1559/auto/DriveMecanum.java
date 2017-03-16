@@ -15,8 +15,8 @@ public class DriveMecanum extends AutoCommand {
 	double speed;
 	
 	public DriveMecanum(double xInches, double yInches, double rotDegrees) {
-		this.x = xInches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI) * (22.0/32.0);
-		this.y = yInches * Constants.ENCODER_CODES_PER_REV / (4 * Math.PI) * (22.0/32.0);
+		this.x = xInches * Constants.ENCODER_CODES_PER_REV / ((4 * Math.PI) * (32.0/22.0));
+		this.y = yInches * Constants.ENCODER_CODES_PER_REV / ((4 * Math.PI) * (32.0/22.0));
 		this.rot = rotDegrees;
 		this.startDist = DriveTrain.getInstance().getAvgEncoderPos();
 	}
@@ -31,7 +31,7 @@ public class DriveMecanum extends AutoCommand {
 		yErr = y - (DriveTrain.getInstance().getAvgEncoderPos() - startDist);
 		rotErr = rot - BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS, BNO055.vector_type_t.VECTOR_EULER).getVector()[0];
 		double kP_rot = 0.033;
-		double kP_dist = 0.3; //0.000003
+		double kP_dist = 0.0006; //0.000003
 		DriveTrain.getInstance().driveMecanum(0, yErr * kP_dist, rotErr * kP_rot, true);
 		System.out.println(yErr);
 		//QUICK AND DIRTY -John
