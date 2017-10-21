@@ -14,10 +14,10 @@ public interface Constants {
 	final double Fd = 0.0682; //(This may change) The feed-forward value for the PIDF loop (Mecanum)
 	// Fd CHASSIS BLEU: 0.0682
 	// Fd CHASSIS OR: 
-	final double Ps = -0.9; //(This may change) The proportional value for the PIDF loop (shooter)
+	final double Ps = -0; //(This may change) The proportional value for the PIDF loop (shooter)
 	final double Is = -0; //(This may change) The integral value for the PIDF loop (shooter)
 	final double Ds = -0; //(This may change) The derivative  value for the PIDF loop (shooter)
-	final double Fs = 0.042; //(This may change) The feed-forward value for the PIDF loop (shooter)
+	final double Fs = 0.67; //(This may change) The feed-forward value for the PIDF loop (shooter)
 	final int ENCODER_CODES_PER_REV = 4096;// The number of times an encoder will move in one wheel revolution
 
 	final float NOMINAL_FWD_VOUT = +0.0f; //The forward nomial output voltage for the talons
@@ -25,9 +25,9 @@ public interface Constants {
 	final float PEAK_FWD_VOUT = +12.0f; //The reverse nomial output voltage for the talons
 	final float PEAK_REV_VOUT = -12.0f; //The reverse peak output voltage for the talons
 	final int PROFILE = 0; //The profile for the talons
-	final double SHOOTER_SPEED = 540;//The minimum to make it over the lip is 685, the maximum is 720, average of about 700.
-	final double FEEDER_SPEED = 0.50; // The speed for the feeder of the balls. (Will change)
+	final double SHOOTER_SPEED =  378;// Calculation (((19400/7.0)*0.8*1024)/60)/100;//The minimum to make it over the lip is 685, the maximum is 720, average of about 700.
+	final double FEEDER_SPEED = 0.2; // The speed for the feeder of the balls. (Will change) TODO: Set to zero for testing // 4
 	final double RPM_CONVERSION = (300)/(4096); //This will change
-	final double SHOOTER_TOLERANCE = 0.5; //needs to be found
+	final double SHOOTER_TOLERANCE = 35000; //needs to be found
 	final int ARDUINO_ADDRESS = 4;
 }

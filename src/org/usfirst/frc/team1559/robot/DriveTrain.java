@@ -115,7 +115,7 @@ public class DriveTrain extends Subsystem {
 		double ys = Math.signum(stick.getY());
 		double xIn = Math.pow(stick.getX(), 2) * xs;
 		double yIn = Math.pow(stick.getY(), 2) * ys;
-		double rotIn = Math.pow(stick.getRawAxis(4), 3);
+		double rotIn = Math.pow(stick.getRawAxis(2), 3); //with an xbox controller the raw axis is 4
 
 		if (rampedControls && !mecanumized) { // ramping breaks mecanum
 												// apparently...
