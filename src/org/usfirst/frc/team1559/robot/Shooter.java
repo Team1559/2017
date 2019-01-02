@@ -3,23 +3,23 @@ package org.usfirst.frc.team1559.robot;
 import org.usfirst.frc.team1559.lib.State;
 import org.usfirst.frc.team1559.lib.Subsystem;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
+//import com.ctre.CANTalon;
+//import com.ctre.CANTalon.FeedbackDevice;
+//import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
 
-	private CANTalon shooter;
+	//private CANTalon shooter;
 	private Talon feeder;
 
 	public Shooter() {
 		super("shooter");
 		feeder = new Talon(Wiring.FEEDER_TALON);
 		feeder.setInverted(true);
-		shooter = new CANTalon(Wiring.SHOOTER_TALON);
+		/*shooter = new CANTalon(Wiring.SHOOTER_TALON);
 		shooter.changeControlMode(TalonControlMode.Speed);
 		shooter.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		shooter.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
@@ -31,52 +31,52 @@ public class Shooter extends Subsystem {
 		shooter.setD(Constants.Ds);
 		shooter.setF(Constants.Fs);
 		shooter.enable();
-		shooter.setInverted(true);
+		shooter.setInverted(true);*/
 	}
 
-	public void shooterInit() {
-		shooter.enable();
+//	public void shooterInit() {
+//		shooter.enable();
+//	}
+//
+//	public void setShooter(double shootSpeed) {
+//		shooter.set(shootSpeed);
+//	}
+//
+//	public void setFeeder(double feedSpeed) {
+//		feeder.set(feedSpeed);
+//	}
+//
+//	public CANTalon getShooter() {
+//		return shooter;
+//	}
+//
+//	public void fire(boolean fire) {
+//		SmartDashboard.putNumber("Shooter Velocity: ", shooter.getEncVelocity());
+//		if (fire) {
+//			System.out.println("shooter closed loop err: " + shooter.getClosedLoopError());
+//			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed.
+//			if (Math.abs(shooter.getClosedLoopError()) < Constants.SHOOTER_TOLERANCE) {
+//				System.out.println("feed me daddy");
+//				setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed
+//			} else {
+//				setFeeder(0);
+//			}
+//		} else {
+//			setShooter(0);
+//			setFeeder(0);
+//		}
+//	}
+//
+public void getState(State s) {
+//		s.put("shooter-velocity", shooter.getEncVelocity() * Constants.RPM_CONVERSION);
 	}
-
-	public void setShooter(double shootSpeed) {
-		shooter.set(shootSpeed);
-	}
-
-	public void setFeeder(double feedSpeed) {
-		feeder.set(feedSpeed);
-	}
-
-	public CANTalon getShooter() {
-		return shooter;
-	}
-
-	public void fire(boolean fire) {
-		SmartDashboard.putNumber("Shooter Velocity: ", shooter.getEncVelocity());
-		if (fire) {
-			System.out.println("shooter closed loop err: " + shooter.getClosedLoopError());
-			setShooter(Constants.SHOOTER_SPEED); // TODO: Find the right speed.
-			if (Math.abs(shooter.getClosedLoopError()) < Constants.SHOOTER_TOLERANCE) {
-				System.out.println("feed me daddy");
-				setFeeder(Constants.FEEDER_SPEED); // TODO: Find the exact speed
-			} else {
-				setFeeder(0);
-			}
-		} else {
-			setShooter(0);
-			setFeeder(0);
-		}
-	}
-
-	public void getState(State s) {
-		s.put("shooter-velocity", shooter.getEncVelocity() * Constants.RPM_CONVERSION);
-	}
-
-	private static Shooter instance;
-
-	public static Shooter getInstance() {
-		if (instance == null) {
-			instance = new Shooter();
-		}
-		return instance;
-	}
+//
+private static Shooter instance;
+//
+//	public static Shooter getInstance() {
+//		if (instance == null) {
+//			instance = new Shooter();
+//		}
+//		return instance;
+//	}
 }

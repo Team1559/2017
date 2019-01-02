@@ -17,7 +17,7 @@ public class Robot extends IterativeRobot {
 	private Compressor compressor;
 	private AutoRoutine routine;
 	private DriveTrain driveTrain;
-	private Shooter shooter;
+	//private Shooter shooter;
 	private GearPlacer gearGatherer;
 	private BallGatherer ballGatherer;
 	private Climber climber;
@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
 		routine = new Test();
 		pdp = new PowerDistributionPanel();
 		driveTrain = DriveTrain.getInstance();
-		shooter = Shooter.getInstance();
+		//shooter = Shooter.getInstance();
 		gearGatherer = GearPlacer.getInstance();
 		ballGatherer = BallGatherer.getInstance();
 		oi = OperatorInterface.getInstance();
@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		driveTrain.drop(false);
 		routine.reset();
-		shooter.shooterInit();
+		//shooter.shooterInit();
 		// Vision.getInstance().checkConnection();
 	}
 
@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot {
 			gearGatherer.openMouth(!gearGatherer.isMouthOpen());
 		}
 
-		shooter.fire(oi.shoot.isDown());
+		//shooter.fire(oi.shoot.isDown());
 	}
 
 	public void testInit() {

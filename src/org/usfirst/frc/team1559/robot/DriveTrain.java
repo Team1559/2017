@@ -5,9 +5,12 @@ import org.usfirst.frc.team1559.lib.Ramp;
 import org.usfirst.frc.team1559.lib.State;
 import org.usfirst.frc.team1559.lib.Subsystem;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -27,7 +30,7 @@ public class DriveTrain extends Subsystem {
 	private boolean rampedControls = true;
 	private boolean fieldCentric = false;
 
-	private CANTalon[] talons;
+	private WPI_TalonSRX[] talons;
 	private Solenoid drop; // Solenoid for shifting
 	private RobotDrive drive;
 	private boolean mecanumized;
@@ -40,11 +43,11 @@ public class DriveTrain extends Subsystem {
 
 	private DriveTrain(boolean mecanumized) {
 		super("drive-train");
-		talons = new CANTalon[4];
-		talons[FR] = new CANTalon(Wiring.FR_SRX);
-		talons[RR] = new CANTalon(Wiring.RR_SRX);
-		talons[RL] = new CANTalon(Wiring.RL_SRX);
-		talons[FL] = new CANTalon(Wiring.FL_SRX);
+		talons = new WPI_TalonSRX[4];
+		talons[FR] = new WPI_TalonSRX(Wiring.FR_SRX);
+		talons[RR] = new WPI_TalonSRX(Wiring.RR_SRX);
+		talons[RL] = new WPI_TalonSRX(Wiring.RL_SRX);
+		talons[FL] = new WPI_TalonSRX(Wiring.FL_SRX);
 		drop = new Solenoid(Wiring.DROPPER);
 		drive = new RobotDrive(talons[FL], talons[RL], talons[FR], talons[RR]);
 		this.mecanumized = mecanumized;
@@ -52,9 +55,8 @@ public class DriveTrain extends Subsystem {
 		desiredPos = new RobotPosition();
 
 		if (velocityControl) {
-			for (CANTalon t : talons) {
+			for (WPI_TalonSRX t : talons) {
 				initVelocityControl(t);
-				t.enable();
 			}
 		}
 
@@ -115,7 +117,7 @@ public class DriveTrain extends Subsystem {
 		double ys = Math.signum(stick.getY());
 		double xIn = Math.pow(stick.getX(), 2) * xs;
 		double yIn = Math.pow(stick.getY(), 2) * ys;
-		double rotIn = Math.pow(stick.getRawAxis(2), 3); //with an xbox controller the raw axis is 4
+		double rotIn = Math.pow(stick.getRawAxis(2), 3); // with an xbox controller the raw axis is 4
 
 		if (rampedControls && !mecanumized) { // ramping breaks mecanum
 												// apparently...
@@ -215,44 +217,45 @@ public class DriveTrain extends Subsystem {
 		return mecanumized;
 	}
 
-	public void initVelocityControl(CANTalon talon) {
-		talon.changeControlMode(TalonControlMode.Speed);
-		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		talon.configEncoderCodesPerRev(Constants.ENCODER_CODES_PER_REV);
-		talon.configNominalOutputVoltage(Constants.NOMINAL_FWD_VOUT, Constants.NOMINAL_REV_VOUT);
-		talon.configPeakOutputVoltage(Constants.PEAK_FWD_VOUT, Constants.PEAK_REV_VOUT);
-		talon.setProfile(Constants.PROFILE);
-		talon.setP(Constants.Pd);
-		talon.setI(Constants.Id);
-		talon.setD(Constants.Dd);
-		talon.setF(Constants.Fd);
+	public void initVelocityControl(WPI_TalonSRX talon) {
+		talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+
+		talon.configClosedloopRamp(0.0, 0); // 0.08
+		talon.configOpenloopRamp(0.15, 0);
+
+		talon.configNominalOutputForward(0, 0);
+		talon.configNominalOutputReverse(0, 0);
+		talon.configPeakOutputForward(+1, 0);
+		talon.configPeakOutputReverse(-1, 0);
+
+		talon.setNeutralMode(NeutralMode.Coast);
+
+		talon.configNeutralDeadband(.04, 0);
+
+		// TODO this is new
+		talon.set(ControlMode.Velocity, 0);
 	}
 
 	public void resetEncoders() {
 		for (int i = 0; i < talons.length; i++) {
-			talons[i].setEncPosition(0);
+			talons[i].getSensorCollection().setQuadraturePosition(0, 0);
 		}
 	}
 
 	public double getAvgEncoderPos() {
-		double ret = 0;
-		ret += -talons[FL].getEncPosition();
-		ret += -talons[RL].getEncPosition();
-		ret += talons[FR].getEncPosition();
-		ret += talons[RR].getEncPosition();
-		ret /= 4;
-		if (flipped) {
-			ret *= -1;
-		}
-		return ret;
+		return (talons[0].getSensorCollection().getQuadraturePosition()- //- for robot 1
+				talons[1].getSensorCollection().getQuadraturePosition()+
+				talons[2].getSensorCollection().getQuadraturePosition()-
+				talons[3].getSensorCollection().getQuadraturePosition())/4.0;
 	}
+	
 
 	public double getEncoderPos(int wheel) {
-		return Math.abs(talons[wheel].getEncPosition());
+		return Math.abs(talons[wheel].getSensorCollection().getQuadraturePosition());
 	}
 
 	/**
-	 * Sets a particular {@link CANTalon} to the specified speed.
+	 * Sets a particular {@link WPI_TalonSRX} to the specified speed.
 	 * 
 	 * @param wheel
 	 *            The position of the wheel on the chassis. Use {@link DriveTrain} constants, such as {@link DriveTrain#FR}.
