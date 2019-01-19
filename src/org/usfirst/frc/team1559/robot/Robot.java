@@ -58,6 +58,7 @@ public class Robot extends IterativeRobot {
 		driveTrain.drop(false); // Make sure we are in traction mode
 		ballGatherer.setPiston(true);
 		driveTrain.setOperatorControlled(true);
+		System.out.println("hello World");
 	}
 
 	public void teleopPeriodic() {
